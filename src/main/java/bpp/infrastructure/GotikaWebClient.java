@@ -2,7 +2,6 @@ package bpp.infrastructure;
 
 import bpp.model.PetrolPrice;
 import bpp.model.WebPageResponse;
-import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
@@ -17,8 +16,8 @@ import static bpp.util.PetrolNames.PETROL;
 @Component
 public class GotikaWebClient extends WebClient {
     private static final String GOTIKA_SEARCH_PRICE_PATTERN = "" +
-            "(?<petrol95>\\d.\\d\\d\\d)(.*\\n)(.*\\n)" +
-            "(?<diesel>\\d.\\d\\d\\d)";
+            "(?<petrol95>\\d.?\\d{3})(.*\\n)(.*\\n)" +
+            "(?<diesel>\\d.?\\d{3})";
     @Value("${gotikaAuto.price_link}")
     private String gotikaPriceLink;
     private Pattern pattern;
@@ -31,10 +30,10 @@ public class GotikaWebClient extends WebClient {
     @Override
     public PetrolPrice getContent() {
         PetrolPrice petrolPrice = null;
-        WebPageResponse gotikaWebContent = super.getWebContent(gotikaPriceLink);
+        WebPageResponse gotikaWebContent = getWebContent(gotikaPriceLink);
 
         if (gotikaWebContent.getId() == WEB_CLIENT_CONNECTION_FAILED) {
-            return super.createFailedPetrolPrice(gotikaWebContent.getId(), gotikaWebContent.getContent());
+            return createFailedPetrolPrice(gotikaWebContent.getId(), gotikaWebContent.getContent());
         }
 
         final Matcher matcher = pattern.matcher(gotikaWebContent.getContent());
@@ -42,9 +41,9 @@ public class GotikaWebClient extends WebClient {
         while (matcher.find()) {
             petrolPrice = PetrolPrice.builder()
                     .id(gotikaWebContent.getId())
-                    .petrol(new BigDecimal(matcher.group(PETROL)))
+                    .petrol(createPriceFromString(matcher.group(PETROL)))
                     .petrolBestPriceAddress(PRICE_FOR_ALL_STATIONS)
-                    .diesel(new BigDecimal(matcher.group(DIESEL)))
+                    .diesel(createPriceFromString(matcher.group(DIESEL)))
                     .dieselBestPriceAddress(PRICE_FOR_ALL_STATIONS)
                     .build();
         }

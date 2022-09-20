@@ -1,11 +1,13 @@
 package bpp.infrastructure;
 
+import bpp.entity.NestePriceEntity;
 import bpp.model.PetrolPrice;
 import bpp.model.WebPageResponse;
-import java.math.BigDecimal;
+import bpp.repository.NestePriceRepository;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -17,12 +19,14 @@ import static bpp.util.PetrolNames.PETROL;
 import static bpp.util.PetrolNames.PETROL_PRO;
 
 @Component
+@RequiredArgsConstructor
 public class NesteWebClient extends WebClient {
+    private final NestePriceRepository nestePriceRepository;
     private static final String NESTE_SEARCH_PRICE_PATTERN = "" +
-            "(?<petrol95>\\d.\\d\\d\\d)(\\n\\t.*\\n.*\\n\\t)" +
-            "(?<petrol98>\\d.\\d\\d\\d)(\\n\\t.*\\n.*\\n\\t)" +
-            "(?<diesel>\\d.\\d\\d\\d)(\\n\\t.*\\n.*\\n\\t)" +
-            "(?<dieselPro>\\d.\\d\\d\\d)";
+            "(?<petrol95>\\d.?\\d{3})(\\n\\t.*\\n.*\\n\\t)" +
+            "(?<petrol98>\\d.?\\d{3})(\\n\\t.*\\n.*\\n\\t)" +
+            "(?<diesel>\\d.?\\d{3})(\\n\\t.*\\n.*\\n\\t)" +
+            "(?<dieselPro>\\d.?\\d{3})";
     @Value("${neste.price_link}")
     private String nestePriceLink;
     private Pattern pattern;
@@ -35,10 +39,10 @@ public class NesteWebClient extends WebClient {
     @Override
     public PetrolPrice getContent() {
         PetrolPrice petrolPrice = null;
-        WebPageResponse nesteWebContent = super.getWebContent(nestePriceLink);
+        WebPageResponse nesteWebContent = getWebContent(nestePriceLink);
 
         if (nesteWebContent.getId() == WEB_CLIENT_CONNECTION_FAILED) {
-            return super.createFailedPetrolPrice(nesteWebContent.getId(), nesteWebContent.getContent());
+            return createFailedPetrolPrice(nesteWebContent.getId(), nesteWebContent.getContent());
         }
 
         final Matcher matcher = pattern.matcher(nesteWebContent.getContent());
@@ -46,16 +50,29 @@ public class NesteWebClient extends WebClient {
         while (matcher.find()) {
             petrolPrice = PetrolPrice.builder()
                     .id(nesteWebContent.getId())
-                    .petrol(new BigDecimal(matcher.group(PETROL)))
+                    .petrol(createPriceFromString(matcher.group(PETROL)))
                     .petrolBestPriceAddress(PRICE_FOR_ALL_STATIONS)
-                    .petrolPro(new BigDecimal(matcher.group(PETROL_PRO)))
+                    .petrolPro(createPriceFromString(matcher.group(PETROL_PRO)))
                     .petrolProBestPriceAddress(PRICE_FOR_ALL_STATIONS)
-                    .diesel(new BigDecimal(matcher.group(DIESEL)))
+                    .diesel(createPriceFromString(matcher.group(DIESEL)))
                     .dieselBestPriceAddress(PRICE_FOR_ALL_STATIONS)
-                    .dieselPro(new BigDecimal(matcher.group(DIESEL_PRO)))
+                    .dieselPro(createPriceFromString(matcher.group(DIESEL_PRO)))
                     .dieselProBestPriceAddress(PRICE_FOR_ALL_STATIONS)
                     .build();
         }
+
+        NestePriceEntity nestePriceEntity = NestePriceEntity.builder()
+                .petrol(petrolPrice.getPetrol())
+                .petrolBestPriceAddress(petrolPrice.getPetrolBestPriceAddress())
+                .petrolPro(petrolPrice.getPetrolPro())
+                .petrolProBestPriceAddress(petrolPrice.getPetrolProBestPriceAddress())
+                .diesel(petrolPrice.getDiesel())
+                .dieselBestPriceAddress(petrolPrice.getDieselBestPriceAddress())
+                .dieselPro(petrolPrice.getDieselPro())
+                .dieselProBestPriceAddress(petrolPrice.getDieselProBestPriceAddress())
+                .build();
+
+        nestePriceRepository.save(nestePriceEntity);
         return petrolPrice;
     }
 }
