@@ -1,6 +1,7 @@
 package bpp;
 
 import bpp.infrastructure.CircleWebClient;
+import bpp.infrastructure.GotikaWebClient;
 import bpp.infrastructure.NesteWebClient;
 import bpp.model.PetrolPrice;
 import org.springframework.boot.SpringApplication;
@@ -17,6 +18,9 @@ public class LocalBppApplication {
 
         CircleWebClient circleWebClient = context.getBean(CircleWebClient.class);
         PetrolPrice circlePetrolPrice = circleWebClient.getContent();
+
+        GotikaWebClient gotikaWebClient = context.getBean(GotikaWebClient.class);
+        PetrolPrice gotikaPetrolPrice = gotikaWebClient.getContent();
 
         System.out.println();
     }
