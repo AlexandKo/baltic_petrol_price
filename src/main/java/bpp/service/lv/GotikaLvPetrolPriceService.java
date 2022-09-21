@@ -1,11 +1,11 @@
 package bpp.service.lv;
 
-import bpp.entity.NestePriceEntity;
+import bpp.entity.GotikaPriceEntity;
 import bpp.infrastructure.ContentWebClient;
-import bpp.infrastructure.lv.NesteContentWebClient;
-import bpp.mapper.NestePriceMapper;
+import bpp.infrastructure.lv.GotikaContentWebClient;
+import bpp.mapper.GotikaPriceMapper;
 import bpp.model.PetrolPriceModel;
-import bpp.repository.NestePriceRepository;
+import bpp.repository.GotikaPriceRepository;
 import bpp.service.LvPetrolPriceService;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -19,22 +19,22 @@ import static bpp.util.Messages.NEW_RECORD_INFO;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class NesteLvPetrolPriceService implements LvPetrolPriceService {
+public class GotikaLvPetrolPriceService implements LvPetrolPriceService {
     private final List<ContentWebClient> contentWebClients;
-    private final NestePriceRepository nestePriceRepository;
+    private final GotikaPriceRepository gotikaPriceRepository;
 
     @Override
     public void savePetrolPrice() {
         PetrolPriceModel nestePetrolPriceModel = contentWebClients
                 .stream()
-                .filter(NesteContentWebClient.class::isInstance)
+                .filter(GotikaContentWebClient.class::isInstance)
                 .map(ContentWebClient::getContent).findFirst()
                 .orElse(null);
 
         if (nestePetrolPriceModel != null) {
-            NestePriceEntity nestePriceEntity = NestePriceMapper.toNestePriceEntity(nestePetrolPriceModel);
-            nestePriceRepository.save(nestePriceEntity);
-            log.info(String.format(NEW_RECORD_INFO, "Neste", nestePriceEntity.getCountry()));
+            GotikaPriceEntity gotikaPriceEntity = GotikaPriceMapper.toGotikaPriceEntity(nestePetrolPriceModel);
+            gotikaPriceRepository.save(gotikaPriceEntity);
+            log.info(String.format(NEW_RECORD_INFO, "Gotika", gotikaPriceEntity.getCountry()));
         }
     }
 }
