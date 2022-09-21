@@ -16,6 +16,8 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+server:
+  port: 9000
 bpp:
   cron: 0 0 10 * * ?
 neste:
