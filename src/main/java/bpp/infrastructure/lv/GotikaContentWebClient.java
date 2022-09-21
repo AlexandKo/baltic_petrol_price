@@ -1,8 +1,9 @@
 package bpp.infrastructure.lv;
 
-import bpp.infrastructure.WebClient;
+import bpp.infrastructure.ContentWebClient;
 import bpp.model.PetrolPriceModel;
 import bpp.model.WebPageResponseModel;
+import bpp.util.Country;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
@@ -15,7 +16,7 @@ import static bpp.util.PetrolNames.DIESEL;
 import static bpp.util.PetrolNames.PETROL;
 
 @Component
-class GotikaWebClient extends WebClient {
+public class GotikaContentWebClient extends ContentWebClient {
     private static final String GOTIKA_SEARCH_PRICE_PATTERN = "" +
             "(?<petrol95>\\d.?\\d{3})(.*\\n)(.*\\n)" +
             "(?<diesel>\\d.?\\d{3})";
@@ -42,6 +43,7 @@ class GotikaWebClient extends WebClient {
         while (matcher.find()) {
             petrolPriceModel = PetrolPriceModel.builder()
                     .id(gotikaWebContent.getId())
+                    .country(Country.LV)
                     .petrol(createPriceFromString(matcher.group(PETROL)))
                     .petrolBestPriceAddress(PRICE_FOR_ALL_STATIONS)
                     .diesel(createPriceFromString(matcher.group(DIESEL)))

@@ -13,7 +13,7 @@ import static bpp.util.MessageCodes.WEB_CLIENT_CONNECTION_FAILED;
 import static bpp.util.MessageCodes.WEB_CLIENT_CONNECTION_SUCCESSFULLY;
 import static bpp.util.Messages.CONNECTION_ERROR;
 
-public abstract class WebClient {
+public abstract class ContentWebClient {
     private com.gargoylesoftware.htmlunit.WebClient petrolWebClient;
 
     @PostConstruct

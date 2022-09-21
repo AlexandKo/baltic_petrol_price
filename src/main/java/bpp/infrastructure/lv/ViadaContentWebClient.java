@@ -1,8 +1,9 @@
 package bpp.infrastructure.lv;
 
-import bpp.infrastructure.WebClient;
+import bpp.infrastructure.ContentWebClient;
 import bpp.model.PetrolPriceModel;
 import bpp.model.WebPageResponseModel;
+import bpp.util.Country;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
@@ -28,7 +29,7 @@ import static bpp.util.PetrolNames.PETROL_PRO;
 import static bpp.util.PetrolNames.PETROL_PRO_BEST_PRICE_ADDRESS;
 
 @Component
-class ViadaWebClient extends WebClient {
+public class ViadaContentWebClient extends ContentWebClient {
     private static final String FULL_LINE_WITH_TAB_CHAR_PATTERN = "( .*\\t)";
     private static final String NEW_LINE_AND_TAB_CHARS_PATTERN = "(\\n\\t)";
     private static final String ANY_CHARS_PATTERN = "(.*)";
@@ -71,6 +72,7 @@ class ViadaWebClient extends WebClient {
         while (matcher.find()) {
             petrolPriceModel = PetrolPriceModel.builder()
                     .id(viadaWebContent.getId())
+                    .country(Country.LV)
                     .petrolEcto(createPriceFromString(matcher.group(PETROL_ECTO)))
                     .petrolEctoBestPriceAddress(matcher.group(PETROL_ECTO_BEST_PRICE_ADDRESS))
                     .petrolEctoPlus(createPriceFromString(matcher.group(PETROL_ECTO_PLUS)))

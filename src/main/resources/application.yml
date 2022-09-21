@@ -1,13 +1,3 @@
-neste:
-  lv_price_link: http://www.neste.lv/lv/content/degvielas-cenas
-circleK:
-  lv_price_link: https://www.circlek.lv/priv%C4%81tperson%C4%81m/degvielas-cenas
-gotikaAuto:
-  lv_price_link: https://www.gotikaauto.lv/
-viada:
-  lv_price_link: http://www.viada.lv/zemakas-degvielas-cenas/
-virsi:
-  lv_price_link: https://www.virsi.lv/lv/degvielas-cena
 spring:
   datasource:
     platform: postgres
@@ -26,3 +16,16 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+bpp:
+  cron: 0 0 10 * * ?
+neste:
+  lv_price_link: http://www.neste.lv/lv/content/degvielas-cenas
+circleK:
+  lv_price_link: https://www.circlek.lv/priv%C4%81tperson%C4%81m/degvielas-cenas
+gotikaAuto:
+  lv_price_link: https://www.gotikaauto.lv/
+viada:
+  lv_price_link: http://www.viada.lv/zemakas-degvielas-cenas/
+virsi:
+  lv_price_link: https://www.virsi.lv/lv/degvielas-cena
+

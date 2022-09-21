@@ -1,10 +1,8 @@
 package bpp.infrastructure.lv;
 
-import bpp.entity.NestePriceEntity;
-import bpp.infrastructure.WebClient;
+import bpp.infrastructure.ContentWebClient;
 import bpp.model.PetrolPriceModel;
 import bpp.model.WebPageResponseModel;
-import bpp.repository.NestePriceRepository;
 import bpp.util.Country;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,8 +20,7 @@ import static bpp.util.PetrolNames.PETROL_PRO;
 
 @Component
 @RequiredArgsConstructor
-class NesteWebClient extends WebClient {
-    private final NestePriceRepository nestePriceRepository;
+public class NesteContentWebClient extends ContentWebClient {
     private static final String NESTE_SEARCH_PRICE_PATTERN = "" +
             "(?<petrol95>\\d.?\\d{3})(\\n\\t.*\\n.*\\n\\t)" +
             "(?<petrol98>\\d.?\\d{3})(\\n\\t.*\\n.*\\n\\t)" +
@@ -63,21 +60,6 @@ class NesteWebClient extends WebClient {
                     .dieselProBestPriceAddress(PRICE_FOR_ALL_STATIONS)
                     .build();
         }
-
-        NestePriceEntity nestePriceEntity = NestePriceEntity.builder()
-                .country(petrolPriceModel.getCountry())
-                .petrol(petrolPriceModel.getPetrol())
-                .petrolBestPriceAddress(petrolPriceModel.getPetrolBestPriceAddress())
-                .petrolPro(petrolPriceModel.getPetrolPro())
-                .petrolProBestPriceAddress(petrolPriceModel.getPetrolProBestPriceAddress())
-                .diesel(petrolPriceModel.getDiesel())
-                .dieselBestPriceAddress(petrolPriceModel.getDieselBestPriceAddress())
-                .dieselPro(petrolPriceModel.getDieselPro())
-                .dieselProBestPriceAddress(petrolPriceModel.getDieselProBestPriceAddress())
-                .build();
-
-        nestePriceRepository.save(nestePriceEntity);
-        System.out.println("Neste go");
         return petrolPriceModel;
     }
 }
