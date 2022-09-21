@@ -16,7 +16,7 @@ public class RestConfiguration implements WebMvcConfigurer {
             public void addCorsMappings(@NonNull final CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowCredentials(true)
-                        .allowedOrigins("*")
+                        .allowedOriginPatterns("*")
                         .allowedMethods("*")
                         .allowedHeaders("*");
             }
