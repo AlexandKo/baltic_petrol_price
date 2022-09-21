@@ -15,7 +15,7 @@ import static bpp.util.PetrolNames.DIESEL;
 import static bpp.util.PetrolNames.PETROL;
 
 @Component
-public class GotikaWebClient extends WebClient {
+class GotikaWebClient extends WebClient {
     private static final String GOTIKA_SEARCH_PRICE_PATTERN = "" +
             "(?<petrol95>\\d.?\\d{3})(.*\\n)(.*\\n)" +
             "(?<diesel>\\d.?\\d{3})";

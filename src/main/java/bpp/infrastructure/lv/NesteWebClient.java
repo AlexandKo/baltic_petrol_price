@@ -22,7 +22,7 @@ import static bpp.util.PetrolNames.PETROL_PRO;
 
 @Component
 @RequiredArgsConstructor
-public class NesteWebClient extends WebClient {
+class NesteWebClient extends WebClient {
     private final NestePriceRepository nestePriceRepository;
     private static final String NESTE_SEARCH_PRICE_PATTERN = "" +
             "(?<petrol95>\\d.?\\d{3})(\\n\\t.*\\n.*\\n\\t)" +

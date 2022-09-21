@@ -23,7 +23,7 @@ import static bpp.util.PetrolNames.PETROL_PRO;
 import static bpp.util.PetrolNames.PETROL_PRO_BEST_PRICE_ADDRESS;
 
 @Component
-public class CircleWebClient extends WebClient {
+class CircleWebClient extends WebClient {
     private static final String FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN = "(.*\\n)";
     private static final String CIRCLEK_SEARCH_PRICE_PATTERN = "" +
             "(?<petrol95>\\d.?\\d{3})" + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN +

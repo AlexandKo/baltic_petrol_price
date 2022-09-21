@@ -28,7 +28,7 @@ import static bpp.util.PetrolNames.PETROL_PRO;
 import static bpp.util.PetrolNames.PETROL_PRO_BEST_PRICE_ADDRESS;
 
 @Component
-public class ViadaWebClient extends WebClient {
+class ViadaWebClient extends WebClient {
     private static final String FULL_LINE_WITH_TAB_CHAR_PATTERN = "( .*\\t)";
     private static final String NEW_LINE_AND_TAB_CHARS_PATTERN = "(\\n\\t)";
     private static final String ANY_CHARS_PATTERN = "(.*)";

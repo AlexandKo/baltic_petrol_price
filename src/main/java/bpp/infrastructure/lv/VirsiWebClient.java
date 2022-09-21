@@ -22,7 +22,7 @@ import static bpp.util.PetrolNames.PETROL_PRO;
 import static bpp.util.PetrolNames.PETROL_PRO_BEST_PRICE_ADDRESS;
 
 @Component
-public class VirsiWebClient extends WebClient {
+class VirsiWebClient extends WebClient {
     private static final String VIRSI_SEARCH_PRICE_PATTERN = "" +
             "(?<diesel>\\d.?\\d{3})(\\n)" +
             "(?<dieselBestPriceAddress>.*)(\\n.*\\n)" +
