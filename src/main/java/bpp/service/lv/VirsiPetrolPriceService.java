@@ -1,15 +1,12 @@
 package bpp.service.lv;
 
-import bpp.entity.NestePriceEntity;
 import bpp.entity.VirsiPriceEntity;
 import bpp.infrastructure.ContentWebClient;
-import bpp.infrastructure.lv.NesteContentWebClient;
 import bpp.infrastructure.lv.VirsiContentWebClient;
-import bpp.mapper.NestePriceMapper;
 import bpp.mapper.VirsiPriceMapper;
 import bpp.model.PetrolPriceModel;
 import bpp.repository.VirsiPriceRepository;
-import bpp.service.LvPetrolPriceService;
+import bpp.service.PetrolPriceService;
 import java.util.List;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +19,7 @@ import static bpp.util.Messages.NEW_RECORD_INFO;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class VirsiLvPetrolPriceService implements LvPetrolPriceService {
+public class VirsiPetrolPriceService implements PetrolPriceService {
     private final List<ContentWebClient> contentWebClients;
     private final VirsiPriceRepository virsiPriceRepository;
 

@@ -6,7 +6,7 @@ import bpp.infrastructure.lv.GotikaContentWebClient;
 import bpp.mapper.GotikaPriceMapper;
 import bpp.model.PetrolPriceModel;
 import bpp.repository.GotikaPriceRepository;
-import bpp.service.LvPetrolPriceService;
+import bpp.service.PetrolPriceService;
 import java.util.List;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import static bpp.util.Messages.NEW_RECORD_INFO;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class GotikaLvPetrolPriceService implements LvPetrolPriceService {
+public class GotikaPetrolPriceService implements PetrolPriceService {
     private final List<ContentWebClient> contentWebClients;
     private final GotikaPriceRepository gotikaPriceRepository;
 

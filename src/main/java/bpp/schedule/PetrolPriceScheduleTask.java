@@ -1,6 +1,6 @@
 package bpp.schedule;
 
-import bpp.service.LvPetrolPriceService;
+import bpp.service.PetrolPriceService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 @EnableScheduling
 @RequiredArgsConstructor
 public class PetrolPriceScheduleTask {
-    private final List<LvPetrolPriceService> lvPetrolPriceServiceList;
+    private final List<PetrolPriceService> petrolPriceServiceList;
 
     @Async
     @Scheduled(cron = "1 * * * * ?")
     public void scheduleTask() {
-        lvPetrolPriceServiceList.forEach(LvPetrolPriceService::savePetrolPrice);
+        petrolPriceServiceList.forEach(PetrolPriceService::savePetrolPrice);
     }
 }

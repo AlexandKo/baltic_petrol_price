@@ -1,5 +1,5 @@
 package bpp.service;
 
-public interface LvPetrolPriceService {
+public interface PetrolPriceService {
     void savePetrolPrice();
 }

@@ -6,7 +6,7 @@ import bpp.infrastructure.lv.NesteContentWebClient;
 import bpp.mapper.NestePriceMapper;
 import bpp.model.PetrolPriceModel;
 import bpp.repository.NestePriceRepository;
-import bpp.service.LvPetrolPriceService;
+import bpp.service.PetrolPriceService;
 import java.util.List;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import static bpp.util.Messages.NEW_RECORD_INFO;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class NesteLvPetrolPriceService implements LvPetrolPriceService {
+public class NestePetrolPriceService implements PetrolPriceService {
     private final List<ContentWebClient> contentWebClients;
     private final NestePriceRepository nestePriceRepository;
 
