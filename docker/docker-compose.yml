@@ -10,4 +10,4 @@ services:
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "password"
-      POSTGRES_DB: "petrol_station"
+      POSTGRES_DB: "petrol_price"

@@ -2,7 +2,7 @@ spring:
   datasource:
     platform: postgres
     continue-on-error: false
-    url: jdbc:postgresql://localhost:5436/petrol_station
+    url: jdbc:postgresql://localhost:5436/petrol_price
     username: postgres
     password: password
     driver-class-name: org.postgresql.Driver
