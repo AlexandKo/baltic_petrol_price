@@ -70,3 +70,26 @@ CREATE TABLE IF NOT EXISTS petrol_station.circle
     gas_best_price_address        TEXT
 );
 
+CREATE TABLE IF NOT EXISTS petrol_station.viada
+(
+    id                                  UUID      NOT NULL PRIMARY KEY,
+    created_date                        TIMESTAMP NOT NULL,
+    updated_date                        TIMESTAMP NOT NULL,
+    entity_version                      BIGINT    NOT NULL,
+    country                             VARCHAR(2),
+    petrol_ecto                         VARCHAR(10),
+    petrol_ecto_best_price_address      TEXT,
+    petrol_ecto_plus                    VARCHAR(10),
+    petrol_ecto_plus_best_price_address TEXT,
+    petrol_pro                          VARCHAR(10),
+    petrol_pro_best_price_address       TEXT,
+    diesel                              VARCHAR(10),
+    diesel_best_price_address           TEXT,
+    diesel_ecto                         VARCHAR(10),
+    diesel_ecto_best_price_address      TEXT,
+    gas                                 VARCHAR(10),
+    gas_best_price_address              TEXT,
+    petrol_eco                          VARCHAR(10),
+    petrol_eco_best_price_address       TEXT
+);
+
