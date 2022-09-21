@@ -6,8 +6,8 @@ import bpp.infrastructure.lv.NesteContentWebClient;
 import bpp.infrastructure.lv.ViadaContentWebClient;
 import bpp.infrastructure.lv.VirsiContentWebClient;
 import bpp.model.PetrolPriceModel;
-import javax.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,47 +23,43 @@ public class LvPetrolController {
     private final VirsiContentWebClient virsiContentWebClient;
 
     @GetMapping("/neste")
-    public Response getNestePrice() {
+    public ResponseEntity<PetrolPriceModel> getNestePrice() {
         PetrolPriceModel petrolPriceModel = nesteContentWebClient.getContent();
 
-        return Response.ok()
-                .entity(petrolPriceModel)
-                .build();
+        return ResponseEntity
+                .ok()
+                .body(petrolPriceModel);
     }
 
     @GetMapping("/circlek")
-    public Response getCirclePrice() {
+    public ResponseEntity<PetrolPriceModel> getCirclePrice() {
         PetrolPriceModel petrolPriceModel = circleContentWebClient.getContent();
 
-        return Response.ok()
-                .entity(petrolPriceModel)
-                .build();
+        return ResponseEntity.ok()
+                .body(petrolPriceModel);
     }
 
     @GetMapping("/gotika")
-    public Response getGotikaPrice() {
+    public ResponseEntity<PetrolPriceModel> getGotikaPrice() {
         PetrolPriceModel petrolPriceModel = gotikaContentWebClient.getContent();
 
-        return Response.ok()
-                .entity(petrolPriceModel)
-                .build();
+        return ResponseEntity.ok()
+                .body(petrolPriceModel);
     }
 
     @GetMapping("/viada")
-    public Response getViadaPrice() {
+    public ResponseEntity<PetrolPriceModel> getViadaPrice() {
         PetrolPriceModel petrolPriceModel = viadaContentWebClient.getContent();
 
-        return Response.ok()
-                .entity(petrolPriceModel)
-                .build();
+        return ResponseEntity.ok()
+                .body(petrolPriceModel);
     }
 
     @GetMapping("/virsi")
-    public Response getVirsiPrice() {
+    public ResponseEntity<PetrolPriceModel> getVirsiPrice() {
         PetrolPriceModel petrolPriceModel = virsiContentWebClient.getContent();
 
-        return Response.ok()
-                .entity(petrolPriceModel)
-                .build();
+        return ResponseEntity.ok()
+                .body(petrolPriceModel);
     }
 }
