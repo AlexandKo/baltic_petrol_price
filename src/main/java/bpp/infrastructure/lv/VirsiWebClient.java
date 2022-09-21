@@ -1,7 +1,8 @@
-package bpp.infrastructure;
+package bpp.infrastructure.lv;
 
-import bpp.model.PetrolPrice;
-import bpp.model.WebPageResponse;
+import bpp.infrastructure.WebClient;
+import bpp.model.PetrolPriceModel;
+import bpp.model.WebPageResponseModel;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
@@ -31,7 +32,7 @@ public class VirsiWebClient extends WebClient {
             "(?<petrol98BestPriceAddress>.*)(\\n.*\\n)(\\d.?\\d{3})(\\n)(.*)(\\n.*\\n)" +
             "(?<gas>\\d.?\\d{3})(\\n)" +
             "(?<gasBestPriceAddress>.*)";
-    @Value("${virsi.price_link}")
+    @Value("${virsi.lv_price_link}")
     private String virsiPriceLink;
     private Pattern pattern;
 
@@ -41,9 +42,9 @@ public class VirsiWebClient extends WebClient {
     }
 
     @Override
-    public PetrolPrice getContent() {
-        PetrolPrice petrolPrice = null;
-        WebPageResponse virsiWebContent = getWebContent(virsiPriceLink);
+    public PetrolPriceModel getContent() {
+        PetrolPriceModel petrolPriceModel = null;
+        WebPageResponseModel virsiWebContent = getWebContent(virsiPriceLink);
 
         if (virsiWebContent.getId() == WEB_CLIENT_CONNECTION_FAILED) {
             return createFailedPetrolPrice(virsiWebContent.getId(), virsiWebContent.getContent());
@@ -52,7 +53,7 @@ public class VirsiWebClient extends WebClient {
         final Matcher matcher = pattern.matcher(virsiWebContent.getContent());
 
         while (matcher.find()) {
-            petrolPrice = PetrolPrice.builder()
+            petrolPriceModel = PetrolPriceModel.builder()
                     .id(virsiWebContent.getId())
                     .petrol(createPriceFromString(matcher.group(PETROL)))
                     .petrolBestPriceAddress(setDescription(matcher.group(PETROL_BEST_PRICE_ADDRESS)))
@@ -64,7 +65,7 @@ public class VirsiWebClient extends WebClient {
                     .gasProBestPriceAddress(setDescription(matcher.group(GAS_BEST_PRICE_ADDRESS)))
                     .build();
         }
-        return petrolPrice;
+        return petrolPriceModel;
     }
 
     private String setDescription(String bestPriceAddress) {

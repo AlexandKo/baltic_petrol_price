@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class WebPageResponse {
+public class WebPageResponseModel {
     private int id;
     private String content;
 }

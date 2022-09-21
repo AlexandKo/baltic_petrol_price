@@ -1,7 +1,8 @@
-package bpp.infrastructure;
+package bpp.infrastructure.lv;
 
-import bpp.model.PetrolPrice;
-import bpp.model.WebPageResponse;
+import bpp.infrastructure.WebClient;
+import bpp.model.PetrolPriceModel;
+import bpp.model.WebPageResponseModel;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
@@ -47,7 +48,7 @@ public class ViadaWebClient extends WebClient {
             "(?<gasBestPriceAddress>" + ANY_CHARS_PATTERN + ")" + NEW_LINE_AND_TAB_CHARS_PATTERN +
             "(?<petrol85>\\d.?\\d{3})" + FULL_LINE_WITH_TAB_CHAR_PATTERN +
             "(?<petrolEBestPriceAddress>" + ANY_CHARS_PATTERN + ")";
-    @Value("${viada.price_link}")
+    @Value("${viada.lv_price_link}")
     private String viadaPriceLink;
     private Pattern pattern;
 
@@ -57,9 +58,9 @@ public class ViadaWebClient extends WebClient {
     }
 
     @Override
-    public PetrolPrice getContent() {
-        PetrolPrice petrolPrice = null;
-        WebPageResponse viadaWebContent = getWebContent(viadaPriceLink);
+    public PetrolPriceModel getContent() {
+        PetrolPriceModel petrolPriceModel = null;
+        WebPageResponseModel viadaWebContent = getWebContent(viadaPriceLink);
 
         if (viadaWebContent.getId() == WEB_CLIENT_CONNECTION_FAILED) {
             return createFailedPetrolPrice(viadaWebContent.getId(), viadaWebContent.getContent());
@@ -68,7 +69,7 @@ public class ViadaWebClient extends WebClient {
         final Matcher matcher = pattern.matcher(viadaWebContent.getContent());
 
         while (matcher.find()) {
-            petrolPrice = PetrolPrice.builder()
+            petrolPriceModel = PetrolPriceModel.builder()
                     .id(viadaWebContent.getId())
                     .petrolEcto(createPriceFromString(matcher.group(PETROL_ECTO)))
                     .petrolEctoBestPriceAddress(matcher.group(PETROL_ECTO_BEST_PRICE_ADDRESS))
@@ -86,7 +87,7 @@ public class ViadaWebClient extends WebClient {
                     .petrolEBestPriceAddress(matcher.group(PETROL_E_BEST_PRICE_ADDRESS))
                     .build();
         }
-        return petrolPrice;
+        return petrolPriceModel;
     }
 
     private String setDescription(String bestPriceAddress) {

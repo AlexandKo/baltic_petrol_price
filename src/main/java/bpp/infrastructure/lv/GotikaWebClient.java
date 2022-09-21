@@ -1,7 +1,8 @@
-package bpp.infrastructure;
+package bpp.infrastructure.lv;
 
-import bpp.model.PetrolPrice;
-import bpp.model.WebPageResponse;
+import bpp.infrastructure.WebClient;
+import bpp.model.PetrolPriceModel;
+import bpp.model.WebPageResponseModel;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
@@ -18,7 +19,7 @@ public class GotikaWebClient extends WebClient {
     private static final String GOTIKA_SEARCH_PRICE_PATTERN = "" +
             "(?<petrol95>\\d.?\\d{3})(.*\\n)(.*\\n)" +
             "(?<diesel>\\d.?\\d{3})";
-    @Value("${gotikaAuto.price_link}")
+    @Value("${gotikaAuto.lv_price_link}")
     private String gotikaPriceLink;
     private Pattern pattern;
 
@@ -28,9 +29,9 @@ public class GotikaWebClient extends WebClient {
     }
 
     @Override
-    public PetrolPrice getContent() {
-        PetrolPrice petrolPrice = null;
-        WebPageResponse gotikaWebContent = getWebContent(gotikaPriceLink);
+    public PetrolPriceModel getContent() {
+        PetrolPriceModel petrolPriceModel = null;
+        WebPageResponseModel gotikaWebContent = getWebContent(gotikaPriceLink);
 
         if (gotikaWebContent.getId() == WEB_CLIENT_CONNECTION_FAILED) {
             return createFailedPetrolPrice(gotikaWebContent.getId(), gotikaWebContent.getContent());
@@ -39,7 +40,7 @@ public class GotikaWebClient extends WebClient {
         final Matcher matcher = pattern.matcher(gotikaWebContent.getContent());
 
         while (matcher.find()) {
-            petrolPrice = PetrolPrice.builder()
+            petrolPriceModel = PetrolPriceModel.builder()
                     .id(gotikaWebContent.getId())
                     .petrol(createPriceFromString(matcher.group(PETROL)))
                     .petrolBestPriceAddress(PRICE_FOR_ALL_STATIONS)
@@ -47,6 +48,6 @@ public class GotikaWebClient extends WebClient {
                     .dieselBestPriceAddress(PRICE_FOR_ALL_STATIONS)
                     .build();
         }
-        return petrolPrice;
+        return petrolPriceModel;
     }
 }

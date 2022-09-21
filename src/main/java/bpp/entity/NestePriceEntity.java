@@ -1,10 +1,13 @@
 package bpp.entity;
 
+import bpp.util.Country;
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,21 +30,24 @@ public class NestePriceEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
     @Column(length = 36, nullable = false, updatable = false)
     private UUID id;
-    @Column
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
+    private Country country;
+    @Column(nullable = false)
     private BigDecimal petrol;
-    @Column
+    @Column(nullable = false)
     private String petrolBestPriceAddress;
-    @Column
+    @Column(nullable = false)
     private BigDecimal petrolPro;
-    @Column
+    @Column(nullable = false)
     private String petrolProBestPriceAddress;
-    @Column
+    @Column(nullable = false)
     private BigDecimal diesel;
-    @Column
+    @Column(nullable = false)
     private String dieselBestPriceAddress;
-    @Column
+    @Column(nullable = false)
     private BigDecimal dieselPro;
-    @Column
+    @Column(nullable = false)
     private String dieselProBestPriceAddress;
 
     @Override

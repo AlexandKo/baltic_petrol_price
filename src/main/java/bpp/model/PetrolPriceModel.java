@@ -1,13 +1,15 @@
 package bpp.model;
 
+import bpp.util.Country;
 import java.math.BigDecimal;
 import lombok.Builder;
 import lombok.Getter;
 
 @Builder
 @Getter
-public class PetrolPrice {
+public class PetrolPriceModel {
     private int id;
+    private Country country;
     private BigDecimal petrol;
     private BigDecimal petrolEcto;
     private BigDecimal petrolEctoPlus;

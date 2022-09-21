@@ -1,7 +1,8 @@
-package bpp.infrastructure;
+package bpp.infrastructure.lv;
 
-import bpp.model.PetrolPrice;
-import bpp.model.WebPageResponse;
+import bpp.infrastructure.WebClient;
+import bpp.model.PetrolPriceModel;
+import bpp.model.WebPageResponseModel;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
@@ -35,7 +36,7 @@ public class CircleWebClient extends WebClient {
             "(?<dieselProBestPriceAddress>.*)(\\n.*ze\\t)" +
             "(?<gas>\\d.?\\d{3})( EUR\\t)" +
             "(?<gasBestPriceAddress>.*)";
-    @Value("${circleK.price_link}")
+    @Value("${circleK.lv_price_link}")
     private String circlePriceLink;
     private Pattern pattern;
 
@@ -45,9 +46,9 @@ public class CircleWebClient extends WebClient {
     }
 
     @Override
-    public PetrolPrice getContent() {
-        PetrolPrice petrolPrice = null;
-        WebPageResponse circleWebContent = getWebContent(circlePriceLink);
+    public PetrolPriceModel getContent() {
+        PetrolPriceModel petrolPriceModel = null;
+        WebPageResponseModel circleWebContent = getWebContent(circlePriceLink);
 
         if (circleWebContent.getId() == WEB_CLIENT_CONNECTION_FAILED) {
             return createFailedPetrolPrice(circleWebContent.getId(), circleWebContent.getContent());
@@ -56,7 +57,7 @@ public class CircleWebClient extends WebClient {
         final Matcher matcher = pattern.matcher(circleWebContent.getContent());
 
         while (matcher.find()) {
-            petrolPrice = PetrolPrice.builder()
+            petrolPriceModel = PetrolPriceModel.builder()
                     .id(circleWebContent.getId())
                     .petrol(createPriceFromString(matcher.group(PETROL)))
                     .petrolBestPriceAddress(setDescription(matcher.group(PETROL_BEST_PRICE_ADDRESS)))
@@ -70,7 +71,7 @@ public class CircleWebClient extends WebClient {
                     .gasProBestPriceAddress(setDescription(matcher.group(GAS_BEST_PRICE_ADDRESS)))
                     .build();
         }
-        return petrolPrice;
+        return petrolPriceModel;
     }
 
     private String setDescription(String bestPriceAddress) {

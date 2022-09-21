@@ -1,7 +1,7 @@
 package bpp.infrastructure;
 
-import bpp.model.PetrolPrice;
-import bpp.model.WebPageResponse;
+import bpp.model.PetrolPriceModel;
+import bpp.model.WebPageResponseModel;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import static bpp.util.MessageCodes.WEB_CLIENT_CONNECTION_FAILED;
 import static bpp.util.MessageCodes.WEB_CLIENT_CONNECTION_SUCCESSFULLY;
 import static bpp.util.Messages.CONNECTION_ERROR;
 
-abstract class WebClient {
+public abstract class WebClient {
     private com.gargoylesoftware.htmlunit.WebClient petrolWebClient;
 
     @PostConstruct
@@ -27,24 +27,24 @@ abstract class WebClient {
         petrolWebClient.getOptions().setUseInsecureSSL(true);
     }
 
-    protected WebPageResponse getWebContent(String url) {
+    protected WebPageResponseModel getWebContent(String url) {
         HtmlPage htmlPage;
         try {
             htmlPage = petrolWebClient.getPage(url);
-            return WebPageResponse.builder()
+            return WebPageResponseModel.builder()
                     .id(WEB_CLIENT_CONNECTION_SUCCESSFULLY)
                     .content(htmlPage.asNormalizedText())
                     .build();
         } catch (IOException e) {
-            return WebPageResponse.builder()
+            return WebPageResponseModel.builder()
                     .id(WEB_CLIENT_CONNECTION_FAILED)
                     .content(String.format(CONNECTION_ERROR, url))
                     .build();
         }
     }
 
-    protected PetrolPrice createFailedPetrolPrice(int id, String message) {
-        return PetrolPrice.builder()
+    protected PetrolPriceModel createFailedPetrolPrice(int id, String message) {
+        return PetrolPriceModel.builder()
                 .id(id)
                 .errorMessage(message)
                 .build();
@@ -57,5 +57,5 @@ abstract class WebClient {
         return new BigDecimal(price).divide(new BigDecimal("1000"),3, RoundingMode.DOWN);
     }
 
-    public abstract PetrolPrice getContent();
+    public abstract PetrolPriceModel getContent();
 }
