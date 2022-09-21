@@ -9,7 +9,7 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import static bpp.util.CodeErrors.WEB_CLIENT_CONNECTION_FAILED;
+import static bpp.util.MessageCodes.WEB_CLIENT_CONNECTION_FAILED;
 import static bpp.util.Messages.PRICE_FOR_ALL_STATIONS;
 import static bpp.util.PetrolNames.DIESEL;
 import static bpp.util.PetrolNames.DIESEL_BEST_PRICE_ADDRESS;

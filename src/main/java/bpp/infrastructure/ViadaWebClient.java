@@ -9,7 +9,7 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import static bpp.util.CodeErrors.WEB_CLIENT_CONNECTION_FAILED;
+import static bpp.util.MessageCodes.WEB_CLIENT_CONNECTION_FAILED;
 import static bpp.util.Messages.PRICE_FOR_ALL_STATIONS;
 import static bpp.util.PetrolNames.DIESEL;
 import static bpp.util.PetrolNames.DIESEL_BEST_PRICE_ADDRESS;
@@ -28,23 +28,25 @@ import static bpp.util.PetrolNames.PETROL_PRO_BEST_PRICE_ADDRESS;
 
 @Component
 public class ViadaWebClient extends WebClient {
-    private static final String FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN = "(.*\\n)";
+    private static final String FULL_LINE_WITH_TAB_CHAR_PATTERN = "( .*\\t)";
+    private static final String NEW_LINE_AND_TAB_CHARS_PATTERN = "(\\n\\t)";
+    private static final String ANY_CHARS_PATTERN = "(.*)";
     private static final String VIADA_SEARCH_PRICE_PATTERN = "" +
-            "(.*\\tCena EUR.*\\n)(\\t)" +
-            "(?<petrolEcto>\\d.?\\d{3})( .*\\t)" +
-            "(?<petrolEctoBestPriceAddress>.*)(\\n\\t)" +
-            "(?<petrolEctoPlus>\\d.?\\d{3})( .*\\t)" +
-            "(?<petrolEctoPlusBestPriceAddress>.*)(\\n\\t)" +
-            "(?<petrol98>\\d.?\\d{3})( .*\\t)" +
-            "(?<petrol98BestPriceAddress>.*)(\\n\\t)" +
-            "(?<diesel>\\d.?\\d{3})( .*\\t)" +
-            "(?<dieselBestPriceAddress>.*)(\\n\\t)" +
-            "(?<dieselEcto>\\d.?\\d{3})( .*\\t)" +
-            "(?<dieselEctoBestPriceAddress>.*)(\\n\\t)" +
-            "(?<gas>\\d.?\\d{3})( .*\\t)" +
-            "(?<gasBestPriceAddress>.*)(\\n\\t)" +
-            "(?<petrol85>\\d.?\\d{3})( .*\\t)" +
-            "(?<petrolEBestPriceAddress>.*)";
+            "(" + ANY_CHARS_PATTERN + "\\tCena EUR.*\\n)(\\t)" +
+            "(?<petrolEcto>\\d.?\\d{3})" + FULL_LINE_WITH_TAB_CHAR_PATTERN +
+            "(?<petrolEctoBestPriceAddress>" + ANY_CHARS_PATTERN + ")" + NEW_LINE_AND_TAB_CHARS_PATTERN +
+            "(?<petrolEctoPlus>\\d.?\\d{3})" + FULL_LINE_WITH_TAB_CHAR_PATTERN +
+            "(?<petrolEctoPlusBestPriceAddress>" + ANY_CHARS_PATTERN + ")" + NEW_LINE_AND_TAB_CHARS_PATTERN +
+            "(?<petrol98>\\d.?\\d{3})" + FULL_LINE_WITH_TAB_CHAR_PATTERN +
+            "(?<petrol98BestPriceAddress>" + ANY_CHARS_PATTERN + ")" + NEW_LINE_AND_TAB_CHARS_PATTERN +
+            "(?<diesel>\\d.?\\d{3})" + FULL_LINE_WITH_TAB_CHAR_PATTERN +
+            "(?<dieselBestPriceAddress>" + ANY_CHARS_PATTERN + ")" + NEW_LINE_AND_TAB_CHARS_PATTERN +
+            "(?<dieselEcto>\\d.?\\d{3})" + FULL_LINE_WITH_TAB_CHAR_PATTERN +
+            "(?<dieselEctoBestPriceAddress>" + ANY_CHARS_PATTERN + ")" + NEW_LINE_AND_TAB_CHARS_PATTERN +
+            "(?<gas>\\d.?\\d{3})" + FULL_LINE_WITH_TAB_CHAR_PATTERN +
+            "(?<gasBestPriceAddress>" + ANY_CHARS_PATTERN + ")" + NEW_LINE_AND_TAB_CHARS_PATTERN +
+            "(?<petrol85>\\d.?\\d{3})" + FULL_LINE_WITH_TAB_CHAR_PATTERN +
+            "(?<petrolEBestPriceAddress>" + ANY_CHARS_PATTERN + ")";
     @Value("${viada.price_link}")
     private String viadaPriceLink;
     private Pattern pattern;

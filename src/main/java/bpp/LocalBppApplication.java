@@ -17,8 +17,8 @@ public class LocalBppApplication {
     public static void main(String[] args) {
         //new SpringApplicationBuilder(LocalBppApplication.class).run(args);
         ConfigurableApplicationContext context = SpringApplication.run(LocalBppApplication.class, args);
-        NesteWebClient nesteWebClient = context.getBean(NesteWebClient.class);
-        PetrolPrice nestePetrolPrice = nesteWebClient.getContent();
+//        NesteWebClient nesteWebClient = context.getBean(NesteWebClient.class);
+//        PetrolPrice nestePetrolPrice = nesteWebClient.getContent();
 //
 //        CircleWebClient circleWebClient = context.getBean(CircleWebClient.class);
 //        PetrolPrice circlePetrolPrice = circleWebClient.getContent();
@@ -29,8 +29,8 @@ public class LocalBppApplication {
 //        VirsiWebClient virsiWebClient = context.getBean(VirsiWebClient.class);
 //        PetrolPrice virsiPetrolPrice = virsiWebClient.getContent();
 //
-//        ViadaWebClient viadaWebClient = context.getBean(ViadaWebClient.class);
-//        PetrolPrice viadaPetrolPrice = viadaWebClient.getContent();
+        ViadaWebClient viadaWebClient = context.getBean(ViadaWebClient.class);
+        PetrolPrice viadaPetrolPrice = viadaWebClient.getContent();
 
         System.out.println();
     }

@@ -9,8 +9,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import javax.annotation.PostConstruct;
 
-import static bpp.util.CodeErrors.WEB_CLIENT_CONNECTION_FAILED;
-import static bpp.util.CodeErrors.WEB_CLIENT_CONNECTION_SUCCESSFULLY;
+import static bpp.util.MessageCodes.WEB_CLIENT_CONNECTION_FAILED;
+import static bpp.util.MessageCodes.WEB_CLIENT_CONNECTION_SUCCESSFULLY;
 import static bpp.util.Messages.CONNECTION_ERROR;
 
 abstract class WebClient {
