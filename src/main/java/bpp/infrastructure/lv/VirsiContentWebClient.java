@@ -48,7 +48,7 @@ public class VirsiContentWebClient extends ContentWebClient {
         WebPageResponseModel virsiWebContent = getWebContent(virsiPriceLink);
 
         if (virsiWebContent.getId() == WEB_CLIENT_CONNECTION_FAILED) {
-            return createFailedPetrolPrice(virsiWebContent.getId(), virsiWebContent.getContent());
+            return createFailedPetrolPrice(virsiWebContent.getId(), Country.LV, virsiWebContent.getContent());
         }
 
         final Matcher matcher = pattern.matcher(virsiWebContent.getContent());

@@ -64,7 +64,7 @@ public class ViadaContentWebClient extends ContentWebClient {
         WebPageResponseModel viadaWebContent = getWebContent(viadaPriceLink);
 
         if (viadaWebContent.getId() == WEB_CLIENT_CONNECTION_FAILED) {
-            return createFailedPetrolPrice(viadaWebContent.getId(), viadaWebContent.getContent());
+            return createFailedPetrolPrice(viadaWebContent.getId(), Country.LV, viadaWebContent.getContent());
         }
 
         final Matcher matcher = pattern.matcher(viadaWebContent.getContent());

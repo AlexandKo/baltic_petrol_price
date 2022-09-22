@@ -1,6 +1,7 @@
 package bpp.mapper;
 
 import bpp.entity.NestePriceEntity;
+import bpp.model.NestePetrolPriceModel;
 import bpp.model.PetrolPriceModel;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,22 @@ public class NestePriceMapper {
                 .dieselBestPriceAddress(petrolPriceModel.getDieselBestPriceAddress())
                 .dieselPro(petrolPriceModel.getDieselPro())
                 .dieselProBestPriceAddress(petrolPriceModel.getDieselProBestPriceAddress())
+                .build();
+    }
+
+    public static NestePetrolPriceModel toNestePetrolPriceModel(PetrolPriceModel petrolPriceModel) {
+        return NestePetrolPriceModel.builder()
+                .id(petrolPriceModel.getId())
+                .country(petrolPriceModel.getCountry())
+                .petrol(petrolPriceModel.getPetrol())
+                .petrolBestPriceAddress(petrolPriceModel.getPetrolBestPriceAddress())
+                .petrolPro(petrolPriceModel.getPetrolPro())
+                .petrolProBestPriceAddress(petrolPriceModel.getPetrolProBestPriceAddress())
+                .diesel(petrolPriceModel.getDiesel())
+                .dieselBestPriceAddress(petrolPriceModel.getDieselBestPriceAddress())
+                .dieselPro(petrolPriceModel.getDieselPro())
+                .dieselProBestPriceAddress(petrolPriceModel.getDieselProBestPriceAddress())
+                .errorMessage(petrolPriceModel.getErrorMessage())
                 .build();
     }
 }

@@ -35,7 +35,7 @@ public class GotikaContentWebClient extends ContentWebClient {
         WebPageResponseModel gotikaWebContent = getWebContent(gotikaPriceLink);
 
         if (gotikaWebContent.getId() == WEB_CLIENT_CONNECTION_FAILED) {
-            return createFailedPetrolPrice(gotikaWebContent.getId(), gotikaWebContent.getContent());
+            return createFailedPetrolPrice(gotikaWebContent.getId(), Country.LV, gotikaWebContent.getContent());
         }
 
         final Matcher matcher = pattern.matcher(gotikaWebContent.getContent());

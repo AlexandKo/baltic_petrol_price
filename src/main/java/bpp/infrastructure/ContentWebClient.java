@@ -2,6 +2,7 @@ package bpp.infrastructure;
 
 import bpp.model.PetrolPriceModel;
 import bpp.model.WebPageResponseModel;
+import bpp.util.Country;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import java.io.IOException;
@@ -43,9 +44,10 @@ public abstract class ContentWebClient {
         }
     }
 
-    protected PetrolPriceModel createFailedPetrolPrice(int id, String message) {
+    protected PetrolPriceModel createFailedPetrolPrice(int id, Country country, String message) {
         return PetrolPriceModel.builder()
                 .id(id)
+                .country(country)
                 .errorMessage(message)
                 .build();
     }

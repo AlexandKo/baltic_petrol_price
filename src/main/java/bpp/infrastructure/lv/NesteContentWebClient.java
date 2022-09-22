@@ -41,7 +41,7 @@ public class NesteContentWebClient extends ContentWebClient {
         WebPageResponseModel nesteWebContent = getWebContent(nestePriceLink);
 
         if (nesteWebContent.getId() == WEB_CLIENT_CONNECTION_FAILED) {
-            return createFailedPetrolPrice(nesteWebContent.getId(), nesteWebContent.getContent());
+            return createFailedPetrolPrice(nesteWebContent.getId(), Country.LV, nesteWebContent.getContent());
         }
 
         final Matcher matcher = pattern.matcher(nesteWebContent.getContent());

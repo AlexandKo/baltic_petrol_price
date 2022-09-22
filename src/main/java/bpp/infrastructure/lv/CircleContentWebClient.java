@@ -52,7 +52,7 @@ public class CircleContentWebClient extends ContentWebClient {
         WebPageResponseModel circleWebContent = getWebContent(circlePriceLink);
 
         if (circleWebContent.getId() == WEB_CLIENT_CONNECTION_FAILED) {
-            return createFailedPetrolPrice(circleWebContent.getId(), circleWebContent.getContent());
+            return createFailedPetrolPrice(circleWebContent.getId(), Country.LV, circleWebContent.getContent());
         }
 
         final Matcher matcher = pattern.matcher(circleWebContent.getContent());
