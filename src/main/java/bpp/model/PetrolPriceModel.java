@@ -14,7 +14,7 @@ public class PetrolPriceModel {
     private BigDecimal petrolEcto;
     private BigDecimal petrolEctoPlus;
     private BigDecimal petrolPro;
-    private BigDecimal petrolE;
+    private BigDecimal petrolEco;
     private BigDecimal diesel;
     private BigDecimal dieselEcto;
     private BigDecimal dieselPro;
@@ -23,10 +23,10 @@ public class PetrolPriceModel {
     private String petrolEctoBestPriceAddress;
     private String petrolEctoPlusBestPriceAddress;
     private String petrolProBestPriceAddress;
-    private String petrolEBestPriceAddress;
+    private String petrolEcoBestPriceAddress;
     private String dieselBestPriceAddress;
     private String dieselEctoBestPriceAddress;
     private String dieselProBestPriceAddress;
-    private String gasProBestPriceAddress;
+    private String gasBestPriceAddress;
     private String errorMessage;
 }

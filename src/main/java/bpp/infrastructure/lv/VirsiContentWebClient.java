@@ -64,7 +64,7 @@ public class VirsiContentWebClient extends ContentWebClient {
                     .diesel(createPriceFromString(matcher.group(DIESEL)))
                     .dieselBestPriceAddress(setDescription(matcher.group(DIESEL_BEST_PRICE_ADDRESS)))
                     .gas(createPriceFromString(matcher.group(GAS)))
-                    .gasProBestPriceAddress(setDescription(matcher.group(GAS_BEST_PRICE_ADDRESS)))
+                    .gasBestPriceAddress(setDescription(matcher.group(GAS_BEST_PRICE_ADDRESS)))
                     .build();
         }
         return petrolPriceModel;

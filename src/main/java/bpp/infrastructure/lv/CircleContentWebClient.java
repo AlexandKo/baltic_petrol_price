@@ -70,7 +70,7 @@ public class CircleContentWebClient extends ContentWebClient {
                     .dieselPro(createPriceFromString(matcher.group(DIESEL_PRO)))
                     .dieselProBestPriceAddress(setDescription(matcher.group(DIESEL_PRO_BEST_PRICE_ADDRESS)))
                     .gas(createPriceFromString(matcher.group(GAS)))
-                    .gasProBestPriceAddress(setDescription(matcher.group(GAS_BEST_PRICE_ADDRESS)))
+                    .gasBestPriceAddress(setDescription(matcher.group(GAS_BEST_PRICE_ADDRESS)))
                     .build();
         }
         return petrolPriceModel;

@@ -84,9 +84,9 @@ public class ViadaContentWebClient extends ContentWebClient {
                     .dieselEcto(createPriceFromString(matcher.group(DIESEL_ECTO)))
                     .dieselEctoBestPriceAddress(setDescription(matcher.group(DIESEL_ECTO_BEST_PRICE_ADDRESS)))
                     .gas(createPriceFromString(matcher.group(GAS)))
-                    .gasProBestPriceAddress(setDescription(matcher.group(GAS_BEST_PRICE_ADDRESS)))
-                    .petrolE(createPriceFromString(matcher.group(PETROL_E)))
-                    .petrolEBestPriceAddress(matcher.group(PETROL_E_BEST_PRICE_ADDRESS))
+                    .gasBestPriceAddress(setDescription(matcher.group(GAS_BEST_PRICE_ADDRESS)))
+                    .petrolEco(createPriceFromString(matcher.group(PETROL_E)))
+                    .petrolEcoBestPriceAddress(matcher.group(PETROL_E_BEST_PRICE_ADDRESS))
                     .build();
         }
         return petrolPriceModel;

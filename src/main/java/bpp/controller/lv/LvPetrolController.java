@@ -5,9 +5,17 @@ import bpp.infrastructure.lv.GotikaContentWebClient;
 import bpp.infrastructure.lv.NesteContentWebClient;
 import bpp.infrastructure.lv.ViadaContentWebClient;
 import bpp.infrastructure.lv.VirsiContentWebClient;
+import bpp.mapper.CirclePriceMapper;
+import bpp.mapper.GotikaPriceMapper;
 import bpp.mapper.NestePriceMapper;
+import bpp.mapper.ViadaPriceMapper;
+import bpp.mapper.VirsiPriceMapper;
+import bpp.model.CirclePetrolPriceModel;
+import bpp.model.GotikaPetrolPriceModel;
 import bpp.model.NestePetrolPriceModel;
 import bpp.model.PetrolPriceModel;
+import bpp.model.ViadaPetrolPriceModel;
+import bpp.model.VirsiPetrolPriceModel;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -41,34 +49,42 @@ public class LvPetrolController {
     }
 
     @GetMapping("/circlek")
-    public ResponseEntity<PetrolPriceModel> getCirclePrice() {
+    public ResponseEntity<CirclePetrolPriceModel> getCirclePrice() {
         PetrolPriceModel petrolPriceModel = circleContentWebClient.getContent();
 
+        CirclePetrolPriceModel circlePetrolPriceModel = CirclePriceMapper.toCirclePetrolPriceModel(petrolPriceModel);
+
         return ResponseEntity.ok()
-                .body(petrolPriceModel);
+                .body(circlePetrolPriceModel);
     }
 
     @GetMapping("/gotika")
-    public ResponseEntity<PetrolPriceModel> getGotikaPrice() {
+    public ResponseEntity<GotikaPetrolPriceModel> getGotikaPrice() {
         PetrolPriceModel petrolPriceModel = gotikaContentWebClient.getContent();
 
+        GotikaPetrolPriceModel gotikaPetrolPriceModel = GotikaPriceMapper.toGotikaPetrolPriceModel(petrolPriceModel);
+
         return ResponseEntity.ok()
-                .body(petrolPriceModel);
+                .body(gotikaPetrolPriceModel);
     }
 
     @GetMapping("/viada")
-    public ResponseEntity<PetrolPriceModel> getViadaPrice() {
+    public ResponseEntity<ViadaPetrolPriceModel> getViadaPrice() {
         PetrolPriceModel petrolPriceModel = viadaContentWebClient.getContent();
 
+        ViadaPetrolPriceModel viadaPetrolPriceModel = ViadaPriceMapper.toViadaPetrolPriceModel(petrolPriceModel);
+
         return ResponseEntity.ok()
-                .body(petrolPriceModel);
+                .body(viadaPetrolPriceModel);
     }
 
     @GetMapping("/virsi")
-    public ResponseEntity<PetrolPriceModel> getVirsiPrice() {
+    public ResponseEntity<VirsiPetrolPriceModel> getVirsiPrice() {
         PetrolPriceModel petrolPriceModel = virsiContentWebClient.getContent();
 
+        VirsiPetrolPriceModel virsiPetrolPriceModel = VirsiPriceMapper.toVirsiPetrolPriceModel(petrolPriceModel);
+
         return ResponseEntity.ok()
-                .body(petrolPriceModel);
+                .body(virsiPetrolPriceModel);
     }
 }
