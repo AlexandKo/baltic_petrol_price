@@ -5,21 +5,23 @@ import bpp.infrastructure.lv.GotikaContentWebClient;
 import bpp.infrastructure.lv.NesteContentWebClient;
 import bpp.infrastructure.lv.ViadaContentWebClient;
 import bpp.infrastructure.lv.VirsiContentWebClient;
-import bpp.mapper.CirclePriceMapper;
 import bpp.mapper.GotikaPriceMapper;
-import bpp.mapper.NestePriceMapper;
 import bpp.mapper.ViadaPriceMapper;
 import bpp.mapper.VirsiPriceMapper;
 import bpp.model.CirclePetrolPriceModel;
+import bpp.model.ErrorModel;
 import bpp.model.GotikaPetrolPriceModel;
 import bpp.model.NestePetrolPriceModel;
 import bpp.model.PetrolPriceModel;
+import bpp.model.Response;
 import bpp.model.ViadaPetrolPriceModel;
 import bpp.model.VirsiPetrolPriceModel;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,25 +39,40 @@ public class LvPetrolController {
     private final VirsiContentWebClient virsiContentWebClient;
 
     @GetMapping("/neste")
-    @ApiResponse(responseCode = "200", description = "Successful operation", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = NestePetrolPriceModel.class))})
-    public ResponseEntity<NestePetrolPriceModel> getNestePrice() {
-        PetrolPriceModel petrolPriceModel = nesteContentWebClient.getContent();
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = NestePetrolPriceModel.class))}),
+            @ApiResponse(responseCode = "404", description = "Not found", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
+    })
+    public ResponseEntity<Object> getNestePrice() {
+        Response<?> nesteClientResponse = nesteContentWebClient.getContent();
 
-        NestePetrolPriceModel nestePetrolPriceModel = NestePriceMapper.toNestePetrolPriceModel(petrolPriceModel);
+        if (nesteClientResponse.getResponseModel() instanceof ErrorModel) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(nesteClientResponse.getResponseModel());
+        }
 
         return ResponseEntity
                 .ok()
-                .body(nestePetrolPriceModel);
+                .body(nesteClientResponse.getResponseModel());
     }
 
     @GetMapping("/circlek")
-    public ResponseEntity<CirclePetrolPriceModel> getCirclePrice() {
-        PetrolPriceModel petrolPriceModel = circleContentWebClient.getContent();
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CirclePetrolPriceModel.class))}),
+            @ApiResponse(responseCode = "404", description = "Not found", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
+    })
+    public ResponseEntity<Object> getCirclePrice() {
+        Response<?> circleClientResponse = circleContentWebClient.getContent();
 
-        CirclePetrolPriceModel circlePetrolPriceModel = CirclePriceMapper.toCirclePetrolPriceModel(petrolPriceModel);
+        if (circleClientResponse.getResponseModel() instanceof ErrorModel) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(circleClientResponse.getResponseModel());
+        }
 
         return ResponseEntity.ok()
-                .body(circlePetrolPriceModel);
+                .body(circleClientResponse);
     }
 
     @GetMapping("/gotika")

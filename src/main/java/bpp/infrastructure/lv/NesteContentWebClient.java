@@ -1,7 +1,9 @@
 package bpp.infrastructure.lv;
 
 import bpp.infrastructure.ContentWebClient;
-import bpp.model.PetrolPriceModel;
+import bpp.model.ErrorModel;
+import bpp.model.NestePetrolPriceModel;
+import bpp.model.Response;
 import bpp.model.WebPageResponseModel;
 import bpp.util.Country;
 import java.util.regex.Matcher;
@@ -20,7 +22,7 @@ import static bpp.util.PetrolNames.PETROL_PRO;
 
 @Component
 @RequiredArgsConstructor
-public class NesteContentWebClient extends ContentWebClient {
+public class NesteContentWebClient extends ContentWebClient<Response<?>> {
     private static final String NESTE_SEARCH_PRICE_PATTERN = "" +
             "(?<petrol95>\\d.?\\d{3})(\\n\\t.*\\n.*\\n\\t)" +
             "(?<petrol98>\\d.?\\d{3})(\\n\\t.*\\n.*\\n\\t)" +
@@ -36,18 +38,29 @@ public class NesteContentWebClient extends ContentWebClient {
     }
 
     @Override
-    public PetrolPriceModel getContent() {
-        PetrolPriceModel petrolPriceModel = null;
+    public Response<?> getContent() {
         WebPageResponseModel nesteWebContent = getWebContent(nestePriceLink);
 
         if (nesteWebContent.getId() == WEB_CLIENT_CONNECTION_FAILED) {
-            return createFailedPetrolPrice(nesteWebContent.getId(), Country.LV, nesteWebContent.getContent());
+            ErrorModel errorModel = ErrorModel.builder()
+                    .id(nesteWebContent.getId())
+                    .country(Country.LV)
+                    .errorMessage(nesteWebContent.getContent())
+                    .build();
+            return new Response<>(errorModel);
         }
+
+        NestePetrolPriceModel nestePetrolPriceModel = getNestePetrolPriceModel(nesteWebContent);
+        return new Response<>(nestePetrolPriceModel);
+    }
+
+    private NestePetrolPriceModel getNestePetrolPriceModel(WebPageResponseModel nesteWebContent) {
+        NestePetrolPriceModel nestePetrolPriceModel = null;
 
         final Matcher matcher = pattern.matcher(nesteWebContent.getContent());
 
         while (matcher.find()) {
-            petrolPriceModel = PetrolPriceModel.builder()
+            nestePetrolPriceModel = NestePetrolPriceModel.builder()
                     .id(nesteWebContent.getId())
                     .country(Country.LV)
                     .petrol(createPriceFromString(matcher.group(PETROL)))
@@ -60,6 +73,6 @@ public class NesteContentWebClient extends ContentWebClient {
                     .dieselProBestPriceAddress(PRICE_FOR_ALL_STATIONS)
                     .build();
         }
-        return petrolPriceModel;
+        return nestePetrolPriceModel;
     }
 }

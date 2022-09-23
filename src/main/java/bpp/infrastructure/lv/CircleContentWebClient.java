@@ -1,7 +1,9 @@
 package bpp.infrastructure.lv;
 
 import bpp.infrastructure.ContentWebClient;
-import bpp.model.PetrolPriceModel;
+import bpp.model.CirclePetrolPriceModel;
+import bpp.model.ErrorModel;
+import bpp.model.Response;
 import bpp.model.WebPageResponseModel;
 import bpp.util.Country;
 import java.util.regex.Matcher;
@@ -24,7 +26,7 @@ import static bpp.util.PetrolNames.PETROL_PRO;
 import static bpp.util.PetrolNames.PETROL_PRO_BEST_PRICE_ADDRESS;
 
 @Component
-public class CircleContentWebClient extends ContentWebClient {
+public class CircleContentWebClient extends ContentWebClient<Response<?>> {
     private static final String FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN = "(.*\\n)";
     private static final String CIRCLEK_SEARCH_PRICE_PATTERN = "" +
             "(?<petrol95>\\d.?\\d{3})" + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN +
@@ -47,18 +49,33 @@ public class CircleContentWebClient extends ContentWebClient {
     }
 
     @Override
-    public PetrolPriceModel getContent() {
-        PetrolPriceModel petrolPriceModel = null;
+    public Response<?> getContent() {
         WebPageResponseModel circleWebContent = getWebContent(circlePriceLink);
 
         if (circleWebContent.getId() == WEB_CLIENT_CONNECTION_FAILED) {
-            return createFailedPetrolPrice(circleWebContent.getId(), Country.LV, circleWebContent.getContent());
+            ErrorModel errorModel = ErrorModel.builder()
+                    .id(circleWebContent.getId())
+                    .country(Country.LV)
+                    .errorMessage(circleWebContent.getContent())
+                    .build();
+            return new Response<>(errorModel);
         }
+
+        CirclePetrolPriceModel circlePetrolPriceModel = getCirclePetrolPriceModel(circleWebContent);
+        return new Response<>(circlePetrolPriceModel);
+    }
+
+    private String setDescription(String bestPriceAddress) {
+        return bestPriceAddress.contains("DUS") ? PRICE_FOR_ALL_STATIONS : bestPriceAddress;
+    }
+
+    private CirclePetrolPriceModel getCirclePetrolPriceModel(WebPageResponseModel circleWebContent) {
+        CirclePetrolPriceModel circlePetrolPriceModel = null;
 
         final Matcher matcher = pattern.matcher(circleWebContent.getContent());
 
         while (matcher.find()) {
-            petrolPriceModel = PetrolPriceModel.builder()
+            circlePetrolPriceModel = CirclePetrolPriceModel.builder()
                     .id(circleWebContent.getId())
                     .country(Country.LV)
                     .petrol(createPriceFromString(matcher.group(PETROL)))
@@ -73,10 +90,6 @@ public class CircleContentWebClient extends ContentWebClient {
                     .gasBestPriceAddress(setDescription(matcher.group(GAS_BEST_PRICE_ADDRESS)))
                     .build();
         }
-        return petrolPriceModel;
-    }
-
-    private String setDescription(String bestPriceAddress) {
-        return bestPriceAddress.contains("DUS") ? PRICE_FOR_ALL_STATIONS : bestPriceAddress;
+        return circlePetrolPriceModel;
     }
 }

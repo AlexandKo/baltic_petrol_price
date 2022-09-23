@@ -14,7 +14,7 @@ import static bpp.util.MessageCodes.WEB_CLIENT_CONNECTION_FAILED;
 import static bpp.util.MessageCodes.WEB_CLIENT_CONNECTION_SUCCESSFULLY;
 import static bpp.util.Messages.CONNECTION_ERROR;
 
-public abstract class ContentWebClient {
+public abstract class ContentWebClient<T> {
     private com.gargoylesoftware.htmlunit.WebClient petrolWebClient;
 
     @PostConstruct
@@ -59,5 +59,5 @@ public abstract class ContentWebClient {
         return new BigDecimal(price).divide(new BigDecimal("1000"),3, RoundingMode.DOWN);
     }
 
-    public abstract PetrolPriceModel getContent();
+    public abstract T getContent();
 }
