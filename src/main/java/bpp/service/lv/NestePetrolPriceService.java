@@ -34,7 +34,8 @@ public class NestePetrolPriceService implements PetrolPriceService {
                 .stream()
                 .filter(NesteContentWebClient.class::isInstance)
                 .map(NesteContentWebClient.class::cast)
-                .map(NesteContentWebClient::getContent).findFirst()
+                .map(NesteContentWebClient::getContent)
+                .findFirst()
                 .orElse(null);
 
         if (nestePetrolPriceResponse == null) {
@@ -42,16 +43,17 @@ public class NestePetrolPriceService implements PetrolPriceService {
             return;
         }
 
-        if (nestePetrolPriceResponse.getResponseModel() instanceof ErrorModel) {
-            ErrorModel errorModel = (ErrorModel) nestePetrolPriceResponse.getResponseModel();
-            log.error(String.format(NOT_FOUND_ERROR, PETROL_STATION, errorModel.getCountry()));
-            return;
+        if (nestePetrolPriceResponse.getResponseModel() != null) {
+            if (nestePetrolPriceResponse.getResponseModel() instanceof ErrorModel) {
+                ErrorModel errorModel = (ErrorModel) nestePetrolPriceResponse.getResponseModel();
+                log.error(String.format(NOT_FOUND_ERROR, PETROL_STATION, errorModel.getCountry()));
+                return;
+            }
+            NestePetrolPriceModel nestePetrolPriceModel = (NestePetrolPriceModel) nestePetrolPriceResponse.getResponseModel();
+            NestePriceEntity nestePriceEntity = NestePriceMapper.toNestePriceEntity(nestePetrolPriceModel);
+
+            nestePriceRepository.save(nestePriceEntity);
+            log.info(String.format(NEW_RECORD_INFO, PETROL_STATION, nestePriceEntity.getCountry()));
         }
-
-        NestePetrolPriceModel nestePetrolPriceModel = (NestePetrolPriceModel) nestePetrolPriceResponse.getResponseModel();
-        NestePriceEntity nestePriceEntity = NestePriceMapper.toNestePriceEntity(nestePetrolPriceModel);
-
-        nestePriceRepository.save(nestePriceEntity);
-        log.info(String.format(NEW_RECORD_INFO, PETROL_STATION, nestePriceEntity.getCountry()));
     }
 }

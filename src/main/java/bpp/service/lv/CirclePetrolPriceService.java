@@ -43,16 +43,17 @@ public class CirclePetrolPriceService implements PetrolPriceService {
             return;
         }
 
-        if (circlePetrolPriceResponse.getResponseModel() instanceof ErrorModel) {
-            ErrorModel errorModel = (ErrorModel) circlePetrolPriceResponse.getResponseModel();
-            log.error(String.format(NOT_FOUND_ERROR, PETROL_STATION, errorModel.getCountry()));
-            return;
+        if (circlePetrolPriceResponse.getResponseModel() != null) {
+            if (circlePetrolPriceResponse.getResponseModel() instanceof ErrorModel) {
+                ErrorModel errorModel = (ErrorModel) circlePetrolPriceResponse.getResponseModel();
+                log.error(String.format(NOT_FOUND_ERROR, PETROL_STATION, errorModel.getCountry()));
+                return;
+            }
+            CirclePetrolPriceModel circlePetrolPriceModel = (CirclePetrolPriceModel) circlePetrolPriceResponse.getResponseModel();
+            CirclePriceEntity circlePriceEntity = CirclePriceMapper.toCirclePriceEntity(circlePetrolPriceModel);
+
+            circlePriceRepository.save(circlePriceEntity);
+            log.info(String.format(NEW_RECORD_INFO, PETROL_STATION, circlePriceEntity.getCountry()));
         }
-
-        CirclePetrolPriceModel circlePetrolPriceModel = (CirclePetrolPriceModel) circlePetrolPriceResponse.getResponseModel();
-        CirclePriceEntity circlePriceEntity = CirclePriceMapper.toCirclePriceEntity(circlePetrolPriceModel);
-
-        circlePriceRepository.save(circlePriceEntity);
-        log.info(String.format(NEW_RECORD_INFO, PETROL_STATION, circlePriceEntity.getCountry()));
     }
 }
