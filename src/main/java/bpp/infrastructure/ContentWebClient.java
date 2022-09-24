@@ -1,8 +1,6 @@
 package bpp.infrastructure;
 
-import bpp.model.PetrolPriceModel;
 import bpp.model.WebPageResponseModel;
-import bpp.util.Country;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import java.io.IOException;
@@ -44,19 +42,11 @@ public abstract class ContentWebClient<T> {
         }
     }
 
-    protected PetrolPriceModel createFailedPetrolPrice(int id, Country country, String message) {
-        return PetrolPriceModel.builder()
-                .id(id)
-                .country(country)
-                .errorMessage(message)
-                .build();
-    }
-
     protected BigDecimal createPriceFromString(String price) {
         if (price.contains(".")) {
             return new BigDecimal(price);
         }
-        return new BigDecimal(price).divide(new BigDecimal("1000"),3, RoundingMode.DOWN);
+        return new BigDecimal(price).divide(new BigDecimal("1000"), 3, RoundingMode.DOWN);
     }
 
     public abstract T getContent();

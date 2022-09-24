@@ -1,7 +1,9 @@
 package bpp.infrastructure.lv;
 
 import bpp.infrastructure.ContentWebClient;
-import bpp.model.PetrolPriceModel;
+import bpp.model.ErrorModel;
+import bpp.model.Response;
+import bpp.model.VirsiPetrolPriceModel;
 import bpp.model.WebPageResponseModel;
 import bpp.util.Country;
 import java.util.regex.Matcher;
@@ -23,7 +25,7 @@ import static bpp.util.PetrolNames.PETROL_PRO;
 import static bpp.util.PetrolNames.PETROL_PRO_BEST_PRICE_ADDRESS;
 
 @Component
-public class VirsiContentWebClient extends ContentWebClient {
+public class VirsiContentWebClient extends ContentWebClient<Response<?>> {
     private static final String VIRSI_SEARCH_PRICE_PATTERN = "" +
             "(?<diesel>\\d.?\\d{3})(\\n)" +
             "(?<dieselBestPriceAddress>.*)(\\n.*\\n)" +
@@ -43,18 +45,29 @@ public class VirsiContentWebClient extends ContentWebClient {
     }
 
     @Override
-    public PetrolPriceModel getContent() {
-        PetrolPriceModel petrolPriceModel = null;
+    public Response<?> getContent() {
         WebPageResponseModel virsiWebContent = getWebContent(virsiPriceLink);
 
         if (virsiWebContent.getId() == WEB_CLIENT_CONNECTION_FAILED) {
-            return createFailedPetrolPrice(virsiWebContent.getId(), Country.LV, virsiWebContent.getContent());
+            ErrorModel errorModel = ErrorModel.builder()
+                    .id(virsiWebContent.getId())
+                    .country(Country.LV)
+                    .errorMessage(virsiWebContent.getContent())
+                    .build();
+            return new Response<>(errorModel);
         }
+
+        VirsiPetrolPriceModel virsiPetrolPriceModel = getVirsiPetrolPriceModel(virsiWebContent);
+        return new Response<>(virsiPetrolPriceModel);
+    }
+
+    private VirsiPetrolPriceModel getVirsiPetrolPriceModel(WebPageResponseModel virsiWebContent) {
+        VirsiPetrolPriceModel virsiPetrolPriceModel = null;
 
         final Matcher matcher = pattern.matcher(virsiWebContent.getContent());
 
         while (matcher.find()) {
-            petrolPriceModel = PetrolPriceModel.builder()
+            virsiPetrolPriceModel = VirsiPetrolPriceModel.builder()
                     .id(virsiWebContent.getId())
                     .country(Country.LV)
                     .petrol(createPriceFromString(matcher.group(PETROL)))
@@ -67,7 +80,7 @@ public class VirsiContentWebClient extends ContentWebClient {
                     .gasBestPriceAddress(setDescription(matcher.group(GAS_BEST_PRICE_ADDRESS)))
                     .build();
         }
-        return petrolPriceModel;
+        return virsiPetrolPriceModel;
     }
 
     private String setDescription(String bestPriceAddress) {

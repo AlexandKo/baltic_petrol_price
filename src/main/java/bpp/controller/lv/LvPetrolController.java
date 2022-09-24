@@ -5,12 +5,10 @@ import bpp.infrastructure.lv.GotikaContentWebClient;
 import bpp.infrastructure.lv.NesteContentWebClient;
 import bpp.infrastructure.lv.ViadaContentWebClient;
 import bpp.infrastructure.lv.VirsiContentWebClient;
-import bpp.mapper.VirsiPriceMapper;
 import bpp.model.CirclePetrolPriceModel;
 import bpp.model.ErrorModel;
 import bpp.model.GotikaPetrolPriceModel;
 import bpp.model.NestePetrolPriceModel;
-import bpp.model.PetrolPriceModel;
 import bpp.model.Response;
 import bpp.model.ViadaPetrolPriceModel;
 import bpp.model.VirsiPetrolPriceModel;
@@ -115,12 +113,21 @@ public class LvPetrolController {
     }
 
     @GetMapping("/virsi")
-    public ResponseEntity<VirsiPetrolPriceModel> getVirsiPrice() {
-        PetrolPriceModel petrolPriceModel = virsiContentWebClient.getContent();
+    @Operation(description = "Return price list Virsi Gas Station", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = VirsiPetrolPriceModel.class))}),
+            @ApiResponse(responseCode = "404", description = "Not found", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
+    })
+    public ResponseEntity<Object> getVirsiPrice() {
+        Response<?> virsiClientResponse = virsiContentWebClient.getContent();
 
-        VirsiPetrolPriceModel virsiPetrolPriceModel = VirsiPriceMapper.toVirsiPetrolPriceModel(petrolPriceModel);
+        if (virsiClientResponse.getResponseModel() instanceof ErrorModel) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(virsiClientResponse.getResponseModel());
+        }
 
         return ResponseEntity.ok()
-                .body(virsiPetrolPriceModel);
+                .body(virsiClientResponse);
     }
 }
