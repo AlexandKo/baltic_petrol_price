@@ -49,5 +49,10 @@ public abstract class ContentWebClient<T> {
         return new BigDecimal(price).divide(new BigDecimal("1000"), 3, RoundingMode.DOWN);
     }
 
+    protected BigDecimal createPriceWithDecimalPoint(String price) {
+        String changedPriceFormat = price.replace(",", ".");
+        return new BigDecimal(changedPriceFormat);
+    }
+
     public abstract T getContent();
 }

@@ -1,43 +1,27 @@
-package bpp.service.lv;
+package bpp.usecase;
 
 import bpp.entity.CirclePriceEntity;
-import bpp.infrastructure.ContentWebClient;
-import bpp.infrastructure.lv.CircleContentWebClient;
 import bpp.mapper.CirclePriceMapper;
 import bpp.model.CirclePetrolPriceModel;
 import bpp.model.ErrorModel;
 import bpp.model.Response;
 import bpp.repository.CirclePriceRepository;
-import bpp.service.PetrolPriceService;
-import java.util.List;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import static bpp.util.Messages.NEW_RECORD_INFO;
 import static bpp.util.Messages.NOT_FOUND_ERROR;
 import static bpp.util.Messages.SERVICE_NOT_FOUND_ERROR;
 
 @Slf4j
-@Service
-@Transactional
+@Component
 @RequiredArgsConstructor
-public class CirclePetrolPriceService implements PetrolPriceService {
+public class CirclePepositoryUseCase {
     private static final String PETROL_STATION = "Circle K";
-    private final List<ContentWebClient<?>> contentWebClients;
     private final CirclePriceRepository circlePriceRepository;
 
-    @Override
-    public void savePetrolPrice() {
-        Response<?> circlePetrolPriceResponse = contentWebClients
-                .stream()
-                .filter(CircleContentWebClient.class::isInstance)
-                .map(CircleContentWebClient.class::cast)
-                .map(CircleContentWebClient::getContent)
-                .findFirst()
-                .orElse(null);
-
+    public void saveToDataBase(Response<?> circlePetrolPriceResponse) {
         if (circlePetrolPriceResponse == null) {
             log.error(String.format(SERVICE_NOT_FOUND_ERROR, PETROL_STATION));
             return;

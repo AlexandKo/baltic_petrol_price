@@ -36,7 +36,7 @@ public class LvPetrolController {
     private final VirsiContentWebClient virsiContentWebClient;
 
     @GetMapping("/neste")
-    @Operation(description = "Return price list Neste Gas Station", method = "GET")
+    @Operation(description = "Return price list Neste Gas Station Latvia", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = NestePetrolPriceModel.class))}),
             @ApiResponse(responseCode = "404", description = "Not found", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
@@ -56,7 +56,7 @@ public class LvPetrolController {
     }
 
     @GetMapping("/circlek")
-    @Operation(description = "Return price list Circle K Gas Station", method = "GET")
+    @Operation(description = "Return price list Circle K Gas Station Latvia", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CirclePetrolPriceModel.class))}),
             @ApiResponse(responseCode = "404", description = "Not found", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
@@ -75,7 +75,7 @@ public class LvPetrolController {
     }
 
     @GetMapping("/gotika")
-    @Operation(description = "Return price list Gotika Gas Station", method = "GET")
+    @Operation(description = "Return price list Gotika Gas Station Latvia", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = GotikaPetrolPriceModel.class))}),
             @ApiResponse(responseCode = "404", description = "Not found", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
@@ -94,7 +94,7 @@ public class LvPetrolController {
     }
 
     @GetMapping("/viada")
-    @Operation(description = "Return price list Viada Gas Station", method = "GET")
+    @Operation(description = "Return price list Viada Gas Station Latvia", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ViadaPetrolPriceModel.class))}),
             @ApiResponse(responseCode = "404", description = "Not found", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
@@ -113,7 +113,7 @@ public class LvPetrolController {
     }
 
     @GetMapping("/virsi")
-    @Operation(description = "Return price list Virsi Gas Station", method = "GET")
+    @Operation(description = "Return price list Virsi Gas Station Latvia", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = VirsiPetrolPriceModel.class))}),
             @ApiResponse(responseCode = "404", description = "Not found", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})

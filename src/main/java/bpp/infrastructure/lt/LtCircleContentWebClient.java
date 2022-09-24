@@ -1,4 +1,4 @@
-package bpp.infrastructure.lv;
+package bpp.infrastructure.lt;
 
 import bpp.infrastructure.ContentWebClient;
 import bpp.model.CirclePetrolPriceModel;
@@ -9,11 +9,11 @@ import bpp.util.Country;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import static bpp.util.MessageCodes.WEB_CLIENT_CONNECTION_FAILED;
-import static bpp.util.Messages.PRICE_FOR_ALL_STATIONS;
 import static bpp.util.PetrolNames.DIESEL;
 import static bpp.util.PetrolNames.DIESEL_BEST_PRICE_ADDRESS;
 import static bpp.util.PetrolNames.DIESEL_PRO;
@@ -26,21 +26,30 @@ import static bpp.util.PetrolNames.PETROL_PRO;
 import static bpp.util.PetrolNames.PETROL_PRO_BEST_PRICE_ADDRESS;
 
 @Component
-public class CircleContentWebClient extends ContentWebClient<Response<?>> {
+public class LtCircleContentWebClient extends ContentWebClient<Response<?>> {
     private static final String FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN = "(.*\\n)";
+    private static final String THREE_LINES_WITH_NEXT_LINE_CHAR_PATTERN = ".*\\n.*\\n.*\\n";
+    private static final String PETROL_PRICE = "\\d.?\\d{3})(\\n)";
     private static final String CIRCLEK_SEARCH_PRICE_PATTERN = "" +
-            "(?<petrol95>\\d.?\\d{3})" + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN +
-            "(?<petrol95BestPriceAddress>.*)" + "(\\n.* \\d{2}\\t)" +
-            "(?<petrol98>\\d.?\\d{3})" + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN +
-            "(?<petrol98BestPriceAddress>.*)(\\n.* D\\t)" +
-            "(?<diesel>\\d.?\\d{3})" + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN +
-            "(?<dieselBestPriceAddress>.*)(\\n.* D\\t)" +
-            "(?<dieselPro>\\d.?\\d{3})" + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN +
-            "(?<dieselProBestPriceAddress>.*)(\\n.*ze\\t)" +
-            "(?<gas>\\d.?\\d{3})( EUR\\t)" +
-            "(?<gasBestPriceAddress>.*)";
-    @Value("${circleK.lv_price_link}")
-    private String circlePriceLink;
+            "(Apa)" + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN +
+            "(?<petrol95>" + PETROL_PRICE +
+            "(?<petrol95BestPriceAddress>.*\\n.*\\n.*\\n)" + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN +
+            FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN + "(\\d.?\\d{3})(\\n)(.*\\n.*\\n.*\\n)" +
+            FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN +
+            "(?<petrol98>" + PETROL_PRICE +
+            "(?<petrol98BestPriceAddress>" + THREE_LINES_WITH_NEXT_LINE_CHAR_PATTERN + ")" +
+            FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN +
+            "(?<diesel>" + PETROL_PRICE +
+            "(?<dieselBestPriceAddress>" + THREE_LINES_WITH_NEXT_LINE_CHAR_PATTERN + ")" +
+            FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN +
+            "(?<dieselPro>" + PETROL_PRICE +
+            "(?<dieselProBestPriceAddress>" + THREE_LINES_WITH_NEXT_LINE_CHAR_PATTERN + ")" +
+            FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN +
+            "(\\d.?\\d{3})(\\n)(.*\\n.*\\n.*\\n)(.*\\n)(.*\\n)" +
+            "(?<gas>" + PETROL_PRICE +
+            "(?<gasBestPriceAddress>" + THREE_LINES_WITH_NEXT_LINE_CHAR_PATTERN + ")";
+    @Value("${circleK.lt_price_link}")
+    private String ltCirclePriceLink;
     private Pattern pattern;
 
     @PostConstruct
@@ -50,12 +59,12 @@ public class CircleContentWebClient extends ContentWebClient<Response<?>> {
 
     @Override
     public Response<?> getContent() {
-        WebPageResponseModel circleWebContent = getWebContent(circlePriceLink);
+        WebPageResponseModel circleWebContent = getWebContent(ltCirclePriceLink);
 
         if (circleWebContent.getId() == WEB_CLIENT_CONNECTION_FAILED) {
             ErrorModel errorModel = ErrorModel.builder()
                     .id(circleWebContent.getId())
-                    .country(Country.LV)
+                    .country(Country.LT)
                     .errorMessage(circleWebContent.getContent())
                     .build();
             return new Response<>(errorModel);
@@ -73,16 +82,16 @@ public class CircleContentWebClient extends ContentWebClient<Response<?>> {
         while (matcher.find()) {
             circlePetrolPriceModel = CirclePetrolPriceModel.builder()
                     .id(circleWebContent.getId())
-                    .country(Country.LV)
-                    .petrol(createPriceFromString(matcher.group(PETROL)))
+                    .country(Country.LT)
+                    .petrol(createPriceWithDecimalPoint(matcher.group(PETROL)))
                     .petrolBestPriceAddress(setDescription(matcher.group(PETROL_BEST_PRICE_ADDRESS)))
-                    .petrolPro(createPriceFromString(matcher.group(PETROL_PRO)))
+                    .petrolPro(createPriceWithDecimalPoint(matcher.group(PETROL_PRO)))
                     .petrolProBestPriceAddress(setDescription(matcher.group(PETROL_PRO_BEST_PRICE_ADDRESS)))
-                    .diesel(createPriceFromString(matcher.group(DIESEL)))
+                    .diesel(createPriceWithDecimalPoint(matcher.group(DIESEL)))
                     .dieselBestPriceAddress(setDescription(matcher.group(DIESEL_BEST_PRICE_ADDRESS)))
-                    .dieselPro(createPriceFromString(matcher.group(DIESEL_PRO)))
+                    .dieselPro(createPriceWithDecimalPoint(matcher.group(DIESEL_PRO)))
                     .dieselProBestPriceAddress(setDescription(matcher.group(DIESEL_PRO_BEST_PRICE_ADDRESS)))
-                    .gas(createPriceFromString(matcher.group(GAS)))
+                    .gas(createPriceWithDecimalPoint(matcher.group(GAS)))
                     .gasBestPriceAddress(setDescription(matcher.group(GAS_BEST_PRICE_ADDRESS)))
                     .build();
         }
@@ -90,6 +99,6 @@ public class CircleContentWebClient extends ContentWebClient<Response<?>> {
     }
 
     private String setDescription(String bestPriceAddress) {
-        return bestPriceAddress.contains("DUS") ? PRICE_FOR_ALL_STATIONS : bestPriceAddress;
+        return bestPriceAddress.replace("\n", Strings.EMPTY);
     }
 }
