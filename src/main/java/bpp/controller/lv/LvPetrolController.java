@@ -5,7 +5,6 @@ import bpp.infrastructure.lv.GotikaContentWebClient;
 import bpp.infrastructure.lv.NesteContentWebClient;
 import bpp.infrastructure.lv.ViadaContentWebClient;
 import bpp.infrastructure.lv.VirsiContentWebClient;
-import bpp.mapper.ViadaPriceMapper;
 import bpp.mapper.VirsiPriceMapper;
 import bpp.model.CirclePetrolPriceModel;
 import bpp.model.ErrorModel;
@@ -97,13 +96,22 @@ public class LvPetrolController {
     }
 
     @GetMapping("/viada")
-    public ResponseEntity<ViadaPetrolPriceModel> getViadaPrice() {
-        PetrolPriceModel petrolPriceModel = viadaContentWebClient.getContent();
+    @Operation(description = "Return price list Viada Gas Station", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ViadaPetrolPriceModel.class))}),
+            @ApiResponse(responseCode = "404", description = "Not found", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
+    })
+    public ResponseEntity<Object> getViadaPrice() {
+        Response<?> viadaClientResponse = viadaContentWebClient.getContent();
 
-        ViadaPetrolPriceModel viadaPetrolPriceModel = ViadaPriceMapper.toViadaPetrolPriceModel(petrolPriceModel);
+        if (viadaClientResponse.getResponseModel() instanceof ErrorModel) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(viadaClientResponse.getResponseModel());
+        }
 
         return ResponseEntity.ok()
-                .body(viadaPetrolPriceModel);
+                .body(viadaClientResponse);
     }
 
     @GetMapping("/virsi")

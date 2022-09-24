@@ -1,7 +1,9 @@
 package bpp.infrastructure.lv;
 
 import bpp.infrastructure.ContentWebClient;
-import bpp.model.PetrolPriceModel;
+import bpp.model.ErrorModel;
+import bpp.model.Response;
+import bpp.model.ViadaPetrolPriceModel;
 import bpp.model.WebPageResponseModel;
 import bpp.util.Country;
 import java.util.regex.Matcher;
@@ -29,7 +31,7 @@ import static bpp.util.PetrolNames.PETROL_PRO;
 import static bpp.util.PetrolNames.PETROL_PRO_BEST_PRICE_ADDRESS;
 
 @Component
-public class ViadaContentWebClient extends ContentWebClient {
+public class ViadaContentWebClient extends ContentWebClient<Response<?>> {
     private static final String FULL_LINE_WITH_TAB_CHAR_PATTERN = "( .*\\t)";
     private static final String NEW_LINE_AND_TAB_CHARS_PATTERN = "(\\n\\t)";
     private static final String ANY_CHARS_PATTERN = "(.*)";
@@ -59,18 +61,29 @@ public class ViadaContentWebClient extends ContentWebClient {
     }
 
     @Override
-    public PetrolPriceModel getContent() {
-        PetrolPriceModel petrolPriceModel = null;
+    public Response<?> getContent() {
         WebPageResponseModel viadaWebContent = getWebContent(viadaPriceLink);
 
         if (viadaWebContent.getId() == WEB_CLIENT_CONNECTION_FAILED) {
-            return createFailedPetrolPrice(viadaWebContent.getId(), Country.LV, viadaWebContent.getContent());
+            ErrorModel errorModel = ErrorModel.builder()
+                    .id(viadaWebContent.getId())
+                    .country(Country.LV)
+                    .errorMessage(viadaWebContent.getContent())
+                    .build();
+            return new Response<>(errorModel);
         }
+
+        ViadaPetrolPriceModel viadaPetrolPriceModel = getViadaPetrolPriceModel(viadaWebContent);
+        return new Response<>(viadaPetrolPriceModel);
+    }
+
+    private ViadaPetrolPriceModel getViadaPetrolPriceModel(WebPageResponseModel viadaWebContent) {
+        ViadaPetrolPriceModel viadaPetrolPriceModel = null;
 
         final Matcher matcher = pattern.matcher(viadaWebContent.getContent());
 
         while (matcher.find()) {
-            petrolPriceModel = PetrolPriceModel.builder()
+            viadaPetrolPriceModel = ViadaPetrolPriceModel.builder()
                     .id(viadaWebContent.getId())
                     .country(Country.LV)
                     .petrolEcto(createPriceFromString(matcher.group(PETROL_ECTO)))
@@ -89,7 +102,7 @@ public class ViadaContentWebClient extends ContentWebClient {
                     .petrolEcoBestPriceAddress(matcher.group(PETROL_E_BEST_PRICE_ADDRESS))
                     .build();
         }
-        return petrolPriceModel;
+        return viadaPetrolPriceModel;
     }
 
     private String setDescription(String bestPriceAddress) {
