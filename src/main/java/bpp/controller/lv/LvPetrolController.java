@@ -5,7 +5,6 @@ import bpp.infrastructure.lv.GotikaContentWebClient;
 import bpp.infrastructure.lv.NesteContentWebClient;
 import bpp.infrastructure.lv.ViadaContentWebClient;
 import bpp.infrastructure.lv.VirsiContentWebClient;
-import bpp.mapper.GotikaPriceMapper;
 import bpp.mapper.ViadaPriceMapper;
 import bpp.mapper.VirsiPriceMapper;
 import bpp.model.CirclePetrolPriceModel;
@@ -16,6 +15,7 @@ import bpp.model.PetrolPriceModel;
 import bpp.model.Response;
 import bpp.model.ViadaPetrolPriceModel;
 import bpp.model.VirsiPetrolPriceModel;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -39,6 +39,7 @@ public class LvPetrolController {
     private final VirsiContentWebClient virsiContentWebClient;
 
     @GetMapping("/neste")
+    @Operation(description = "Return price list Neste Gas Station", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = NestePetrolPriceModel.class))}),
             @ApiResponse(responseCode = "404", description = "Not found", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
@@ -58,6 +59,7 @@ public class LvPetrolController {
     }
 
     @GetMapping("/circlek")
+    @Operation(description = "Return price list Circle K Gas Station", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CirclePetrolPriceModel.class))}),
             @ApiResponse(responseCode = "404", description = "Not found", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
@@ -76,13 +78,22 @@ public class LvPetrolController {
     }
 
     @GetMapping("/gotika")
-    public ResponseEntity<GotikaPetrolPriceModel> getGotikaPrice() {
-        PetrolPriceModel petrolPriceModel = gotikaContentWebClient.getContent();
+    @Operation(description = "Return price list Gotika Gas Station", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = GotikaPetrolPriceModel.class))}),
+            @ApiResponse(responseCode = "404", description = "Not found", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
+    })
+    public ResponseEntity<Object> getGotikaPrice() {
+        Response<?> gotikaClientResponse = gotikaContentWebClient.getContent();
 
-        GotikaPetrolPriceModel gotikaPetrolPriceModel = GotikaPriceMapper.toGotikaPetrolPriceModel(petrolPriceModel);
+        if (gotikaClientResponse.getResponseModel() instanceof ErrorModel) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(gotikaClientResponse.getResponseModel());
+        }
 
         return ResponseEntity.ok()
-                .body(gotikaPetrolPriceModel);
+                .body(gotikaClientResponse);
     }
 
     @GetMapping("/viada")
