@@ -26,7 +26,7 @@ public abstract class ContentWebClient<T> {
         petrolWebClient.getOptions().setUseInsecureSSL(true);
     }
 
-    protected WebPageResponseModel getWebContent(String url) {
+    public WebPageResponseModel getWebContent(String url) {
         HtmlPage htmlPage;
         try {
             htmlPage = petrolWebClient.getPage(url);
