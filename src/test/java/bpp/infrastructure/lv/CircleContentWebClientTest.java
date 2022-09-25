@@ -58,7 +58,12 @@ class CircleContentWebClientTest {
         Response<?> response = circleContentWebClient.getContent();
         CirclePetrolPriceModel circlePetrolPriceModel = (CirclePetrolPriceModel) response.getResponseModel();
         // Assert
+        assertThat(circlePetrolPriceModel.getId()).isEqualTo(200);
         assertThat(circlePetrolPriceModel.getPetrol()).isEqualTo(new BigDecimal("1.684"));
+        assertThat(circlePetrolPriceModel.getPetrolPro()).isEqualTo(new BigDecimal("1.734"));
+        assertThat(circlePetrolPriceModel.getDiesel()).isEqualTo(new BigDecimal("1.744"));
+        assertThat(circlePetrolPriceModel.getDieselPro()).isEqualTo(new BigDecimal("1.854"));
+        assertThat(circlePetrolPriceModel.getGas()).isEqualTo(new BigDecimal("0.825"));
     }
 
     private String returnContent() {
