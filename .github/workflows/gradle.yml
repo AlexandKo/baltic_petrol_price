@@ -31,7 +31,6 @@ jobs:
           cache: gradle
       - name: Unit test
         run: ./gradlew test
-      - name: Test Report
       - name: Test Summary
         uses: test-summary/action@v1
         with:
