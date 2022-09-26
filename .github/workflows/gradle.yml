@@ -28,7 +28,6 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
-      - uses: actions/checkout@master
       - name: Grant Permissions to gradlew
         run: chmod +x gradlew
       - name: Unit test
