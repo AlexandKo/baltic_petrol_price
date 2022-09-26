@@ -29,6 +29,7 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: gradle
+      - uses: actions/checkout@v3
       - name: Grant Permissions to gradlew
         run: chmod +x gradlew
       - name: Unit test
