@@ -30,7 +30,7 @@ jobs:
           distribution: 'temurin'
           cache: gradle
       - name: Unit test
-        run: ./gradlew test
+        run: ./gradlew test -i
       - name: Test Summary
         uses: test-summary/action@v1
         with:
