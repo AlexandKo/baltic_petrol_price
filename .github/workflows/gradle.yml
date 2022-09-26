@@ -31,7 +31,7 @@ jobs:
       - name: Grant Permissions to gradlew
         run: chmod +x gradlew
       - name: Unit test
-        uses: ./gradlew test --stacktrace
+        uses: ./gradlew test --tests "*"
       - name: Unit tests results
         uses: actions/upload-artifact@v3
       - name: Build with Gradle
