@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static bpp.util.Messages.PRICE_FOR_ALL_STATIONS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 
@@ -64,6 +65,27 @@ class CircleContentWebClientTest {
         assertThat(circlePetrolPriceModel.getDiesel()).isEqualTo(new BigDecimal("1.744"));
         assertThat(circlePetrolPriceModel.getDieselPro()).isEqualTo(new BigDecimal("1.854"));
         assertThat(circlePetrolPriceModel.getGas()).isEqualTo(new BigDecimal("0.825"));
+    }
+
+    @Test
+    void mustReturnBestPricesAddresses() {
+        // Arrange, Act
+        doReturn(WebPageResponseModel
+                .builder()
+                .id(200)
+                .content(returnContent())
+                .build())
+                .when(circleContentWebClient)
+                .getWebContent(null);
+        Response<?> response = circleContentWebClient.getContent();
+        CirclePetrolPriceModel circlePetrolPriceModel = (CirclePetrolPriceModel) response.getResponseModel();
+        // Assert
+        assertThat(circlePetrolPriceModel.getId()).isEqualTo(200);
+        assertThat(circlePetrolPriceModel.getPetrolBestPriceAddress()).isEqualTo("Valdeķu iela 35; Maskavas iela 324");
+        assertThat(circlePetrolPriceModel.getPetrolProBestPriceAddress()).isEqualTo("Valdeķu iela 35; Maskavas iela 324");
+        assertThat(circlePetrolPriceModel.getDieselBestPriceAddress()).isEqualTo("Valdeķu iela 35; Maskavas iela 324");
+        assertThat(circlePetrolPriceModel.getDieselProBestPriceAddress()).isEqualTo(PRICE_FOR_ALL_STATIONS);
+        assertThat(circlePetrolPriceModel.getGasBestPriceAddress()).isEqualTo(PRICE_FOR_ALL_STATIONS);
     }
 
     private String returnContent() {
