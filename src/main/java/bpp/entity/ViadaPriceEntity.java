@@ -31,35 +31,35 @@ public class ViadaPriceEntity extends BaseEntity {
     @Column(length = 36, nullable = false, updatable = false)
     private UUID id;
     @Enumerated(value = EnumType.STRING)
-    @Column(nullable = false)
+    @Column
     private Country country;
-    @Column(nullable = false)
+    @Column
     private BigDecimal petrolEcto;
-    @Column(nullable = false)
+    @Column
     private String petrolEctoBestPriceAddress;
-    @Column(nullable = false)
+    @Column
     private BigDecimal petrolEctoPlus;
-    @Column(nullable = false)
+    @Column
     private String petrolEctoPlusBestPriceAddress;
-    @Column(nullable = false)
+    @Column
     private BigDecimal petrolPro;
-    @Column(nullable = false)
+    @Column
     private String petrolProBestPriceAddress;
-    @Column(nullable = false)
+    @Column
     private BigDecimal diesel;
-    @Column(nullable = false)
+    @Column
     private String dieselBestPriceAddress;
-    @Column(nullable = false)
+    @Column
     private BigDecimal dieselEcto;
-    @Column(nullable = false)
+    @Column
     private String dieselEctoBestPriceAddress;
-    @Column(nullable = false)
+    @Column
     private BigDecimal gas;
-    @Column(nullable = false)
+    @Column
     private String gasBestPriceAddress;
-    @Column(nullable = false)
+    @Column
     private BigDecimal petrolEco;
-    @Column(nullable = false)
+    @Column
     private String petrolEcoBestPriceAddress;
 
     @Override

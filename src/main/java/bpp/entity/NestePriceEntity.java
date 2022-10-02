@@ -31,23 +31,23 @@ public class NestePriceEntity extends BaseEntity {
     @Column(length = 36, nullable = false, updatable = false)
     private UUID id;
     @Enumerated(value = EnumType.STRING)
-    @Column(nullable = false)
+    @Column
     private Country country;
-    @Column(nullable = false)
+    @Column
     private BigDecimal petrol;
-    @Column(nullable = false)
+    @Column
     private String petrolBestPriceAddress;
-    @Column(nullable = false)
+    @Column
     private BigDecimal petrolPro;
-    @Column(nullable = false)
+    @Column
     private String petrolProBestPriceAddress;
-    @Column(nullable = false)
+    @Column
     private BigDecimal diesel;
-    @Column(nullable = false)
+    @Column
     private String dieselBestPriceAddress;
-    @Column(nullable = false)
+    @Column
     private BigDecimal dieselPro;
-    @Column(nullable = false)
+    @Column
     private String dieselProBestPriceAddress;
 
     @Override
