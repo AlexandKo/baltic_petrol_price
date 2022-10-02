@@ -11,15 +11,13 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.LastModifiedBy;
 
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
 @MappedSuperclass
-abstract class BaseEntity {
+public abstract class BaseEntity {
     @Version
     @Column(nullable = false)
     private Long entityVersion;

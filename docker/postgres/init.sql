@@ -93,3 +93,18 @@ CREATE TABLE IF NOT EXISTS petrol_station.viada
     petrol_eco_best_price_address       TEXT
 );
 
+CREATE UNIQUE INDEX circle_created_date_index
+    ON petrol_station.circle (created_date DESC);
+
+CREATE UNIQUE INDEX gotika_created_date_index
+    ON petrol_station.gotika (created_date DESC);
+
+CREATE UNIQUE INDEX neste_created_date_index
+    ON petrol_station.neste (created_date DESC);
+
+CREATE UNIQUE INDEX viada_created_date_index
+    ON petrol_station.viada (created_date DESC);
+
+CREATE UNIQUE INDEX virshi_created_date_index
+    ON petrol_station.virsi (created_date DESC);
+

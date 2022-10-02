@@ -22,6 +22,7 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.11'
 
     implementation 'net.sourceforge.htmlunit:htmlunit:2.64.0'
+    implementation 'org.knowm.xchart:xchart:3.8.2'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
