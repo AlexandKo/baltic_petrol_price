@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class LvStatisticController {
     private static final int EMPTY_ARRAY = 0;
-    private static final int RESPONSE_CODE = 204;
+    private static final int RESPONSE_CODE = 404;
     private static final String CREATE_CHART_CREATION_ERROR = "Error during created a Neste petrol station statistics";
     private final NesteStatisticService nesteStatistic;
 
