@@ -21,6 +21,7 @@ public class PetrolChart {
     private static final String Y_AXIS_NAME = "Price, EUR";
     private static final String CHART_FILE_FORMAT = "png";
     private static final String CREATE_CHART_CREATION_ERROR = "Error during created a petrol station statistics";
+    private static final double MAX_PRICE_Y_AXIS = 5d;
     private CategoryChart petrolCategoryChart;
 
     @PostConstruct
@@ -29,7 +30,7 @@ public class PetrolChart {
                 .xAxisTitle(X_AXIS_NAME)
                 .yAxisTitle(Y_AXIS_NAME)
                 .build();
-        petrolCategoryChart.getStyler().setYAxisMax(5D);
+        petrolCategoryChart.getStyler().setYAxisMax(MAX_PRICE_Y_AXIS);
     }
 
     public byte[] createPetrolChart(List<ChartCategoryModel> chartCategoryModelList, List<String> date) {
