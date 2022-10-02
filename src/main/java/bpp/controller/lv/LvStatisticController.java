@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/lv/petrol/statistic")
 @RequiredArgsConstructor
 public class LvStatisticController {
+    private static final int EMPTY_ARRAY = 0;
     private static final int RESPONSE_CODE = 204;
     private static final String CREATE_CHART_CREATION_ERROR = "Error during created a Neste petrol station statistics";
     private final NesteStatisticService nesteStatistic;
@@ -50,6 +51,6 @@ public class LvStatisticController {
     }
 
     private boolean isStatisticChartEmpty(byte[] weeklyStatisticChart) {
-        return weeklyStatisticChart.length == 0;
+        return weeklyStatisticChart.length == EMPTY_ARRAY;
     }
 }
