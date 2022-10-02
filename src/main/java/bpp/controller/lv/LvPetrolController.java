@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/lv/petrol", produces = "application/json")
+@RequestMapping(path = "/lv/petrol", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class LvPetrolController {
     private final NesteContentWebClient nesteContentWebClient;

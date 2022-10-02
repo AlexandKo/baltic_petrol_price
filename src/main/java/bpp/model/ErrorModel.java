@@ -12,6 +12,6 @@ public class ErrorModel {
     private int id;
     @Schema(example = "LV")
     private Country country;
-    @Schema(example = "Error during connect to resource")
+    @Schema(example = "Error description")
     private String errorMessage;
 }
