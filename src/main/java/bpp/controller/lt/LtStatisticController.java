@@ -2,7 +2,7 @@ package bpp.controller.lt;
 
 import bpp.controller.StatisticsBaseController;
 import bpp.model.ErrorModel;
-import bpp.service.lv.statistic.CircleStatisticService;
+import bpp.service.statistics.CircleStatisticService;
 import bpp.util.Country;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

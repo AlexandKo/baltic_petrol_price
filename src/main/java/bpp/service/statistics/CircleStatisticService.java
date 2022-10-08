@@ -1,4 +1,4 @@
-package bpp.service.lv.statistic;
+package bpp.service.statistics;
 
 import bpp.entity.CirclePriceEntity;
 import bpp.model.ChartCategoryModel;

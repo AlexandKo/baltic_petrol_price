@@ -2,7 +2,7 @@ package bpp.controller.lv;
 
 import bpp.controller.StatisticsBaseController;
 import bpp.model.ErrorModel;
-import bpp.service.lv.statistic.CircleStatisticService;
+import bpp.service.statistics.CircleStatisticService;
 import bpp.service.lv.statistic.GotikaStatisticService;
 import bpp.service.lv.statistic.NesteStatisticService;
 import bpp.service.lv.statistic.ViadaStatisticService;
