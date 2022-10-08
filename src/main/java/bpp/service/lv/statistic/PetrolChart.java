@@ -8,11 +8,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategoryChartBuilder;
+import org.knowm.xchart.CategorySeries;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,17 +24,20 @@ public class PetrolChart {
     private static final double MAX_PRICE_Y_AXIS = 5d;
     private CategoryChart petrolCategoryChart;
 
-    @PostConstruct
-    private void init() {
+    private void createNewChart() {
         petrolCategoryChart = new CategoryChartBuilder()
                 .xAxisTitle(X_AXIS_NAME)
                 .yAxisTitle(Y_AXIS_NAME)
                 .build();
         petrolCategoryChart.getStyler().setYAxisMax(MAX_PRICE_Y_AXIS);
+        petrolCategoryChart.setTitle("Petrol station statistic");
+        petrolCategoryChart.getStyler().setDefaultSeriesRenderStyle(CategorySeries.CategorySeriesRenderStyle.Bar);
+        petrolCategoryChart.getStyler().setLabelsVisible(true);
     }
 
     public byte[] createPetrolChart(List<ChartCategoryModel> chartCategoryModelList, List<String> date) {
         try {
+            createNewChart();
             chartCategoryModelList.forEach(i -> petrolCategoryChart.addSeries(i.getCategoryName(), date, i.getCategoryValue()));
 
             byte[] bytes = BitmapEncoder.getBitmapBytes(petrolCategoryChart, BitmapEncoder.BitmapFormat.PNG);
