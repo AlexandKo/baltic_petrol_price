@@ -3,6 +3,7 @@ package bpp.controller.lv;
 import bpp.model.ErrorModel;
 import bpp.service.lv.statistic.GotikaStatisticService;
 import bpp.service.lv.statistic.NesteStatisticService;
+import bpp.service.lv.statistic.VirsiStatisticService;
 import bpp.util.Country;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,6 +27,7 @@ public class LvStatisticController {
     private static final String CREATE_CHART_CREATION_ERROR = "Error during created a Neste petrol station statistics";
     private final NesteStatisticService nesteStatistic;
     private final GotikaStatisticService gotikaStatisticService;
+    private final VirsiStatisticService virsiStatisticService;
 
     @GetMapping("/neste")
     @Operation(description = "Return weekly statistics for Neste Gas Station Latvia", method = "GET")
@@ -45,6 +47,16 @@ public class LvStatisticController {
     })
     public ResponseEntity<Object> getGotikaStatistic() {
         return createResponse(gotikaStatisticService.getWeeklyStatisticChart());
+    }
+
+    @GetMapping("/virsi")
+    @Operation(description = "Return weekly statistics for Virshi Gas Station Latvia", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Return statistic chart png format", content = {@Content(mediaType = MediaType.IMAGE_PNG_VALUE)}),
+            @ApiResponse(responseCode = "404", description = "Not found data for statistic", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
+    })
+    public ResponseEntity<Object> getVirsiStatistic() {
+        return createResponse(virsiStatisticService.getWeeklyStatisticChart());
     }
 
     private ResponseEntity<Object> createResponse(byte[] weeklyStatisticChart) {
