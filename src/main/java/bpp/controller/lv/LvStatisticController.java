@@ -1,5 +1,6 @@
 package bpp.controller.lv;
 
+import bpp.controller.StatisticsBaseController;
 import bpp.model.ErrorModel;
 import bpp.service.lv.statistic.CircleStatisticService;
 import bpp.service.lv.statistic.GotikaStatisticService;
@@ -12,7 +13,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/lv/petrol/statistic")
 @RequiredArgsConstructor
-public class LvStatisticController {
-    private static final int EMPTY_ARRAY = 0;
-    private static final int RESPONSE_CODE = 404;
-    private static final String CREATE_CHART_CREATION_ERROR = "Error during created a Neste petrol station statistics";
+public class LvStatisticController extends StatisticsBaseController {
     private final NesteStatisticService nesteStatistic;
     private final GotikaStatisticService gotikaStatisticService;
     private final VirsiStatisticService virsiStatisticService;
@@ -38,7 +35,7 @@ public class LvStatisticController {
             @ApiResponse(responseCode = "404", description = "Not found data for statistic", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
     })
     public ResponseEntity<Object> getNesteStatistic() {
-        return createResponse(nesteStatistic.getWeeklyStatisticChart());
+        return createStatisticsResponse(nesteStatistic.getWeeklyStatisticChart());
     }
 
     @GetMapping("/gotika")
@@ -48,7 +45,7 @@ public class LvStatisticController {
             @ApiResponse(responseCode = "404", description = "Not found data for statistic", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
     })
     public ResponseEntity<Object> getGotikaStatistic() {
-        return createResponse(gotikaStatisticService.getWeeklyStatisticChart());
+        return createStatisticsResponse(gotikaStatisticService.getWeeklyStatisticChart());
     }
 
     @GetMapping("/virsi")
@@ -58,7 +55,7 @@ public class LvStatisticController {
             @ApiResponse(responseCode = "404", description = "Not found data for statistic", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
     })
     public ResponseEntity<Object> getVirsiStatistic() {
-        return createResponse(virsiStatisticService.getWeeklyStatisticChart());
+        return createStatisticsResponse(virsiStatisticService.getWeeklyStatisticChart());
     }
 
     @GetMapping("/circlek")
@@ -68,27 +65,6 @@ public class LvStatisticController {
             @ApiResponse(responseCode = "404", description = "Not found data for statistic", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
     })
     public ResponseEntity<Object> getCircleKStatistic() {
-        return createResponse(circleStatisticService.getWeeklyStatisticChart());
-    }
-
-    private ResponseEntity<Object> createResponse(byte[] weeklyStatisticChart) {
-        if (isStatisticChartEmpty(weeklyStatisticChart)) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body(ErrorModel.builder()
-                            .id(RESPONSE_CODE)
-                            .country(Country.LV)
-                            .errorMessage(CREATE_CHART_CREATION_ERROR)
-                            .build());
-        }
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .contentType(MediaType.IMAGE_PNG)
-                .body(weeklyStatisticChart);
-    }
-
-    private boolean isStatisticChartEmpty(byte[] weeklyStatisticChart) {
-        return weeklyStatisticChart.length == EMPTY_ARRAY;
+        return createStatisticsResponse(circleStatisticService.getWeeklyStatisticChart(Country.LV));
     }
 }

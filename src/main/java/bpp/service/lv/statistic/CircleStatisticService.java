@@ -22,11 +22,11 @@ public class CircleStatisticService {
     private final CirclePriceRepository circlePriceRepository;
     private final PetrolChart petrolChart;
 
-    public byte[] getWeeklyStatisticChart() {
+    public byte[] getWeeklyStatisticChart(Country country) {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         List<CirclePriceEntity> circlePriceEntitiesWeeklyList = circlePriceRepository
-                .findTop5ByCreatedDateBeforeAndCountryOrderByCreatedDateDesc(localDateTime, Country.LV);
+                .findTop5ByCreatedDateBeforeAndCountryOrderByCreatedDateDesc(localDateTime, country);
 
         ChartCategoryModel petrolCategory = getPetrolCategoryModel(circlePriceEntitiesWeeklyList);
 
