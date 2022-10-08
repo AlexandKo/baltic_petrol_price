@@ -1,6 +1,7 @@
 package bpp.controller.lv;
 
 import bpp.model.ErrorModel;
+import bpp.service.lv.statistic.CircleStatisticService;
 import bpp.service.lv.statistic.GotikaStatisticService;
 import bpp.service.lv.statistic.NesteStatisticService;
 import bpp.service.lv.statistic.VirsiStatisticService;
@@ -28,6 +29,7 @@ public class LvStatisticController {
     private final NesteStatisticService nesteStatistic;
     private final GotikaStatisticService gotikaStatisticService;
     private final VirsiStatisticService virsiStatisticService;
+    private final CircleStatisticService circleStatisticService;
 
     @GetMapping("/neste")
     @Operation(description = "Return weekly statistics for Neste Gas Station Latvia", method = "GET")
@@ -57,6 +59,16 @@ public class LvStatisticController {
     })
     public ResponseEntity<Object> getVirsiStatistic() {
         return createResponse(virsiStatisticService.getWeeklyStatisticChart());
+    }
+
+    @GetMapping("/circlek")
+    @Operation(description = "Return weekly statistics for CircleK Gas Station Latvia", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Return statistic chart png format", content = {@Content(mediaType = MediaType.IMAGE_PNG_VALUE)}),
+            @ApiResponse(responseCode = "404", description = "Not found data for statistic", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
+    })
+    public ResponseEntity<Object> getCircleKStatistic() {
+        return createResponse(circleStatisticService.getWeeklyStatisticChart());
     }
 
     private ResponseEntity<Object> createResponse(byte[] weeklyStatisticChart) {
