@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ViadaPriceRepository extends CrudRepository<ViadaPriceEntity, UUID> {
+    List<ViadaPriceEntity> findTop5ByCreatedDateBeforeOrderByCreatedDateDesc(LocalDateTime createdDate);
 }
