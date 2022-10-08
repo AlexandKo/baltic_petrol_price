@@ -1,4 +1,4 @@
-package bpp.service.lv.statistic;
+package bpp.service.chart;
 
 import bpp.exception.StatisticChartException;
 import bpp.model.ChartCategoryModel;

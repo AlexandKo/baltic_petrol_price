@@ -2,6 +2,7 @@ package bpp.service.lv.statistic;
 
 import bpp.entity.NestePriceEntity;
 import bpp.repository.NestePriceRepository;
+import bpp.service.chart.PetrolChart;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

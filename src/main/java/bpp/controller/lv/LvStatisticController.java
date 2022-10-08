@@ -1,6 +1,7 @@
 package bpp.controller.lv;
 
 import bpp.model.ErrorModel;
+import bpp.service.lv.statistic.GotikaStatisticService;
 import bpp.service.lv.statistic.NesteStatisticService;
 import bpp.util.Country;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,16 +25,29 @@ public class LvStatisticController {
     private static final int RESPONSE_CODE = 404;
     private static final String CREATE_CHART_CREATION_ERROR = "Error during created a Neste petrol station statistics";
     private final NesteStatisticService nesteStatistic;
+    private final GotikaStatisticService gotikaStatisticService;
 
     @GetMapping("/neste")
-    @Operation(description = "Return monthly statistics for Neste Gas Station Latvia", method = "GET")
+    @Operation(description = "Return weekly statistics for Neste Gas Station Latvia", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Return statistic chart png format", content = {@Content(mediaType = MediaType.IMAGE_PNG_VALUE)}),
             @ApiResponse(responseCode = "404", description = "Not found data for statistic", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
     })
     public ResponseEntity<Object> getNesteStatistic() {
-        byte[] weeklyStatisticChart = nesteStatistic.getWeeklyStatisticChart();
+        return createResponse(nesteStatistic.getWeeklyStatisticChart());
+    }
 
+    @GetMapping("/gotika")
+    @Operation(description = "Return weekly statistics for Gotika Gas Station Latvia", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Return statistic chart png format", content = {@Content(mediaType = MediaType.IMAGE_PNG_VALUE)}),
+            @ApiResponse(responseCode = "404", description = "Not found data for statistic", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
+    })
+    public ResponseEntity<Object> getGotikaStatistic() {
+        return createResponse(gotikaStatisticService.getWeeklyStatisticChart());
+    }
+
+    private ResponseEntity<Object> createResponse(byte[] weeklyStatisticChart) {
         if (isStatisticChartEmpty(weeklyStatisticChart)) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)

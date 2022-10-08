@@ -3,6 +3,7 @@ package bpp.service.lv.statistic;
 import bpp.entity.NestePriceEntity;
 import bpp.model.ChartCategoryModel;
 import bpp.repository.NestePriceRepository;
+import bpp.service.chart.PetrolChart;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
