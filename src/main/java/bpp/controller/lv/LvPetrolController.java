@@ -70,8 +70,9 @@ public class LvPetrolController {
                     .body(circleClientResponse.getResponseModel());
         }
 
-        return ResponseEntity.ok()
-                .body(circleClientResponse);
+        return ResponseEntity
+                .ok()
+                .body(circleClientResponse.getResponseModel());
     }
 
     @GetMapping("/gotika")
@@ -89,8 +90,9 @@ public class LvPetrolController {
                     .body(gotikaClientResponse.getResponseModel());
         }
 
-        return ResponseEntity.ok()
-                .body(gotikaClientResponse);
+        return ResponseEntity
+                .ok()
+                .body(gotikaClientResponse.getResponseModel());
     }
 
     @GetMapping("/viada")
@@ -108,8 +110,9 @@ public class LvPetrolController {
                     .body(viadaClientResponse.getResponseModel());
         }
 
-        return ResponseEntity.ok()
-                .body(viadaClientResponse);
+        return ResponseEntity
+                .ok()
+                .body(viadaClientResponse.getResponseModel());
     }
 
     @GetMapping("/virsi")
@@ -127,7 +130,8 @@ public class LvPetrolController {
                     .body(virsiClientResponse.getResponseModel());
         }
 
-        return ResponseEntity.ok()
-                .body(virsiClientResponse);
+        return ResponseEntity
+                .ok()
+                .body(virsiClientResponse.getResponseModel());
     }
 }

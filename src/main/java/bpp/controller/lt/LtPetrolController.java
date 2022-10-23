@@ -38,7 +38,8 @@ public class LtPetrolController {
                     .body(circleClientResponse.getResponseModel());
         }
 
-        return ResponseEntity.ok()
-                .body(circleClientResponse);
+        return ResponseEntity
+                .ok()
+                .body(circleClientResponse.getResponseModel());
     }
 }
