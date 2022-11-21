@@ -26,13 +26,13 @@ import static bpp.util.PetrolNames.PETROL_PRO_BEST_PRICE_ADDRESS;
 
 @Component
 public class VirsiContentWebClient extends ContentWebClient<Response<?>> {
-    private static final String VIRSI_SEARCH_PRICE_PATTERN = "" +
+    private static final String VIRSI_SEARCH_PRICE_PATTERN = "DD." +
             "(?<diesel>\\d.?\\d{3})(\\n)" +
-            "(?<dieselBestPriceAddress>.*)(\\n.*\\n)" +
+            "(?<dieselBestPriceAddress>.*)(\\n)" + "95E." +
             "(?<petrol95>\\d.?\\d{3})(\\n)" +
-            "(?<petrol95BestPriceAddress>.*)(\\n.*\\n)" +
+            "(?<petrol95BestPriceAddress>.*)(\\n)" + "98E." +
             "(?<petrol98>\\d.?\\d{3})(\\n)" +
-            "(?<petrol98BestPriceAddress>.*)(\\n.*\\n)(\\d.?\\d{3})(\\n)(.*)(\\n.*\\n)" +
+            "(?<petrol98BestPriceAddress>.*)(\\n.*\\n)(.*\\n)" + "LPG." +
             "(?<gas>\\d.?\\d{3})(\\n)" +
             "(?<gasBestPriceAddress>.*)";
     @Value("${virsi.lv_price_link}")
