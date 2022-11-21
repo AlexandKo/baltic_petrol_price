@@ -59,10 +59,10 @@ class VirsiContentWebClientTest {
         VirsiPetrolPriceModel virsiPetrolPriceModel = (VirsiPetrolPriceModel) response.getResponseModel();
         // Assert
         assertThat(virsiPetrolPriceModel.getId()).isEqualTo(200);
-        assertThat(virsiPetrolPriceModel.getPetrol()).isEqualTo(new BigDecimal("1.697"));
-        assertThat(virsiPetrolPriceModel.getPetrolPro()).isEqualTo(new BigDecimal("1.737"));
-        assertThat(virsiPetrolPriceModel.getDiesel()).isEqualTo(new BigDecimal("1.757"));
-        assertThat(virsiPetrolPriceModel.getGas()).isEqualTo(new BigDecimal("0.825"));
+        assertThat(virsiPetrolPriceModel.getPetrol()).isEqualTo(new BigDecimal("1.757"));
+        assertThat(virsiPetrolPriceModel.getPetrolPro()).isEqualTo(new BigDecimal("1.797"));
+        assertThat(virsiPetrolPriceModel.getDiesel()).isEqualTo(new BigDecimal("1.877"));
+        assertThat(virsiPetrolPriceModel.getGas()).isEqualTo(new BigDecimal("0.835"));
     }
 
     @Test
@@ -87,36 +87,22 @@ class VirsiContentWebClientTest {
 
     private String returnContent() {
         return "Degvielas cenas\n" +
-                "dd\n" +
-                "1.757\n" +
+                "DD 1.877\n" +
                 "Satekles iela 2, RĪga, LV-1050\n" +
-                "95e\n" +
-                "1.697\n" +
+                "95E 1.757\n" +
                 "Satekles iela 2, RĪga, LV-1050\n" +
-                "98e\n" +
-                "1737\n" +
+                "98E 1.797\n" +
                 "Satekles iela 2, RĪga, LV-1050\n" +
-                "cng\n" +
-                "5.075\n" +
+                "CNG 3.395\n" +
                 "Lubānas iela 102a, Rīga, LV-1021\n" +
-                "lpg\n" +
-                "0.825\n" +
+                "LPG 0.835\n" +
                 "Uzvaras bulvāris 16, Rīga, LV-1048\n" +
-                "dd\n" +
-                "1.757\n" +
-                "Satekles iela 2, RĪga, LV-1050\n" +
-                "95e\n" +
-                "1.697\n" +
-                "Satekles iela 2, RĪga, LV-1050\n" +
-                "98e\n" +
-                "1737\n" +
-                "Satekles iela 2, RĪga, LV-1050\n" +
-                "cng\n" +
-                "5.075\n" +
-                "Lubānas iela 102a, Rīga, LV-1021\n" +
-                "lpg\n" +
-                "0.825\n" +
-                "Uzvaras bulvāris 16, Rīga, LV-1048\n" +
-                "Lai darītāji vienmēr būtu  informēti par Viršu izdevīgākajiem piedāvājumiem, regulāri atjaunojam aktuālo informāciju par labākajām degvielas cenām Rīgas un Pierīgas Viršu spēka stacijās.";
+                "Elektrouzlādes cenas\n" +
+                "CCS 2 40kW 0.39 EUR/kWh\n" +
+                "Varoņu iela 10, Jēkabpils, LV-5202\n" +
+                "CCS 2 80kW 0.49 EUR/kWh\n" +
+                "Varoņu iela 10, Jēkabpils, LV-5202\n" +
+                "CHAdeMO 40kW 0.39 EUR/kWh\n" +
+                "Varoņu iela 10, Jēkabpils, LV-5202";
     }
 }
