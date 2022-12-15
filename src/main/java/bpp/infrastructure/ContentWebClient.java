@@ -3,10 +3,10 @@ package bpp.infrastructure;
 import bpp.model.WebPageResponseModel;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import jakarta.annotation.PostConstruct;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import javax.annotation.PostConstruct;
 
 import static bpp.util.MessageCodes.WEB_CLIENT_CONNECTION_FAILED;
 import static bpp.util.MessageCodes.WEB_CLIENT_CONNECTION_SUCCESSFULLY;

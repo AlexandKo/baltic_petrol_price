@@ -6,9 +6,9 @@ import bpp.model.GotikaPetrolPriceModel;
 import bpp.model.Response;
 import bpp.model.WebPageResponseModel;
 import bpp.util.Country;
+import jakarta.annotation.PostConstruct;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
