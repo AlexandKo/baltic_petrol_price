@@ -7,8 +7,10 @@ import bpp.model.Response;
 import bpp.model.WebPageResponseModel;
 import bpp.util.Country;
 import jakarta.annotation.PostConstruct;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -27,9 +29,8 @@ import static bpp.util.PetrolNames.PETROL_PRO_BEST_PRICE_ADDRESS;
 
 @Component
 public class CircleContentWebClient extends ContentWebClient<Response<?>> {
-    private static final String FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN = "(.*\\n)";
-    private static final String CIRCLEK_SEARCH_PRICE_PATTERN = "" +
-            "(?<petrol95>\\d.?\\d{3})" + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN +
+    private static final String FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN = "(.*\\t)";
+    private static final String CIRCLEK_SEARCH_PRICE_PATTERN = "(?<petrol95>\\d.?\\d{3})" + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN +
             "(?<petrol95BestPriceAddress>.*)" + "(\\n.* \\d{2}\\t)" +
             "(?<petrol98>\\d.?\\d{3})" + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN +
             "(?<petrol98BestPriceAddress>.*)(\\n.* D\\t)" +
