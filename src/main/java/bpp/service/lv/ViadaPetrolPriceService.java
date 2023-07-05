@@ -44,8 +44,7 @@ public class ViadaPetrolPriceService implements PetrolPriceService {
         }
 
         if (viadaPetrolPriceResponse.getResponseModel() != null) {
-            if (viadaPetrolPriceResponse.getResponseModel() instanceof ErrorModel) {
-                ErrorModel errorModel = (ErrorModel) viadaPetrolPriceResponse.getResponseModel();
+            if (viadaPetrolPriceResponse.getResponseModel() instanceof ErrorModel errorModel) {
                 log.error(String.format(NOT_FOUND_ERROR, PETROL_STATION, errorModel.getCountry()));
                 return;
             }

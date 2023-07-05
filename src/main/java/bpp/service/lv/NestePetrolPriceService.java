@@ -44,8 +44,7 @@ public class NestePetrolPriceService implements PetrolPriceService {
         }
 
         if (nestePetrolPriceResponse.getResponseModel() != null) {
-            if (nestePetrolPriceResponse.getResponseModel() instanceof ErrorModel) {
-                ErrorModel errorModel = (ErrorModel) nestePetrolPriceResponse.getResponseModel();
+            if (nestePetrolPriceResponse.getResponseModel() instanceof ErrorModel errorModel) {
                 log.error(String.format(NOT_FOUND_ERROR, PETROL_STATION, errorModel.getCountry()));
                 return;
             }

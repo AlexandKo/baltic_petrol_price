@@ -46,6 +46,9 @@ public abstract class ContentWebClient<T> {
         if (price.contains(".")) {
             return new BigDecimal(price);
         }
+        if (price.contains(",")) {
+            return new BigDecimal(price.replace(",", "."));
+        }
         return new BigDecimal(price).divide(new BigDecimal("1000"), 3, RoundingMode.DOWN);
     }
 

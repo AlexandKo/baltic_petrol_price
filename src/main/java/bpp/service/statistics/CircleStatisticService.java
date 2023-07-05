@@ -5,11 +5,11 @@ import bpp.model.ChartCategoryModel;
 import bpp.repository.CirclePriceRepository;
 import bpp.service.chart.PetrolChart;
 import bpp.util.Country;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -34,14 +34,14 @@ public class CircleStatisticService {
 
         ChartCategoryModel dieselCategory = getDieselCategoryModel(circlePriceEntitiesWeeklyList);
 
-        ChartCategoryModel dieseProlCategory = getDieselProCategoryModel(circlePriceEntitiesWeeklyList);
+        ChartCategoryModel dieselProCategory = getDieselProCategoryModel(circlePriceEntitiesWeeklyList);
 
         ChartCategoryModel gasCategory = getGasCategoryModel(circlePriceEntitiesWeeklyList);
 
         List<String> dateList = getDatesList(circlePriceEntitiesWeeklyList);
 
         List<ChartCategoryModel> chartCategoryModelList = List.of(petrolCategory, petrolProCategory, dieselCategory,
-                dieseProlCategory, gasCategory);
+                dieselProCategory, gasCategory);
 
         return petrolChart.createPetrolChart(chartCategoryModelList, dateList);
     }
@@ -50,7 +50,8 @@ public class CircleStatisticService {
         List<Number> petrolPriceList = circlePriceEntitiesWeeklyList
                 .stream()
                 .map(CirclePriceEntity::getPetrol)
-                .collect(Collectors.toList());
+                .map(i -> (Number) i)
+                .toList();
 
         return ChartCategoryModel
                 .builder()
@@ -63,7 +64,8 @@ public class CircleStatisticService {
         List<Number> petrolProPriceList = circlePriceEntitiesWeeklyList
                 .stream()
                 .map(CirclePriceEntity::getPetrolPro)
-                .collect(Collectors.toList());
+                .map(i -> (Number) i)
+                .toList();
 
         return ChartCategoryModel
                 .builder()
@@ -76,7 +78,8 @@ public class CircleStatisticService {
         List<Number> dieselPriceList = circlePriceEntitiesWeeklyList
                 .stream()
                 .map(CirclePriceEntity::getDiesel)
-                .collect(Collectors.toList());
+                .map(i -> (Number) i)
+                .toList();
 
         return ChartCategoryModel
                 .builder()
@@ -89,7 +92,8 @@ public class CircleStatisticService {
         List<Number> dieselProPriceList = circlePriceEntitiesWeeklyList
                 .stream()
                 .map(CirclePriceEntity::getDieselPro)
-                .collect(Collectors.toList());
+                .map(i -> (Number) i)
+                .toList();
 
         return ChartCategoryModel
                 .builder()
@@ -102,7 +106,8 @@ public class CircleStatisticService {
         List<Number> dieselProPriceList = circlePriceEntitiesWeeklyList
                 .stream()
                 .map(CirclePriceEntity::getGas)
-                .collect(Collectors.toList());
+                .map(i -> (Number) i)
+                .toList();
 
         return ChartCategoryModel
                 .builder()
@@ -115,7 +120,7 @@ public class CircleStatisticService {
         return circlePriceEntitiesWeeklyList
                 .stream()
                 .map(i -> getDate(i.getCreatedDate()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private String getDate(LocalDateTime localDateTime) {

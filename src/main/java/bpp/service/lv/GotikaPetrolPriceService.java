@@ -44,16 +44,15 @@ public class GotikaPetrolPriceService implements PetrolPriceService {
         }
 
         if (gotikaPetrolPriceResponse.getResponseModel() != null) {
-            if (gotikaPetrolPriceResponse.getResponseModel() instanceof ErrorModel) {
-                ErrorModel errorModel = (ErrorModel) gotikaPetrolPriceResponse.getResponseModel();
+            if (gotikaPetrolPriceResponse.getResponseModel() instanceof ErrorModel errorModel) {
                 log.error(String.format(NOT_FOUND_ERROR, PETROL_STATION, errorModel.getCountry()));
                 return;
             }
             GotikaPetrolPriceModel gotikaPetrolPriceModel = (GotikaPetrolPriceModel) gotikaPetrolPriceResponse.getResponseModel();
-            GotikaPriceEntity nestePriceEntity = GotikaPriceMapper.toGotikaPriceEntity(gotikaPetrolPriceModel);
+            GotikaPriceEntity gotikaPriceEntity = GotikaPriceMapper.toGotikaPriceEntity(gotikaPetrolPriceModel);
 
-            gotikaPriceRepository.save(nestePriceEntity);
-            log.info(String.format(NEW_RECORD_INFO, PETROL_STATION, nestePriceEntity.getCountry()));
+            gotikaPriceRepository.save(gotikaPriceEntity);
+            log.info(String.format(NEW_RECORD_INFO, PETROL_STATION, gotikaPriceEntity.getCountry()));
         }
     }
 }
