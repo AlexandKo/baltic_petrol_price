@@ -2,7 +2,7 @@ spring:
   datasource:
     platform: postgres
     continue-on-error: false
-    url: jdbc:postgresql://localhost:5436/petrol_price
+    url: ${DB_URL}
     username: postgres
     password: password
     driver-class-name: org.postgresql.Driver
@@ -20,7 +20,7 @@ spring:
 server:
   port: 9000
 bpp:
-  cron: 0 0 10 * * ?
+  update_time: 0 0 11 * * ?
 neste:
   lv_price_link: http://www.neste.lv/lv/content/degvielas-cenas
 circleK:

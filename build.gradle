@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id "org.springframework.boot" version "3.1.1"
 }
 
 group 'org.bpp'
@@ -28,6 +29,17 @@ dependencies {
     testImplementation 'com.h2database:h2:2.1.214'
     testCompileOnly 'org.projectlombok:lombok:1.18.28'
     testAnnotationProcessor "org.projectlombok:lombok:1.18.28"
+}
+
+bootJar {
+    enabled = true
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'bpp.BppApplication'
+    }
+    enabled = false
 }
 
 test {

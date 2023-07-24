@@ -14,7 +14,7 @@ import java.util.List;
 public class PetrolPriceScheduleTask {
     private final List<PetrolPriceService> petrolPriceServiceList;
 
-    @Scheduled(cron = "1 * * * * ?")
+    @Scheduled(cron = "${bpp.update_time}")
     public void scheduleTask() {
         petrolPriceServiceList.forEach(PetrolPriceService::savePetrolPrice);
     }
