@@ -1,17 +1,9 @@
 package bpp.controller.lv;
 
-import bpp.infrastructure.lv.CircleContentWebClient;
-import bpp.infrastructure.lv.GotikaContentWebClient;
-import bpp.infrastructure.lv.NesteContentWebClient;
-import bpp.infrastructure.lv.ViadaContentWebClient;
-import bpp.infrastructure.lv.VirsiContentWebClient;
-import bpp.model.CirclePetrolPriceModel;
-import bpp.model.ErrorModel;
-import bpp.model.GotikaPetrolPriceModel;
-import bpp.model.NestePetrolPriceModel;
-import bpp.model.Response;
-import bpp.model.ViadaPetrolPriceModel;
-import bpp.model.VirsiPetrolPriceModel;
+import bpp.infrastructure.lv.*;
+import bpp.model.*;
+import bpp.service.lv.DailyPriceService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -29,11 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/lv/petrol", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class LvPetrolController {
+    private static final String DAILY_PRICE_EXAMPLE_OBJECT = "{\"date\":\"2023-07-26\",\"petrolPrice\":[{\"Gotika\":1.587}],\"dieselPrice\":[{\"Gotika\":1.447}]}";
     private final NesteContentWebClient nesteContentWebClient;
     private final CircleContentWebClient circleContentWebClient;
     private final GotikaContentWebClient gotikaContentWebClient;
     private final ViadaContentWebClient viadaContentWebClient;
     private final VirsiContentWebClient virsiContentWebClient;
+    private final DailyPriceService dailyPriceService;
+    private final ObjectMapper objectMapper;
 
     @GetMapping("/neste")
     @Operation(description = "Return price list Neste Gas Station Latvia", method = "GET")
@@ -133,5 +128,17 @@ public class LvPetrolController {
         return ResponseEntity
                 .ok()
                 .body(virsiClientResponse.getResponseModel());
+    }
+
+    @GetMapping("/daily")
+    @Operation(description = "Return daily best prices list", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(example = DAILY_PRICE_EXAMPLE_OBJECT))}),
+            @ApiResponse(responseCode = "404", description = "Not found", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
+    })
+    public ResponseEntity<Object> getVBestPrice() {
+        DailyPriceModel dailyPriceModel = dailyPriceService.findBestDailyPrice();
+
+        return ResponseEntity.ok(dailyPriceModel);
     }
 }

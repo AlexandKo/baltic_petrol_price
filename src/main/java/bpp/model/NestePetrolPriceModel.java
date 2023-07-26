@@ -11,6 +11,7 @@ import lombok.Getter;
 public class NestePetrolPriceModel {
     @Schema(example = "200")
     private int id;
+    @Schema(example = "LV")
     private Country country;
     @Schema(example = "1.717")
     private BigDecimal petrol;

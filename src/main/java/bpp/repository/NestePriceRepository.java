@@ -1,14 +1,19 @@
 package bpp.repository;
 
 import bpp.entity.NestePriceEntity;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NestePriceRepository extends CrudRepository<NestePriceEntity, UUID> {
     List<NestePriceEntity> findTop5ByCreatedDateBeforeOrderByCreatedDateDesc(LocalDateTime createdDate);
 
+    @Query(value = "SELECT * FROM petrol_station.neste WHERE created_date <= :startDate AND created_date >= :endDate", nativeQuery = true)
+    NestePriceEntity searchLastDatePrices(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 }
