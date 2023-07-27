@@ -3,7 +3,6 @@ package bpp.controller.lv;
 import bpp.infrastructure.lv.*;
 import bpp.model.*;
 import bpp.service.lv.DailyPriceService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -28,7 +27,6 @@ public class LvPetrolController {
     private final ViadaContentWebClient viadaContentWebClient;
     private final VirsiContentWebClient virsiContentWebClient;
     private final DailyPriceService dailyPriceService;
-    private final ObjectMapper objectMapper;
 
     @GetMapping("/neste")
     @Operation(description = "Return price list Neste Gas Station Latvia", method = "GET")
@@ -137,8 +135,8 @@ public class LvPetrolController {
             @ApiResponse(responseCode = "404", description = "Not found", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
     })
     public ResponseEntity<Object> getVBestPrice() {
-        DailyPriceModel dailyPriceModel = dailyPriceService.findBestDailyPrice();
+        Response<DailyPriceModel> dailyPriceModel = dailyPriceService.findBestDailyPrice();
 
-        return ResponseEntity.ok(dailyPriceModel);
+        return ResponseEntity.ok(dailyPriceModel.getResponseModel());
     }
 }
