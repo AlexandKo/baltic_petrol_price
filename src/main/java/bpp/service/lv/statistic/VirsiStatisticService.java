@@ -24,7 +24,7 @@ public class VirsiStatisticService {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         List<VirsiPriceEntity> virsiPriceEntitiesWeeklyList = virsiPriceRepository
-                .findTop5ByCreatedDateBeforeOrderByCreatedDateDesc(localDateTime);
+                .findTop5ByCreatedDateBeforeOrderByCreatedDateAsc(localDateTime);
 
         ChartCategoryModel petrolCategory = getPetrolCategoryModel(virsiPriceEntitiesWeeklyList);
 

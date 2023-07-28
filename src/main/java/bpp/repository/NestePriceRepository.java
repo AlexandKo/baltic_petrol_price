@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Repository
 public interface NestePriceRepository extends CrudRepository<NestePriceEntity, UUID> {
-    List<NestePriceEntity> findTop5ByCreatedDateBeforeOrderByCreatedDateDesc(LocalDateTime createdDate);
+    List<NestePriceEntity> findTop5ByCreatedDateBeforeOrderByCreatedDateAsc(LocalDateTime createdDate);
 
     @Query(value = "SELECT * FROM petrol_station.neste WHERE created_date <= :startDate AND created_date >= :endDate", nativeQuery = true)
     NestePriceEntity searchLastDatePrices(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);

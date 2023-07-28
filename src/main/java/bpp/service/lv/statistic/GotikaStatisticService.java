@@ -22,7 +22,7 @@ public class GotikaStatisticService {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         List<GotikaPriceEntity> gotikaPriceEntitiesWeeklyList = gotikaPriceRepository
-                .findTop5ByCreatedDateBeforeOrderByCreatedDateDesc(localDateTime);
+                .findTop5ByCreatedDateBeforeOrderByCreatedDateAsc(localDateTime);
 
         ChartCategoryModel petrolCategory = getPetrolCategoryModel(gotikaPriceEntitiesWeeklyList);
 

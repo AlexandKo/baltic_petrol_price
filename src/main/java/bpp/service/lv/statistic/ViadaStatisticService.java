@@ -27,7 +27,7 @@ public class ViadaStatisticService {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         List<ViadaPriceEntity> viadaPriceEntitiesWeeklyList = viadaPriceRepository
-                .findTop5ByCreatedDateBeforeOrderByCreatedDateDesc(localDateTime);
+                .findTop5ByCreatedDateBeforeOrderByCreatedDateAsc(localDateTime);
 
         ChartCategoryModel petrolEctoCategory = getPetrolEctoCategoryModel(viadaPriceEntitiesWeeklyList);
 

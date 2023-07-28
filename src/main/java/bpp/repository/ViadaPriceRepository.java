@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Repository
 public interface ViadaPriceRepository extends CrudRepository<ViadaPriceEntity, UUID> {
-    List<ViadaPriceEntity> findTop5ByCreatedDateBeforeOrderByCreatedDateDesc(LocalDateTime createdDate);
+    List<ViadaPriceEntity> findTop5ByCreatedDateBeforeOrderByCreatedDateAsc(LocalDateTime createdDate);
 
     @Query(value = "SELECT * FROM petrol_station.viada WHERE created_date <= :startDate AND created_date >= :endDate", nativeQuery = true)
     ViadaPriceEntity searchLastDatePrices(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);

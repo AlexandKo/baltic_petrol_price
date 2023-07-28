@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GotikaPriceRepository extends CrudRepository<GotikaPriceEntity, UUID> {
-    List<GotikaPriceEntity> findTop5ByCreatedDateBeforeOrderByCreatedDateDesc(LocalDateTime createdDate);
+    List<GotikaPriceEntity> findTop5ByCreatedDateBeforeOrderByCreatedDateAsc(LocalDateTime createdDate);
 
     @Query(value = "SELECT * FROM petrol_station.gotika WHERE created_date <= :startDate AND created_date >= :endDate", nativeQuery = true)
     GotikaPriceEntity searchLastDatePrices(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);

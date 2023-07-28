@@ -24,7 +24,7 @@ public class NesteStatisticService {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         List<NestePriceEntity> nestePriceEntitiesWeeklyList = nestePriceRepository
-                .findTop5ByCreatedDateBeforeOrderByCreatedDateDesc(localDateTime);
+                .findTop5ByCreatedDateBeforeOrderByCreatedDateAsc(localDateTime);
 
         ChartCategoryModel petrolCategory = getPetrolCategoryModel(nestePriceEntitiesWeeklyList);
 

@@ -26,7 +26,7 @@ public class CircleStatisticService {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         List<CirclePriceEntity> circlePriceEntitiesWeeklyList = circlePriceRepository
-                .findTop5ByCreatedDateBeforeAndCountryOrderByCreatedDateDesc(localDateTime, country);
+                .findTop5ByCreatedDateBeforeAndCountryOrderByCreatedDateAsc(localDateTime, country);
 
         ChartCategoryModel petrolCategory = getPetrolCategoryModel(circlePriceEntitiesWeeklyList);
 

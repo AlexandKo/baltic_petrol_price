@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Repository
 public interface VirsiPriceRepository extends CrudRepository<VirsiPriceEntity, UUID> {
-    List<VirsiPriceEntity> findTop5ByCreatedDateBeforeOrderByCreatedDateDesc(LocalDateTime createdDate);
+    List<VirsiPriceEntity> findTop5ByCreatedDateBeforeOrderByCreatedDateAsc(LocalDateTime createdDate);
 
     @Query(value = "SELECT * FROM petrol_station.virsi WHERE created_date <= :startDate AND created_date >= :endDate", nativeQuery = true)
     VirsiPriceEntity searchLastDatePrices(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
