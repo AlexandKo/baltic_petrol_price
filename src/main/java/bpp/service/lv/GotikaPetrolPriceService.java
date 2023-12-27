@@ -15,9 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import static bpp.util.Messages.NEW_RECORD_INFO;
-import static bpp.util.Messages.NOT_FOUND_ERROR;
-import static bpp.util.Messages.SERVICE_NOT_FOUND_ERROR;
+import static bpp.util.Messages.*;
 
 @Slf4j
 @Service
@@ -53,6 +51,8 @@ public class GotikaPetrolPriceService implements PetrolPriceService {
 
             gotikaPriceRepository.save(gotikaPriceEntity);
             log.info(String.format(NEW_RECORD_INFO, PETROL_STATION, gotikaPriceEntity.getCountry()));
+            return;
         }
+        log.error(String.format(PARSING_DATA_ERROR, PETROL_STATION));
     }
 }

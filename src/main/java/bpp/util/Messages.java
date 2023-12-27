@@ -10,4 +10,5 @@ public class Messages {
     public static final String NEW_RECORD_INFO = "Added new record: %s petrol station, country %s";
     public static final String NOT_FOUND_ERROR = "No access to %s web site, country %s";
     public static final String SERVICE_NOT_FOUND_ERROR = "Service %s not found";
+    public static final String PARSING_DATA_ERROR = "Error parsing data for %s station";
 }

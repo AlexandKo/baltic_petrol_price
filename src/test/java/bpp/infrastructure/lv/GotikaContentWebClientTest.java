@@ -83,15 +83,16 @@ class GotikaContentWebClientTest {
     }
 
     private String returnContent() {
-        return "Pieslēgties\n" +
-                "Paldies!\n" +
-                "×\n" +
-                "Jūsu pieprasījums tika veiksmīgi nosūtīts. Mēs sazināsimies ar Jums tuvākajā laikā!\n" +
-                "OK\n" +
-                "95E\n" +
-                "1.647 €\n" +
-                "DD\n" +
-                "1.707 €\n" +
-                "Latviski";
+        return """
+                Pieslēgties
+                Paldies!
+                ×
+                Jūsu pieprasījums tika veiksmīgi nosūtīts. Mēs sazināsimies ar Jums tuvākajā laikā!
+                OK
+                95E
+                1.647 €
+                DD
+                1.707 €
+                Latviski""";
     }
 }

@@ -86,23 +86,24 @@ class VirsiContentWebClientTest {
     }
 
     private String returnContent() {
-        return "Degvielas cenas\n" +
-                "DD 1.877\n" +
-                "Satekles iela 2, RĪga, LV-1050\n" +
-                "95E 1.757\n" +
-                "Satekles iela 2, RĪga, LV-1050\n" +
-                "98E 1.797\n" +
-                "Satekles iela 2, RĪga, LV-1050\n" +
-                "CNG 3.395\n" +
-                "Lubānas iela 102a, Rīga, LV-1021\n" +
-                "LPG 0.835\n" +
-                "Uzvaras bulvāris 16, Rīga, LV-1048\n" +
-                "Elektrouzlādes cenas\n" +
-                "CCS 2 40kW 0.39 EUR/kWh\n" +
-                "Varoņu iela 10, Jēkabpils, LV-5202\n" +
-                "CCS 2 80kW 0.49 EUR/kWh\n" +
-                "Varoņu iela 10, Jēkabpils, LV-5202\n" +
-                "CHAdeMO 40kW 0.39 EUR/kWh\n" +
-                "Varoņu iela 10, Jēkabpils, LV-5202";
+        return """
+                Degvielas cenas
+                DD 1.877
+                Satekles iela 2, RĪga, LV-1050
+                95E 1.757
+                Satekles iela 2, RĪga, LV-1050
+                98E 1.797
+                Satekles iela 2, RĪga, LV-1050
+                CNG 3.395
+                Lubānas iela 102a, Rīga, LV-1021
+                LPG 0.835
+                Uzvaras bulvāris 16, Rīga, LV-1048
+                Elektrouzlādes cenas
+                CCS 2 40kW 0.39 EUR/kWh
+                Varoņu iela 10, Jēkabpils, LV-5202
+                CCS 2 80kW 0.49 EUR/kWh
+                Varoņu iela 10, Jēkabpils, LV-5202
+                CHAdeMO 40kW 0.39 EUR/kWh
+                Varoņu iela 10, Jēkabpils, LV-5202""";
     }
 }

@@ -10,9 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import static bpp.util.Messages.NEW_RECORD_INFO;
-import static bpp.util.Messages.NOT_FOUND_ERROR;
-import static bpp.util.Messages.SERVICE_NOT_FOUND_ERROR;
+import static bpp.util.Messages.*;
 
 @Slf4j
 @Component
@@ -28,8 +26,7 @@ public class CirclePepositoryUseCase {
         }
 
         if (circlePetrolPriceResponse.getResponseModel() != null) {
-            if (circlePetrolPriceResponse.getResponseModel() instanceof ErrorModel) {
-                ErrorModel errorModel = (ErrorModel) circlePetrolPriceResponse.getResponseModel();
+            if (circlePetrolPriceResponse.getResponseModel() instanceof ErrorModel errorModel) {
                 log.error(String.format(NOT_FOUND_ERROR, PETROL_STATION, errorModel.getCountry()));
                 return;
             }
@@ -38,6 +35,8 @@ public class CirclePepositoryUseCase {
 
             circlePriceRepository.save(circlePriceEntity);
             log.info(String.format(NEW_RECORD_INFO, PETROL_STATION, circlePriceEntity.getCountry()));
+            return;
         }
+        log.error(String.format(PARSING_DATA_ERROR, PETROL_STATION));
     }
 }

@@ -7,27 +7,27 @@ import bpp.model.Response;
 import bpp.model.WebPageResponseModel;
 import bpp.util.Country;
 import jakarta.annotation.PostConstruct;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static bpp.util.MessageCodes.WEB_CLIENT_CONNECTION_FAILED;
-import static bpp.util.Messages.PRICE_FOR_ALL_STATIONS;
-import static bpp.util.PetrolNames.DIESEL;
-import static bpp.util.PetrolNames.DIESEL_PRO;
-import static bpp.util.PetrolNames.PETROL;
-import static bpp.util.PetrolNames.PETROL_PRO;
+import static bpp.util.PetrolNames.*;
 
 @Component
 @RequiredArgsConstructor
 public class NesteContentWebClient extends ContentWebClient<Response<?>> {
-    private static final String NESTE_SEARCH_PRICE_PATTERN = "" +
-            "(?<petrol95>\\d.?\\d{3})(\\n\\t.*\\n.*\\n\\t)" +
-            "(?<petrol98>\\d.?\\d{3})(\\n\\t.*\\n.*\\n\\t)" +
-            "(?<diesel>\\d.?\\d{3})(\\n\\t.*\\n.*\\n\\t)" +
-            "(?<dieselPro>\\d.?\\d{3})";
+    private static final String NESTE_SEARCH_PRICE_PATTERN = "(?<petrol95>\\d.?\\d{3})(\\n\\t)" +
+            "(?<petrol95BestPriceAddress>.*)(\\n.*\\n\\t)" +
+            "(?<petrol98>\\d.?\\d{3})(\\n\\t)" +
+            "(?<petrol98BestPriceAddress>.*)(\\n.*\\n\\t)" +
+            "(?<diesel>\\d.?\\d{3})(\\n\\t)" +
+            "(?<dieselBestPriceAddress>.*)(\\n.*\\n\\t)" +
+            "(?<dieselPro>\\d.?\\d{3})(\\n\\t)" +
+            "(?<dieselProBestPriceAddress>.*)";
     @Value("${neste.lv_price_link}")
     private String nestePriceLink;
     private Pattern pattern;
@@ -64,13 +64,13 @@ public class NesteContentWebClient extends ContentWebClient<Response<?>> {
                     .id(nesteWebContent.getId())
                     .country(Country.LV)
                     .petrol(createPriceFromString(matcher.group(PETROL)))
-                    .petrolBestPriceAddress(PRICE_FOR_ALL_STATIONS)
+                    .petrolBestPriceAddress(matcher.group(PETROL_BEST_PRICE_ADDRESS))
                     .petrolPro(createPriceFromString(matcher.group(PETROL_PRO)))
-                    .petrolProBestPriceAddress(PRICE_FOR_ALL_STATIONS)
+                    .petrolProBestPriceAddress(matcher.group(PETROL_PRO_BEST_PRICE_ADDRESS))
                     .diesel(createPriceFromString(matcher.group(DIESEL)))
-                    .dieselBestPriceAddress(PRICE_FOR_ALL_STATIONS)
+                    .dieselBestPriceAddress(matcher.group(DIESEL_BEST_PRICE_ADDRESS))
                     .dieselPro(createPriceFromString(matcher.group(DIESEL_PRO)))
-                    .dieselProBestPriceAddress(PRICE_FOR_ALL_STATIONS)
+                    .dieselProBestPriceAddress(matcher.group(DIESEL_PRO_BEST_PRICE_ADDRESS))
                     .build();
         }
         return nestePetrolPriceModel;

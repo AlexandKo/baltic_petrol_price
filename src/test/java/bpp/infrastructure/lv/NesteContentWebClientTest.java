@@ -4,16 +4,16 @@ import bpp.model.ErrorModel;
 import bpp.model.NestePetrolPriceModel;
 import bpp.model.Response;
 import bpp.model.WebPageResponseModel;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static bpp.util.Messages.PRICE_FOR_ALL_STATIONS;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.math.BigDecimal;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 
@@ -60,10 +60,10 @@ class NesteContentWebClientTest {
         NestePetrolPriceModel nestePetrolPriceModel = (NestePetrolPriceModel) response.getResponseModel();
         // Assert
         assertThat(nestePetrolPriceModel.getId()).isEqualTo(200);
-        assertThat(nestePetrolPriceModel.getPetrol()).isEqualTo(new BigDecimal("1.697"));
-        assertThat(nestePetrolPriceModel.getPetrolPro()).isEqualTo(new BigDecimal("1.737"));
-        assertThat(nestePetrolPriceModel.getDiesel()).isEqualTo(new BigDecimal("1.757"));
-        assertThat(nestePetrolPriceModel.getDieselPro()).isEqualTo(new BigDecimal("1.867"));
+        assertThat(nestePetrolPriceModel.getPetrol()).isEqualTo(new BigDecimal("1.507"));
+        assertThat(nestePetrolPriceModel.getPetrolPro()).isEqualTo(new BigDecimal("1.547"));
+        assertThat(nestePetrolPriceModel.getDiesel()).isEqualTo(new BigDecimal("1.507"));
+        assertThat(nestePetrolPriceModel.getDieselPro()).isEqualTo(new BigDecimal("1.617"));
     }
 
     @Test
@@ -80,30 +80,32 @@ class NesteContentWebClientTest {
         NestePetrolPriceModel nestePetrolPriceModel = (NestePetrolPriceModel) response.getResponseModel();
         // Assert
         assertThat(nestePetrolPriceModel.getId()).isEqualTo(200);
-        assertThat(nestePetrolPriceModel.getPetrolBestPriceAddress()).isEqualTo(PRICE_FOR_ALL_STATIONS);
-        assertThat(nestePetrolPriceModel.getPetrolProBestPriceAddress()).isEqualTo(PRICE_FOR_ALL_STATIONS);
-        assertThat(nestePetrolPriceModel.getDieselBestPriceAddress()).isEqualTo(PRICE_FOR_ALL_STATIONS);
-        assertThat(nestePetrolPriceModel.getDieselProBestPriceAddress()).isEqualTo(PRICE_FOR_ALL_STATIONS);
+        assertThat(nestePetrolPriceModel.getPetrolBestPriceAddress()).isEqualTo("Dzirnavu 127, Katoļu 4, Brīvības gatve 253");
+        assertThat(nestePetrolPriceModel.getPetrolProBestPriceAddress()).isEqualTo("Dzirnavu 127, Katoļu 4, Brīvības gatve 253");
+        assertThat(nestePetrolPriceModel.getDieselBestPriceAddress()).isEqualTo("Dzirnavu 127, Katoļu 4, Brīvības gatve 253");
+        assertThat(nestePetrolPriceModel.getDieselProBestPriceAddress()).isEqualTo("Katoļu 4");
     }
 
     private String returnContent() {
-        return "Zemākās degvielas cenas Neste degvielas uzpildes stacijās Rīgā:\n" +
-                "  \n" +
-                "Cena\tEUR/l\tDUS\n" +
-                "Neste Futura 95\n" +
-                "\t1.697\n" +
-                "\tŠobrīd degvielas cenas visās Rīgas Neste DUS ir vienādas.\n" +
-                "Neste Futura 98\n" +
-                "\t1.737\n" +
-                "\tŠobrīd degvielas cenas visās Rīgas Neste DUS ir vienādas.\n" +
-                "Neste Futura D\n" +
-                "\t1.757\n" +
-                "\tŠobrīd degvielas cenas visās Rīgas Neste DUS ir vienādas.\n" +
-                "Neste Pro Diesel\n" +
-                "\t1.867\n" +
-                "\tŠobrīd degvielas cenas visās Rīgas Neste DUS ir vienādas.\n" +
-                " \t \t \n" +
-                "Informācija par degvielas cenām netiek atjaunota brīvdienās un svētku dienās.\n" +
-                "Kas veido degvielas cenu  ";
+        return """
+                dienas laikā un atšķirties dažādās stacijās.
+                Zemākās degvielas cenas Neste degvielas uzpildes stacijās Rīgā:
+                \s
+                Cena	EUR/l	DUS
+                Neste Futura 95
+                	1.507
+                	Dzirnavu 127, Katoļu 4, Brīvības gatve 253
+                Neste Futura 98
+                	1.547
+                	Dzirnavu 127, Katoļu 4, Brīvības gatve 253
+                Neste Futura D
+                	1.507
+                	Dzirnavu 127, Katoļu 4, Brīvības gatve 253
+                Neste Pro Diesel
+                	1.617
+                	Katoļu 4
+                \s
+                Informācija par degvielas cenām netiek atjaunota brīvdienās un svētku dienās.
+                Kas veido degvielas cenu \s""";
     }
 }
