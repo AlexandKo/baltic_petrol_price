@@ -1,6 +1,6 @@
 package bpp.controller.lt;
 
-import bpp.controller.StatisticsBaseController;
+import bpp.controller.StatisticsBase;
 import bpp.model.ErrorModel;
 import bpp.service.statistics.CircleStatisticService;
 import bpp.util.Country;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/lt/petrol/statistic")
 @RequiredArgsConstructor
-public class LtStatisticController extends StatisticsBaseController {
+public class LtStatisticController extends StatisticsBase {
     private final CircleStatisticService circleStatisticService;
 
     @GetMapping("/circlek")

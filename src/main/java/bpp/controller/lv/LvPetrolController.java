@@ -137,6 +137,8 @@ public class LvPetrolController {
     public ResponseEntity<Object> getVBestPrice() {
         Response<DailyPriceModel> dailyPriceModel = dailyPriceService.findBestDailyPrice();
 
-        return ResponseEntity.ok(dailyPriceModel.getResponseModel());
+        return ResponseEntity
+                .ok()
+                .body(dailyPriceModel.getResponseModel());
     }
 }

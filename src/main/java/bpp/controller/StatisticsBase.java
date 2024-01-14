@@ -6,10 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-public abstract class StatisticsBaseController {
+public abstract class StatisticsBase {
     private static final int EMPTY_ARRAY = 0;
     private static final int RESPONSE_CODE = 404;
-    private static final String CREATE_CHART_CREATION_ERROR = "Error during created a Neste petrol station statistics";
+    private static final String CREATE_CHART_CREATION_ERROR = "Error during created petrol station statistics";
 
     public ResponseEntity<Object> createStatisticsResponse(byte[] weeklyStatisticChart) {
         if (isStatisticChartEmpty(weeklyStatisticChart)) {

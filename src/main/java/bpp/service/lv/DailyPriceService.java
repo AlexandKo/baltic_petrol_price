@@ -40,6 +40,7 @@ public class DailyPriceService {
         List<Map.Entry<String, BigDecimal>> dieselBestPrice = findBestPrice(dieselMap);
 
         return new Response<>(DailyPriceModel.builder()
+                .id(200)
                 .date(lastPriceDate)
                 .petrolPrice(petrolBestPrice)
                 .dieselPrice(dieselBestPrice)

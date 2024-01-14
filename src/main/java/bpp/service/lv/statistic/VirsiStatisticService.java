@@ -4,11 +4,12 @@ import bpp.entity.VirsiPriceEntity;
 import bpp.model.ChartCategoryModel;
 import bpp.repository.VirsiPriceRepository;
 import bpp.service.chart.PetrolChart;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -40,6 +41,12 @@ public class VirsiStatisticService {
                 dieseProlCategory);
 
         return petrolChart.createPetrolChart(chartCategoryModelList, dateList);
+    }
+
+    public List<VirsiPriceEntity> getWeeklyData() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        return virsiPriceRepository
+                .findTop5ByCreatedDateBeforeOrderByCreatedDateAsc(localDateTime);
     }
 
     private ChartCategoryModel getPetrolCategoryModel(List<VirsiPriceEntity> virsiPriceEntitiesWeeklyList) {

@@ -4,11 +4,12 @@ import bpp.entity.ViadaPriceEntity;
 import bpp.model.ChartCategoryModel;
 import bpp.repository.ViadaPriceRepository;
 import bpp.service.chart.PetrolChart;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -49,6 +50,12 @@ public class ViadaStatisticService {
                 dieselCategory, dieselEctoCategory, gasCategory, petrolEcoCategory);
 
         return petrolChart.createPetrolChart(chartCategoryModelList, dateList);
+    }
+
+    public List<ViadaPriceEntity> getWeeklyData() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        return viadaPriceRepository
+                .findTop5ByCreatedDateBeforeOrderByCreatedDateAsc(localDateTime);
     }
 
     private ChartCategoryModel getPetrolEctoCategoryModel(List<ViadaPriceEntity> viadaPriceEntitiesWeeklyList) {

@@ -4,11 +4,12 @@ import bpp.entity.NestePriceEntity;
 import bpp.model.ChartCategoryModel;
 import bpp.repository.NestePriceRepository;
 import bpp.service.chart.PetrolChart;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -40,6 +41,12 @@ public class NesteStatisticService {
                 dieseProlCategory);
 
         return petrolChart.createPetrolChart(chartCategoryModelList, dateList);
+    }
+
+    public List<NestePriceEntity> getWeeklyData() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        return nestePriceRepository
+                .findTop5ByCreatedDateBeforeOrderByCreatedDateAsc(localDateTime);
     }
 
     private ChartCategoryModel getPetrolCategoryModel(List<NestePriceEntity> nestePriceEntitiesWeeklyList) {

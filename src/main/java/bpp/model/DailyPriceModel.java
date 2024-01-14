@@ -11,6 +11,7 @@ import java.util.Map;
 @Builder
 @Getter
 public class DailyPriceModel {
+    private int id;
     private LocalDate date;
     private List<Map.Entry<String, BigDecimal>> petrolPrice;
     private List<Map.Entry<String, BigDecimal>> dieselPrice;

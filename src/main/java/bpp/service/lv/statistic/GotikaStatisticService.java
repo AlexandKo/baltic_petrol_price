@@ -4,11 +4,12 @@ import bpp.entity.GotikaPriceEntity;
 import bpp.model.ChartCategoryModel;
 import bpp.repository.GotikaPriceRepository;
 import bpp.service.chart.PetrolChart;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +34,12 @@ public class GotikaStatisticService {
         List<ChartCategoryModel> chartCategoryModelList = List.of(petrolCategory, dieselCategory);
 
         return petrolChart.createPetrolChart(chartCategoryModelList, dateList);
+    }
+
+    public List<GotikaPriceEntity> getWeeklyData() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        return gotikaPriceRepository
+                .findTop5ByCreatedDateBeforeOrderByCreatedDateAsc(localDateTime);
     }
 
     private ChartCategoryModel getPetrolCategoryModel(List<GotikaPriceEntity> gotikaPriceEntitiesWeeklyList) {
