@@ -17,6 +17,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 @Getter
@@ -26,8 +27,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "gotika", schema = "petrol_station")
 public class GotikaPriceEntity extends BaseEntity {
     @Id
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @UuidGenerator
     @Column(length = 36, nullable = false, updatable = false)
     private UUID id;
     @Enumerated(value = EnumType.STRING)

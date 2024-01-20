@@ -1,9 +1,11 @@
 package bpp.entity;
 
 import bpp.util.Country;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,6 +19,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 @Getter
@@ -26,8 +29,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "circle", schema = "petrol_station")
 public class CirclePriceEntity extends BaseEntity {
     @Id
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    @UuidGenerator
     @Column(length = 36, nullable = false, updatable = false)
     private UUID id;
     @Enumerated(value = EnumType.STRING)
