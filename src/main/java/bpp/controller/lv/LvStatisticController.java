@@ -1,10 +1,7 @@
 package bpp.controller.lv;
 
 import bpp.controller.StatisticsBase;
-import bpp.entity.GotikaPriceEntity;
-import bpp.entity.NestePriceEntity;
-import bpp.entity.ViadaPriceEntity;
-import bpp.entity.VirsiPriceEntity;
+import bpp.entity.*;
 import bpp.model.ErrorModel;
 import bpp.model.StationStatisticModel;
 import bpp.service.lv.statistic.GotikaStatisticService;
@@ -47,14 +44,14 @@ public class LvStatisticController extends StatisticsBase {
         return createStatisticsResponse(nesteStatistic.getWeeklyStatisticChart());
     }
 
-    @GetMapping("/neste/weekly")
-    @Operation(description = "Return weekly data for Neste Gas Station Latvia", method = "GET")
+    @GetMapping("/neste/month")
+    @Operation(description = "Return month data for Neste Gas Station Latvia", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Return weekly data", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
+            @ApiResponse(responseCode = "200", description = "Return month data", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
             @ApiResponse(responseCode = "404", description = "Not found data for statistic", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
     })
     public ResponseEntity<Object> getNesteWeeklyData() {
-        List<NestePriceEntity> nesteStatisticWeeklyData = nesteStatistic.getWeeklyData();
+        List<NestePriceEntity> nesteStatisticWeeklyData = nesteStatistic.getStatisticDataPerMonth();
         StationStatisticModel<List<NestePriceEntity>> stationStatisticModel = new StationStatisticModel<>(200, nesteStatisticWeeklyData);
 
         return ResponseEntity.ok().body(stationStatisticModel);
@@ -70,14 +67,14 @@ public class LvStatisticController extends StatisticsBase {
         return createStatisticsResponse(gotikaStatisticService.getWeeklyStatisticChart());
     }
 
-    @GetMapping("/gotika/weekly")
-    @Operation(description = "Return weekly data for Gotika Gas Station Latvia", method = "GET")
+    @GetMapping("/gotika/month")
+    @Operation(description = "Return month data for Gotika Gas Station Latvia", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Return weekly data", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
+            @ApiResponse(responseCode = "200", description = "Return month data", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
             @ApiResponse(responseCode = "404", description = "Not found data for statistic", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
     })
     public ResponseEntity<Object> getGotikaWeeklyData() {
-        List<GotikaPriceEntity> gotikaStatisticWeeklyData = gotikaStatisticService.getWeeklyData();
+        List<GotikaPriceEntity> gotikaStatisticWeeklyData = gotikaStatisticService.getStatisticDataPerMonth();
 
         StationStatisticModel<List<GotikaPriceEntity>> stationStatisticModel = new StationStatisticModel<>(200, gotikaStatisticWeeklyData);
 
@@ -94,14 +91,14 @@ public class LvStatisticController extends StatisticsBase {
         return createStatisticsResponse(virsiStatisticService.getWeeklyStatisticChart());
     }
 
-    @GetMapping("/virsi/weekly")
-    @Operation(description = "Return weekly data for Virshi Gas Station Latvia", method = "GET")
+    @GetMapping("/virsi/month")
+    @Operation(description = "Return month data for Virshi Gas Station Latvia", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Return weekly data", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
+            @ApiResponse(responseCode = "200", description = "Return month data", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
             @ApiResponse(responseCode = "404", description = "Not found data for statistic", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
     })
     public ResponseEntity<Object> virsiStatisticWeeklyData() {
-        List<VirsiPriceEntity> virsiStatisticWeeklyData = virsiStatisticService.getWeeklyData();
+        List<VirsiPriceEntity> virsiStatisticWeeklyData = virsiStatisticService.getStatisticDataPerMonth();
 
         StationStatisticModel<List<VirsiPriceEntity>> stationStatisticModel = new StationStatisticModel<>(200, virsiStatisticWeeklyData);
 
@@ -118,6 +115,20 @@ public class LvStatisticController extends StatisticsBase {
         return createStatisticsResponse(circleStatisticService.getWeeklyStatisticChart(Country.LV));
     }
 
+    @GetMapping("/circlek/month")
+    @Operation(description = "Return month data for CircleK Gas Station Latvia", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Return month data", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
+            @ApiResponse(responseCode = "404", description = "Not found data for statistic", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
+    })
+    public ResponseEntity<Object> circlekStatisticWeeklyData() {
+        List<CirclePriceEntity> circlekStatisticWeeklyData = circleStatisticService.getStatisticDataPerMonth(Country.LV);
+
+        StationStatisticModel<List<CirclePriceEntity>> stationStatisticModel = new StationStatisticModel<>(200, circlekStatisticWeeklyData);
+
+        return ResponseEntity.ok().body(stationStatisticModel);
+    }
+
     @GetMapping("/viada")
     @Operation(description = "Return weekly statistics for Viada Gas Station Latvia", method = "GET")
     @ApiResponses(value = {
@@ -128,14 +139,14 @@ public class LvStatisticController extends StatisticsBase {
         return createStatisticsResponse(viadaStatisticService.getWeeklyStatisticChart());
     }
 
-    @GetMapping("/viada/weekly")
-    @Operation(description = "Return weekly data for Viada Gas Station Latvia", method = "GET")
+    @GetMapping("/viada/month")
+    @Operation(description = "Return month data for Viada Gas Station Latvia", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Return weekly data", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
+            @ApiResponse(responseCode = "200", description = "Return month data", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
             @ApiResponse(responseCode = "404", description = "Not found data for statistic", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
     })
     public ResponseEntity<Object> viadaStatisticWeeklyData() {
-        List<ViadaPriceEntity> viadaStatisticWeeklyData = viadaStatisticService.getWeeklyData();
+        List<ViadaPriceEntity> viadaStatisticWeeklyData = viadaStatisticService.getStatisticDataPerMonth();
 
         StationStatisticModel<List<ViadaPriceEntity>> stationStatisticModel = new StationStatisticModel<>(200, viadaStatisticWeeklyData);
 

@@ -16,4 +16,7 @@ public interface VirsiPriceRepository extends CrudRepository<VirsiPriceEntity, U
 
     @Query(value = "SELECT * FROM petrol_station.virsi WHERE created_date <= :startDate AND created_date >= :endDate", nativeQuery = true)
     VirsiPriceEntity searchLastDatePrices(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+
+    @Query(value = "SELECT * FROM petrol_station.virsi WHERE created_date <= :startDate AND created_date >= :endDate ORDER BY created_date ASC", nativeQuery = true)
+    List<VirsiPriceEntity> searchPrices(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 }

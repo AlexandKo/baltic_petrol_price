@@ -16,4 +16,7 @@ public interface ViadaPriceRepository extends CrudRepository<ViadaPriceEntity, U
 
     @Query(value = "SELECT * FROM petrol_station.viada WHERE created_date <= :startDate AND created_date >= :endDate", nativeQuery = true)
     ViadaPriceEntity searchLastDatePrices(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+
+    @Query(value = "SELECT * FROM petrol_station.viada WHERE created_date <= :startDate AND created_date >= :endDate ORDER BY created_date ASC", nativeQuery = true)
+    List<ViadaPriceEntity> searchPrices(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 }

@@ -52,10 +52,9 @@ public class ViadaStatisticService {
         return petrolChart.createPetrolChart(chartCategoryModelList, dateList);
     }
 
-    public List<ViadaPriceEntity> getWeeklyData() {
-        LocalDateTime localDateTime = LocalDateTime.now();
+    public List<ViadaPriceEntity> getStatisticDataPerMonth() {
         return viadaPriceRepository
-                .findTop5ByCreatedDateBeforeOrderByCreatedDateAsc(localDateTime);
+                .searchPrices(LocalDateTime.now(), LocalDateTime.now().minusDays(30));
     }
 
     private ChartCategoryModel getPetrolEctoCategoryModel(List<ViadaPriceEntity> viadaPriceEntitiesWeeklyList) {

@@ -1,7 +1,9 @@
 package bpp.controller.lt;
 
 import bpp.controller.StatisticsBase;
+import bpp.entity.CirclePriceEntity;
 import bpp.model.ErrorModel;
+import bpp.model.StationStatisticModel;
 import bpp.service.statistics.CircleStatisticService;
 import bpp.util.Country;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/lt/petrol/statistic")
@@ -30,5 +34,19 @@ public class LtStatisticController extends StatisticsBase {
     })
     public ResponseEntity<Object> getCircleKStatistic() {
         return createStatisticsResponse(circleStatisticService.getWeeklyStatisticChart(Country.LT));
+    }
+
+    @GetMapping("/circlek/month")
+    @Operation(description = "Return month data for CircleK Gas Station Lithuania", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Return month data", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
+            @ApiResponse(responseCode = "404", description = "Not found data for statistic", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
+    })
+    public ResponseEntity<Object> circlekStatisticWeeklyData() {
+        List<CirclePriceEntity> circlekStatisticWeeklyData = circleStatisticService.getStatisticDataPerMonth(Country.LT);
+
+        StationStatisticModel<List<CirclePriceEntity>> stationStatisticModel = new StationStatisticModel<>(200, circlekStatisticWeeklyData);
+
+        return ResponseEntity.ok().body(stationStatisticModel);
     }
 }

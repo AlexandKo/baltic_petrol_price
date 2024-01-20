@@ -43,10 +43,9 @@ public class VirsiStatisticService {
         return petrolChart.createPetrolChart(chartCategoryModelList, dateList);
     }
 
-    public List<VirsiPriceEntity> getWeeklyData() {
-        LocalDateTime localDateTime = LocalDateTime.now();
+    public List<VirsiPriceEntity> getStatisticDataPerMonth() {
         return virsiPriceRepository
-                .findTop5ByCreatedDateBeforeOrderByCreatedDateAsc(localDateTime);
+                .searchPrices(LocalDateTime.now(), LocalDateTime.now().minusDays(30));
     }
 
     private ChartCategoryModel getPetrolCategoryModel(List<VirsiPriceEntity> virsiPriceEntitiesWeeklyList) {

@@ -36,10 +36,9 @@ public class GotikaStatisticService {
         return petrolChart.createPetrolChart(chartCategoryModelList, dateList);
     }
 
-    public List<GotikaPriceEntity> getWeeklyData() {
-        LocalDateTime localDateTime = LocalDateTime.now();
+    public List<GotikaPriceEntity> getStatisticDataPerMonth() {
         return gotikaPriceRepository
-                .findTop5ByCreatedDateBeforeOrderByCreatedDateAsc(localDateTime);
+                .searchPrices(LocalDateTime.now(), LocalDateTime.now().minusDays(30));
     }
 
     private ChartCategoryModel getPetrolCategoryModel(List<GotikaPriceEntity> gotikaPriceEntitiesWeeklyList) {

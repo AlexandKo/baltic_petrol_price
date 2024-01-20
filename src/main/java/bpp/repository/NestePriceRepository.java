@@ -16,4 +16,7 @@ public interface NestePriceRepository extends CrudRepository<NestePriceEntity, U
 
     @Query(value = "SELECT * FROM petrol_station.neste WHERE created_date <= :startDate AND created_date >= :endDate", nativeQuery = true)
     NestePriceEntity searchLastDatePrices(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+
+    @Query(value = "SELECT * FROM petrol_station.neste WHERE created_date <= :startDate AND created_date >= :endDate ORDER BY created_date ASC", nativeQuery = true)
+    List<NestePriceEntity> searchPrices(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 }

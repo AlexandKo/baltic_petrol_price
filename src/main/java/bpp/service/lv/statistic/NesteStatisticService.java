@@ -43,10 +43,9 @@ public class NesteStatisticService {
         return petrolChart.createPetrolChart(chartCategoryModelList, dateList);
     }
 
-    public List<NestePriceEntity> getWeeklyData() {
-        LocalDateTime localDateTime = LocalDateTime.now();
+    public List<NestePriceEntity> getStatisticDataPerMonth() {
         return nestePriceRepository
-                .findTop5ByCreatedDateBeforeOrderByCreatedDateAsc(localDateTime);
+                .searchPrices(LocalDateTime.now(), LocalDateTime.now().minusDays(30));
     }
 
     private ChartCategoryModel getPetrolCategoryModel(List<NestePriceEntity> nestePriceEntitiesWeeklyList) {

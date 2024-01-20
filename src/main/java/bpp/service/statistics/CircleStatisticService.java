@@ -1,6 +1,7 @@
 package bpp.service.statistics;
 
 import bpp.entity.CirclePriceEntity;
+import bpp.entity.VirsiPriceEntity;
 import bpp.model.ChartCategoryModel;
 import bpp.repository.CirclePriceRepository;
 import bpp.service.chart.PetrolChart;
@@ -44,6 +45,11 @@ public class CircleStatisticService {
                 dieselProCategory, gasCategory);
 
         return petrolChart.createPetrolChart(chartCategoryModelList, dateList);
+    }
+
+    public List<CirclePriceEntity> getStatisticDataPerMonth(Country country) {
+        return circlePriceRepository
+                .searchPrices(LocalDateTime.now(), LocalDateTime.now().minusDays(30), country.toString());
     }
 
     private ChartCategoryModel getPetrolCategoryModel(List<CirclePriceEntity> circlePriceEntitiesWeeklyList) {
