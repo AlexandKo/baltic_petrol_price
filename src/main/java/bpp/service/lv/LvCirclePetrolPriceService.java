@@ -1,12 +1,10 @@
 package bpp.service.lv;
 
-import bpp.infrastructure.ContentWebClient;
 import bpp.infrastructure.lv.CircleContentWebClient;
 import bpp.model.Response;
 import bpp.service.PetrolPriceService;
 import bpp.usecase.CirclePepositoryUseCase;
 import jakarta.transaction.Transactional;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,17 +15,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LvCirclePetrolPriceService implements PetrolPriceService {
     private final CirclePepositoryUseCase circlePepositoryUseCase;
-    private final List<ContentWebClient<?>> contentWebClients;
+    private final CircleContentWebClient contentWebClients;
 
     @Override
     public void savePetrolPrice() {
-        Response<?> circlePetrolPriceResponse = contentWebClients
-                .stream()
-                .filter(CircleContentWebClient.class::isInstance)
-                .map(CircleContentWebClient.class::cast)
-                .map(CircleContentWebClient::getContent)
-                .findFirst()
-                .orElse(null);
+        Response<?> circlePetrolPriceResponse = contentWebClients.getContent();
 
         circlePepositoryUseCase.saveToDataBase(circlePetrolPriceResponse);
     }

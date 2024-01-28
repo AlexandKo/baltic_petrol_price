@@ -3,5 +3,6 @@ package bpp.util;
 public enum Country {
     LV,
     LT,
-    EE
+    EE,
+    SE
 }

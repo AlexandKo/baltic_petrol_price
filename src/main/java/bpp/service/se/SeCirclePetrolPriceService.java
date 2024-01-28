@@ -1,12 +1,10 @@
-package bpp.service.lt;
+package bpp.service.se;
 
-import bpp.infrastructure.ContentWebClient;
-import bpp.infrastructure.lt.LtCircleContentWebClient;
+import bpp.infrastructure.se.SeCircleContentWebClient;
 import bpp.model.Response;
 import bpp.service.PetrolPriceService;
 import bpp.usecase.CirclePepositoryUseCase;
 import jakarta.transaction.Transactional;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,9 +13,9 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class LtCirclePetrolPriceService implements PetrolPriceService {
+public class SeCirclePetrolPriceService implements PetrolPriceService {
     private final CirclePepositoryUseCase circlePepositoryUseCase;
-    private final LtCircleContentWebClient contentWebClients;
+    private final SeCircleContentWebClient contentWebClients;
 
     @Override
     public void savePetrolPrice() {

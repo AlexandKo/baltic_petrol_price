@@ -1,7 +1,6 @@
 package bpp.service.lv;
 
 import bpp.entity.GotikaPriceEntity;
-import bpp.infrastructure.ContentWebClient;
 import bpp.infrastructure.lv.GotikaContentWebClient;
 import bpp.mapper.GotikaPriceMapper;
 import bpp.model.ErrorModel;
@@ -10,7 +9,6 @@ import bpp.model.Response;
 import bpp.repository.GotikaPriceRepository;
 import bpp.service.PetrolPriceService;
 import jakarta.transaction.Transactional;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,18 +21,12 @@ import static bpp.util.Messages.*;
 @RequiredArgsConstructor
 public class GotikaPetrolPriceService implements PetrolPriceService {
     private static final String PETROL_STATION = "Gotika";
-    private final List<ContentWebClient<?>> contentWebClients;
+    private final GotikaContentWebClient contentWebClients;
     private final GotikaPriceRepository gotikaPriceRepository;
 
     @Override
     public void savePetrolPrice() {
-        Response<?> gotikaPetrolPriceResponse = contentWebClients
-                .stream()
-                .filter(GotikaContentWebClient.class::isInstance)
-                .map(GotikaContentWebClient.class::cast)
-                .map(GotikaContentWebClient::getContent)
-                .findFirst()
-                .orElse(null);
+        Response<?> gotikaPetrolPriceResponse = contentWebClients.getContent();
 
         if (gotikaPetrolPriceResponse == null) {
             log.error(String.format(SERVICE_NOT_FOUND_ERROR, PETROL_STATION));

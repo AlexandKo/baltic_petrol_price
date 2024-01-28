@@ -1,7 +1,6 @@
 package bpp.service.lv;
 
 import bpp.entity.ViadaPriceEntity;
-import bpp.infrastructure.ContentWebClient;
 import bpp.infrastructure.lv.ViadaContentWebClient;
 import bpp.mapper.ViadaPriceMapper;
 import bpp.model.ErrorModel;
@@ -10,7 +9,6 @@ import bpp.model.ViadaPetrolPriceModel;
 import bpp.repository.ViadaPriceRepository;
 import bpp.service.PetrolPriceService;
 import jakarta.transaction.Transactional;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,18 +21,12 @@ import static bpp.util.Messages.*;
 @RequiredArgsConstructor
 public class ViadaPetrolPriceService implements PetrolPriceService {
     private static final String PETROL_STATION = "Viada";
-    private final List<ContentWebClient<?>> contentWebClients;
+    private final ViadaContentWebClient contentWebClients;
     private final ViadaPriceRepository viadaPriceRepository;
 
     @Override
     public void savePetrolPrice() {
-        Response<?> viadaPetrolPriceResponse = contentWebClients
-                .stream()
-                .filter(ViadaContentWebClient.class::isInstance)
-                .map(ViadaContentWebClient.class::cast)
-                .map(ViadaContentWebClient::getContent)
-                .findFirst()
-                .orElse(null);
+        Response<?> viadaPetrolPriceResponse = contentWebClients.getContent();
 
         if (viadaPetrolPriceResponse == null) {
             log.error(String.format(SERVICE_NOT_FOUND_ERROR, PETROL_STATION));

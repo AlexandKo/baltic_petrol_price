@@ -1,7 +1,6 @@
 package bpp.service.lv;
 
 import bpp.entity.VirsiPriceEntity;
-import bpp.infrastructure.ContentWebClient;
 import bpp.infrastructure.lv.VirsiContentWebClient;
 import bpp.mapper.VirsiPriceMapper;
 import bpp.model.ErrorModel;
@@ -10,7 +9,6 @@ import bpp.model.VirsiPetrolPriceModel;
 import bpp.repository.VirsiPriceRepository;
 import bpp.service.PetrolPriceService;
 import jakarta.transaction.Transactional;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,18 +21,12 @@ import static bpp.util.Messages.*;
 @RequiredArgsConstructor
 public class VirsiPetrolPriceService implements PetrolPriceService {
     private static final String PETROL_STATION = "Virsi";
-    private final List<ContentWebClient<?>> contentWebClients;
+    private final VirsiContentWebClient contentWebClients;
     private final VirsiPriceRepository virsiPriceRepository;
 
     @Override
     public void savePetrolPrice() {
-        Response<?> virsiPetrolPriceResponse = contentWebClients
-                .stream()
-                .filter(VirsiContentWebClient.class::isInstance)
-                .map(VirsiContentWebClient.class::cast)
-                .map(VirsiContentWebClient::getContent)
-                .findFirst()
-                .orElse(null);
+        Response<?> virsiPetrolPriceResponse = contentWebClients.getContent();
 
         if (virsiPetrolPriceResponse == null) {
             log.error(String.format(SERVICE_NOT_FOUND_ERROR, PETROL_STATION));

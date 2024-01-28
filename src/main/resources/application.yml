@@ -26,9 +26,13 @@ neste:
 circleK:
   lv_price_link: https://www.circlek.lv/priv%C4%81tperson%C4%81m/degvielas-cenas
   lt_price_link: https://www.circlek.lt/privatiems/degalu-kainos
+  se_price_link: https://www.circlek.se/drivmedel/drivmedelspriser
 gotikaAuto:
   lv_price_link: https://www.gotikaauto.lv/
 viada:
   lv_price_link: http://www.viada.lv/zemakas-degvielas-cenas/
 virsi:
   lv_price_link: https://www.virsi.lv/lv/privatpersonam/degviela/degvielas-un-elektrouzlades-cenas
+
+exchange:
+  link: http://192.168.0.55:10000/currency/ecb/convert/currency?currency=
