@@ -2,6 +2,7 @@ package bpp.mapper;
 
 import bpp.entity.CirclePriceEntity;
 import bpp.model.CirclePetrolPriceModel;
+import bpp.util.Country;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -20,6 +21,18 @@ public class CirclePriceMapper {
                 .dieselProBestPriceAddress(petrolPriceModel.getDieselProBestPriceAddress())
                 .gas(petrolPriceModel.getGas())
                 .gasBestPriceAddress(petrolPriceModel.getGasBestPriceAddress())
+                .build();
+    }
+
+    public static CirclePriceEntity toCirclePriceEntity(Country country, CirclePetrolPriceModel petrolPriceModel) {
+        return CirclePriceEntity.builder()
+                .country(country)
+                .petrol(petrolPriceModel.getPetrolAutomatic())
+                .petrolBestPriceAddress(petrolPriceModel.getPetrolBestPriceAddress())
+                .petrolPro(petrolPriceModel.getPetrolProAutomatic())
+                .petrolProBestPriceAddress(petrolPriceModel.getPetrolProBestPriceAddress())
+                .diesel(petrolPriceModel.getDieselAutomatic())
+                .dieselBestPriceAddress(petrolPriceModel.getDieselBestPriceAddress())
                 .build();
     }
 }

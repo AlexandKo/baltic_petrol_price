@@ -6,6 +6,7 @@ import bpp.model.CirclePetrolPriceModel;
 import bpp.model.ErrorModel;
 import bpp.model.Response;
 import bpp.repository.CirclePriceRepository;
+import bpp.util.Country;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,7 @@ import static bpp.util.Messages.*;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class CirclePepositoryUseCase {
+public class CircleRepositoryUseCase {
     private static final String PETROL_STATION = "Circle K";
     private final CirclePriceRepository circlePriceRepository;
 
@@ -35,6 +36,12 @@ public class CirclePepositoryUseCase {
 
             circlePriceRepository.save(circlePriceEntity);
             log.info(String.format(NEW_RECORD_INFO, PETROL_STATION, circlePriceEntity.getCountry()));
+
+            if (circlePetrolPriceModel.getCountry() == Country.SE) {
+                CirclePriceEntity circleAutomaticPriceEntity = CirclePriceMapper.toCirclePriceEntity(Country.SE_AUTOMATIC, circlePetrolPriceModel);
+                circlePriceRepository.save(circleAutomaticPriceEntity);
+                log.info(String.format(NEW_RECORD_INFO, PETROL_STATION, circleAutomaticPriceEntity.getCountry()));
+            }
             return;
         }
         log.error(String.format(PARSING_DATA_ERROR, PETROL_STATION));

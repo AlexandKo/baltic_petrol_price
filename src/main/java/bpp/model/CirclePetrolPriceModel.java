@@ -35,4 +35,10 @@ public class CirclePetrolPriceModel {
     private String gasBestPriceAddress;
     @Schema(example = "null")
     private String errorMessage;
+    @Schema(example = "1.701")
+    private BigDecimal petrolAutomatic;
+    @Schema(example = "1.749")
+    private BigDecimal petrolProAutomatic;
+    @Schema(example = "1.760")
+    private BigDecimal dieselAutomatic;
 }

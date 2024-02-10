@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -42,8 +43,8 @@ public class SeStatisticController extends StatisticsBase {
             @ApiResponse(responseCode = "200", description = "Return month data", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
             @ApiResponse(responseCode = "404", description = "Not found data for statistic", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorModel.class))})
     })
-    public ResponseEntity<Object> circlekStatisticWeeklyData() {
-        List<CirclePriceEntity> circlekStatisticWeeklyData = circleStatisticService.getStatisticDataPerMonth(Country.SE);
+    public ResponseEntity<Object> circlekStatisticWeeklyData(@RequestParam Country type) {
+        List<CirclePriceEntity> circlekStatisticWeeklyData = circleStatisticService.getStatisticDataPerMonth(type);
 
         StationStatisticModel<List<CirclePriceEntity>> stationStatisticModel = new StationStatisticModel<>(200, circlekStatisticWeeklyData);
 

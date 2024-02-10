@@ -46,7 +46,7 @@ public class SeCircleContentWebClient extends ContentWebClient<Response<?>> {
         if (circleWebContent.getId() == WEB_CLIENT_CONNECTION_FAILED) {
             ErrorModel errorModel = ErrorModel.builder()
                     .id(circleWebContent.getId())
-                    .country(Country.LT)
+                    .country(Country.SE)
                     .errorMessage(circleWebContent.getContent())
                     .build();
             return new Response<>(errorModel);
@@ -57,8 +57,6 @@ public class SeCircleContentWebClient extends ContentWebClient<Response<?>> {
     }
 
     private CirclePetrolPriceModel getCirclePetrolPriceModel(WebPageResponseModel circleWebContent) {
-        CirclePetrolPriceModel circlePetrolPriceModel;
-
         final Matcher matcher = pattern.matcher(circleWebContent.getContent());
 
         int index = 0;
@@ -68,7 +66,7 @@ public class SeCircleContentWebClient extends ContentWebClient<Response<?>> {
             index++;
         }
 
-        circlePetrolPriceModel = CirclePetrolPriceModel.builder()
+        return CirclePetrolPriceModel.builder()
                 .id(circleWebContent.getId())
                 .country(Country.SE)
                 .petrol(convertToEuro(groups.get(0)))
@@ -81,9 +79,10 @@ public class SeCircleContentWebClient extends ContentWebClient<Response<?>> {
                 .dieselProBestPriceAddress(PRICE_FOR_ALL_STATIONS)
                 .gas(convertToEuro(groups.get(6)))
                 .gasBestPriceAddress(PRICE_FOR_ALL_STATIONS)
+                .petrolAutomatic(convertToEuro(groups.get(8)))
+                .petrolProAutomatic(convertToEuro(groups.get(9)))
+                .dieselAutomatic(convertToEuro(groups.get(10)))
                 .build();
-
-        return circlePetrolPriceModel;
     }
 
     private BigDecimal convertToEuro(String volume) {

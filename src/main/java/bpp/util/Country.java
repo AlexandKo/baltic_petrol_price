@@ -4,5 +4,6 @@ public enum Country {
     LV,
     LT,
     EE,
-    SE
+    SE,
+    SE_AUTOMATIC
 }

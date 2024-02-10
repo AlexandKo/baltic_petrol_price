@@ -59,11 +59,11 @@ class LtCircleContentWebClientTest {
         CirclePetrolPriceModel circlePetrolPriceModel = (CirclePetrolPriceModel) response.getResponseModel();
         // Assert
         assertThat(circlePetrolPriceModel.getId()).isEqualTo(200);
-        assertThat(circlePetrolPriceModel.getPetrol()).isEqualTo(new BigDecimal("1.629"));
-        assertThat(circlePetrolPriceModel.getPetrolPro()).isEqualTo(new BigDecimal("1.738"));
-        assertThat(circlePetrolPriceModel.getDiesel()).isEqualTo(new BigDecimal("1.739"));
-        assertThat(circlePetrolPriceModel.getDieselPro()).isEqualTo(new BigDecimal("1.828"));
-        assertThat(circlePetrolPriceModel.getGas()).isEqualTo(new BigDecimal("0.723"));
+        assertThat(circlePetrolPriceModel.getPetrol()).isEqualTo(new BigDecimal("1.445"));
+        assertThat(circlePetrolPriceModel.getPetrolPro()).isEqualTo(new BigDecimal("1.564"));
+        assertThat(circlePetrolPriceModel.getDiesel()).isEqualTo(new BigDecimal("1.59"));
+        assertThat(circlePetrolPriceModel.getDieselPro()).isEqualTo(new BigDecimal("1.679"));
+        assertThat(circlePetrolPriceModel.getGas()).isEqualTo(new BigDecimal("0.603"));
     }
 
     @Test
@@ -80,59 +80,147 @@ class LtCircleContentWebClientTest {
         CirclePetrolPriceModel circlePetrolPriceModel = (CirclePetrolPriceModel) response.getResponseModel();
         // Assert
         assertThat(circlePetrolPriceModel.getId()).isEqualTo(200);
-        assertThat(circlePetrolPriceModel.getPetrolBestPriceAddress()).isEqualTo("Circle K Šilutė Cintjoniškių g. 15, Šilutė");
-        assertThat(circlePetrolPriceModel.getPetrolProBestPriceAddress()).isEqualTo("Circle K Parkas Parko g. 7A, Panevėžys");
-        assertThat(circlePetrolPriceModel.getDieselBestPriceAddress()).isEqualTo("Circle K Parkas Parko g. 7A, Panevėžys");
-        assertThat(circlePetrolPriceModel.getDieselProBestPriceAddress()).isEqualTo("Circle K Parkas Parko g. 7A, Panevėžys");
-        assertThat(circlePetrolPriceModel.getGasBestPriceAddress()).isEqualTo("Circle K Dainava Pramonės pr. 18, Kaunas");
+        assertThat(circlePetrolPriceModel.getPetrolBestPriceAddress()).isEqualTo("Circle K Vilkaviškis Vilkaviškio g. 10, Serdokų k. Vilkaviškis");
+        assertThat(circlePetrolPriceModel.getPetrolProBestPriceAddress()).isEqualTo("Circle K Smiltelė Taikos pr. 112A, Klaipėda");
+        assertThat(circlePetrolPriceModel.getDieselBestPriceAddress()).isEqualTo("Circle K Baltupiai Baltupio g. 10, Vilnius");
+        assertThat(circlePetrolPriceModel.getDieselProBestPriceAddress()).isEqualTo("Circle K Baltupiai Baltupio g. 10, Vilnius");
+        assertThat(circlePetrolPriceModel.getGasBestPriceAddress()).isEqualTo("Circle K Šilutė Cintjoniškių g. 15, Šilutė");
     }
 
     private String returnContent() {
-        return "Apačioje rasite žemiausias mūsų degalinių tinklo produktų kainas.\n" +
-                "Image\n" +
-                "1,629\n" +
-                "Circle K Šilutė\n" +
-                " Cintjoniškių g. 15,\n" +
-                " Šilutė\n" +
-                "Rugsėjo 26d. 11:00:00\n" +
-                "Image\n" +
-                "1,728\n" +
-                "Circle K Parkas\n" +
-                " Parko g. 7A,\n" +
-                " Panevėžys\n" +
-                "Rugsėjo 26d. 11:00:00\n" +
-                "Image\n" +
-                "1,738\n" +
-                "Circle K Parkas\n" +
-                " Parko g. 7A,\n" +
-                " Panevėžys\n" +
-                "Rugsėjo 26d. 11:00:00\n" +
-                "Image\n" +
-                "1,739\n" +
-                "Circle K Parkas\n" +
-                " Parko g. 7A,\n" +
-                " Panevėžys\n" +
-                "Rugsėjo 26d. 11:00:00\n" +
-                "Image\n" +
-                "1,828\n" +
-                "Circle K Parkas\n" +
-                " Parko g. 7A,\n" +
-                " Panevėžys\n" +
-                "Rugsėjo 26d. 11:00:00\n" +
-                "Image\n" +
-                "1,459\n" +
-                "Circle K Šilutė\n" +
-                " Cintjoniškių g. 15,\n" +
-                " Šilutė\n" +
-                "Rugsėjo 26d. 11:00:00\n" +
-                "Image\n" +
-                "0,723\n" +
-                "Circle K Dainava\n" +
-                " Pramonės pr. 18,\n" +
-                " Kaunas\n" +
-                "Rugsėjo 26d. 11:00:00\n" +
-                "Image\n" +
-                "1.164\n" +
-                "Visos prekiaujančios degalinės.";
+        return """
+                Degalų kainos | Circle K
+                Skip to main content
+                ns
+                Privatiems
+                Verslui
+                Top menu
+                APIE MUS
+                DIRBK PAS MUS
+                KLIENTŲ APTARNAVIMAS
+                Prisijungti
+                EXTRA
+                Verslo savitarnos svetainė
+                Circle K ID
+                Main navigation
+                EXTRA PRIVATIEMS
+                Circle K EXTRA
+                Kortelės
+                Taisyklės
+                MŪSŲ PRODUKTAI
+                Maistas ir gėrimai
+                Kava
+                K-FREEZE gaivusis gėrimas
+                Akcijos ir pasiūlymai
+                Senjorų nuolaidos
+                #mažamedaug
+                Žiemos žaidimas
+                „Rosmarino“ lipdukų akcija
+                Mobilioji programėlė
+                Mokėk numeriais
+                Mobilieji mokėjimai
+                Dovanų kortelės
+                Sudėčių katalogas
+                AUTOMOBILIUI
+                Degalai
+                Benzinas
+                Dyzelinas
+                AdBlue
+                Kiti produktai
+                D.U.K
+                Plovykla
+                Savitarnos plovykla
+                Plovyklos abonementas
+                Plovyklos programos
+                Plovyklos stebėjimas
+                Tepalai
+                Kelių mokesčių vinjetės
+                Image
+                Degalų kainos
+                Čia rasi žemiausias degalų kainas mūsų tinkle.
+                Daugiau
+                TVARUMAS
+                Mūsų tvarumo istorija
+                Pokyčiai degaluose
+                Aukščiausios kokybės produktai
+                Švaresni automobiliai ir švaresnė gamta
+                Socialinė atsakomybė
+                Inovacijų laboratorija
+                Skaidrumas ir etika
+                Žiemos žaidimas
+                Degalinių žemėlapis
+                Degalų kainos
+                Apačioje rasite žemiausias mūsų degalinių tinklo produktų kainas.
+                Image
+                1,445
+                Circle K Vilkaviškis
+                 Vilkaviškio g. 10, Serdokų k.
+                 Vilkaviškis
+                Vasario 7d. 11:00:00
+                Image
+                1,548
+                Circle K Aplinkelis II
+                 Panevėžio aplinkl. 20, Šilagalio k.
+                 Panevėžys
+                Vasario 7d. 11:00:00
+                Image
+                1,564
+                Circle K Smiltelė
+                 Taikos pr. 112A,
+                 Klaipėda
+                Vasario 7d. 11:00:00
+                Image
+                1,59
+                Circle K Baltupiai
+                 Baltupio g. 10,
+                 Vilnius
+                Vasario 7d. 11:00:00
+                Image
+                1,679
+                Circle K Baltupiai
+                 Baltupio g. 10,
+                 Vilnius
+                Vasario 9d. 11:00:00
+                Image
+                0,603
+                Circle K Šilutė
+                 Cintjoniškių g. 15,
+                 Šilutė
+                Vasario 7d. 11:00:00
+                Image
+                0,898
+                Visos prekiaujančios degalinės.
+                 Degalinių sąrašas:
+                 https://www.circlek.lt/degalai/adblue
+                Vasario 7d. 11:00:00
+                Footer
+                PRIVATIEMS
+                Degalinių sąrašas
+                Klientų aptarnavimas
+                Degalų kainos
+                Prarastų pinigų grąžinimas
+                Inovacijų laboratorija
+                VERSLUI
+                Tapkite verslo klientu
+                EXTRA verslo klientams
+                Gaminio duomenų lapai
+                Sutartys ir dokumentai įmonėms
+                Degalinės užsienyje
+                Fiksuota kainodara
+                DIRBK PAS MUS
+                Darbas degalinėse
+                Darbas ofise
+                APIE MUS
+                Kontaktai
+                Naujienos
+                Naujos Circle K degalinės
+                Socialinė atsakomybė
+                Vadovai
+                Bottom
+                Privatumo politika
+                Slapukai
+                Copyright © 2024 Circle K Lietuva
+                Raskite mus Google Play
+                Raskite mus App Store""";
     }
 }
