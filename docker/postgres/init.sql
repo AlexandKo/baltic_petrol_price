@@ -93,6 +93,16 @@ CREATE TABLE IF NOT EXISTS petrol_station.viada
     petrol_eco_best_price_address       TEXT
 );
 
+CREATE TABLE IF NOT EXISTS petrol_station.audit
+(
+    id                        UUID      NOT NULL PRIMARY KEY,
+    created_date              TIMESTAMP NOT NULL,
+    updated_date              TIMESTAMP NOT NULL,
+    entity_version            BIGINT    NOT NULL,
+    ip_address                VARCHAR(40),
+    request_uri               TEXT
+);
+
 CREATE UNIQUE INDEX circle_created_date_index
     ON petrol_station.circle (created_date DESC);
 
