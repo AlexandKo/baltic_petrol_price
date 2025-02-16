@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bpp.util.MessageCodes.WEB_CLIENT_CONNECTION_FAILED;
+import static bpp.util.MessageCodes.WEB_CLIENT_CONNECTION_SUCCESSFULLY;
 import static bpp.util.Messages.PRICE_FOR_ALL_STATIONS;
 
 @Component
@@ -43,11 +43,11 @@ public class SeCircleContentWebClient extends ContentWebClient<Response<?>> {
     public Response<?> getContent() {
         WebPageResponseModel circleWebContent = getWebContent(seCirclePriceLink);
 
-        if (circleWebContent.getId() == WEB_CLIENT_CONNECTION_FAILED) {
+        if (circleWebContent.getId() == WEB_CLIENT_CONNECTION_SUCCESSFULLY) {
             ErrorModel errorModel = ErrorModel.builder()
                     .id(circleWebContent.getId())
                     .country(Country.SE)
-                    .errorMessage(circleWebContent.getContent())
+                    .errorMessage("No Data")
                     .build();
             return new Response<>(errorModel);
         }

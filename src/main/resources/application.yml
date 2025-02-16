@@ -5,12 +5,11 @@ spring:
   datasource:
     platform: postgres
     continue-on-error: false
-    url: ${DB_URL}
+    url: jdbc:postgresql://host.docker.internal:5432/petrol_price
     username: postgres
     password: password
     driver-class-name: org.postgresql.Driver
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
     hibernate:
       ddl-auto: none

@@ -30,23 +30,19 @@ import static bpp.util.PetrolNames.PETROL_PRO_BEST_PRICE_ADDRESS;
 @Component
 public class CircleContentWebClient extends ContentWebClient<Response<?>> {
     private static final String FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN = "(.*\\t)";
-    private static final String CIRCLEK_SEARCH_PRICE_PATTERN = "(?<petrol95>\\d.?\\d{3})" + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN +
-            "(?<petrol95BestPriceAddress>.*)" + "(\\n.* \\d{2}\\t)" +
-            "(?<petrol98>\\d.?\\d{3})" + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN +
-            "(?<petrol98BestPriceAddress>.*)(\\n.* D\\t)" +
-            "(?<diesel>\\d.?\\d{3})" + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN +
-            "(?<dieselBestPriceAddress>.*)(\\n.* D\\t)" +
-            "(?<dieselPro>\\d.?\\d{3})" + FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN +
-            "(?<dieselProBestPriceAddress>.*)(\\n.*ze\\t)" +
-            "(?<gas>\\d.?\\d{3})( EUR\\t)" +
-            "(?<gasBestPriceAddress>.*)";
+    private static final String CIRCLEK_PRICE_PATTERN =
+            "95miles\\s+(?<petrol95>\\d{1,2}\\.\\d{3})\\s+EUR\\s+(?<petrol95BestPriceAddress>.*?)\\s*?" +
+                    "98miles\\+\\s+(?<petrol98>\\d{1,2}\\.\\d{3})\\s+EUR\\s+(?<petrol98BestPriceAddress>.*?)\\s*?" +
+                    "Dmiles\\s+(?<diesel>\\d{1,2}\\.\\d{3})\\s+EUR\\s+(?<dieselBestPriceAddress>.*?)\\s*?" +
+                    "Dmiles\\+\\s+(?<dieselPro>\\d{1,2}\\.\\d{3})\\s+EUR\\s+(?<dieselProBestPriceAddress>.*?)\\s*?" +
+                    "Autogāze\\s+(?<gas>\\d{1,2}\\.\\d{3})\\s+EUR\\s+(?<gasBestPriceAddress>.*?)\\s*?";
     @Value("${circleK.lv_price_link}")
     private String circlePriceLink;
     private Pattern pattern;
 
     @PostConstruct
     private void before() {
-        pattern = Pattern.compile(CIRCLEK_SEARCH_PRICE_PATTERN);
+        pattern = Pattern.compile(CIRCLEK_PRICE_PATTERN, Pattern.DOTALL);
     }
 
     @Override
