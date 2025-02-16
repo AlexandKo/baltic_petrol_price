@@ -40,9 +40,9 @@ class GotikaContentWebClientTest {
                 .when(gotikaContentWebClient)
                 .getWebContent(null);
         Response<?> response = gotikaContentWebClient.getContent();
-        ErrorModel errorModel = (ErrorModel) response.getResponseModel();
+        ErrorModel errorModel = (ErrorModel) response.responseModel();
         // Assert
-        assertThat(response.getResponseModel()).isInstanceOf(ErrorModel.class);
+        assertThat(response.responseModel()).isInstanceOf(ErrorModel.class);
         assertThat(errorModel.getId()).isEqualTo(404);
     }
 
@@ -57,7 +57,7 @@ class GotikaContentWebClientTest {
                 .when(gotikaContentWebClient)
                 .getWebContent(null);
         Response<?> response = gotikaContentWebClient.getContent();
-        GotikaPetrolPriceModel gotikaPetrolPriceModel = (GotikaPetrolPriceModel) response.getResponseModel();
+        GotikaPetrolPriceModel gotikaPetrolPriceModel = (GotikaPetrolPriceModel) response.responseModel();
         // Assert
         assertThat(gotikaPetrolPriceModel.getId()).isEqualTo(200);
         assertThat(gotikaPetrolPriceModel.getPetrol()).isEqualTo(new BigDecimal("1.647"));
@@ -75,7 +75,7 @@ class GotikaContentWebClientTest {
                 .when(gotikaContentWebClient)
                 .getWebContent(null);
         Response<?> response = gotikaContentWebClient.getContent();
-        GotikaPetrolPriceModel gotikaPetrolPriceModel = (GotikaPetrolPriceModel) response.getResponseModel();
+        GotikaPetrolPriceModel gotikaPetrolPriceModel = (GotikaPetrolPriceModel) response.responseModel();
         // Assert
         assertThat(gotikaPetrolPriceModel.getId()).isEqualTo(200);
         assertThat(gotikaPetrolPriceModel.getPetrolBestPriceAddress()).isEqualTo(PRICE_FOR_ALL_STATIONS);

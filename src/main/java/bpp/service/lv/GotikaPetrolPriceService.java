@@ -33,12 +33,12 @@ public class GotikaPetrolPriceService implements PetrolPriceService {
             return;
         }
 
-        if (gotikaPetrolPriceResponse.getResponseModel() != null) {
-            if (gotikaPetrolPriceResponse.getResponseModel() instanceof ErrorModel errorModel) {
+        if (gotikaPetrolPriceResponse.responseModel() != null) {
+            if (gotikaPetrolPriceResponse.responseModel() instanceof ErrorModel errorModel) {
                 log.error(String.format(NOT_FOUND_ERROR, PETROL_STATION, errorModel.getCountry()));
                 return;
             }
-            GotikaPetrolPriceModel gotikaPetrolPriceModel = (GotikaPetrolPriceModel) gotikaPetrolPriceResponse.getResponseModel();
+            GotikaPetrolPriceModel gotikaPetrolPriceModel = (GotikaPetrolPriceModel) gotikaPetrolPriceResponse.responseModel();
             GotikaPriceEntity gotikaPriceEntity = GotikaPriceMapper.toGotikaPriceEntity(gotikaPetrolPriceModel);
 
             gotikaPriceRepository.save(gotikaPriceEntity);

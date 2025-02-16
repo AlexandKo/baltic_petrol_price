@@ -39,9 +39,9 @@ class LtCircleContentWebClientTest {
                 .when(ltCircleContentWebClient)
                 .getWebContent(null);
         Response<?> response = ltCircleContentWebClient.getContent();
-        ErrorModel errorModel = (ErrorModel) response.getResponseModel();
+        ErrorModel errorModel = (ErrorModel) response.responseModel();
         // Assert
-        assertThat(response.getResponseModel()).isInstanceOf(ErrorModel.class);
+        assertThat(response.responseModel()).isInstanceOf(ErrorModel.class);
         assertThat(errorModel.getId()).isEqualTo(404);
     }
 
@@ -56,7 +56,7 @@ class LtCircleContentWebClientTest {
                 .when(ltCircleContentWebClient)
                 .getWebContent(null);
         Response<?> response = ltCircleContentWebClient.getContent();
-        CirclePetrolPriceModel circlePetrolPriceModel = (CirclePetrolPriceModel) response.getResponseModel();
+        CirclePetrolPriceModel circlePetrolPriceModel = (CirclePetrolPriceModel) response.responseModel();
         // Assert
         assertThat(circlePetrolPriceModel.getId()).isEqualTo(200);
         assertThat(circlePetrolPriceModel.getPetrol()).isEqualTo(new BigDecimal("1.445"));
@@ -77,7 +77,7 @@ class LtCircleContentWebClientTest {
                 .when(ltCircleContentWebClient)
                 .getWebContent(null);
         Response<?> response = ltCircleContentWebClient.getContent();
-        CirclePetrolPriceModel circlePetrolPriceModel = (CirclePetrolPriceModel) response.getResponseModel();
+        CirclePetrolPriceModel circlePetrolPriceModel = (CirclePetrolPriceModel) response.responseModel();
         // Assert
         assertThat(circlePetrolPriceModel.getId()).isEqualTo(200);
         assertThat(circlePetrolPriceModel.getPetrolBestPriceAddress()).isEqualTo("Circle K Vilkaviškis Vilkaviškio g. 10, Serdokų k. Vilkaviškis");

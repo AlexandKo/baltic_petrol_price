@@ -33,12 +33,12 @@ public class VirsiPetrolPriceService implements PetrolPriceService {
             return;
         }
 
-        if (virsiPetrolPriceResponse.getResponseModel() != null) {
-            if (virsiPetrolPriceResponse.getResponseModel() instanceof ErrorModel errorModel) {
+        if (virsiPetrolPriceResponse.responseModel() != null) {
+            if (virsiPetrolPriceResponse.responseModel() instanceof ErrorModel errorModel) {
                 log.error(String.format(NOT_FOUND_ERROR, PETROL_STATION, errorModel.getCountry()));
                 return;
             }
-            VirsiPetrolPriceModel virsiPetrolPriceModel = (VirsiPetrolPriceModel) virsiPetrolPriceResponse.getResponseModel();
+            VirsiPetrolPriceModel virsiPetrolPriceModel = (VirsiPetrolPriceModel) virsiPetrolPriceResponse.responseModel();
             VirsiPriceEntity virsiPriceEntity = VirsiPriceMapper.toVirsiPriceEntity(virsiPetrolPriceModel);
 
             virsiPriceRepository.save(virsiPriceEntity);

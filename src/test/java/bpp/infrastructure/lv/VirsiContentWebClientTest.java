@@ -39,9 +39,9 @@ class VirsiContentWebClientTest {
                 .when(virsiContentWebClient)
                 .getWebContent(null);
         Response<?> response = virsiContentWebClient.getContent();
-        ErrorModel errorModel = (ErrorModel) response.getResponseModel();
+        ErrorModel errorModel = (ErrorModel) response.responseModel();
         // Assert
-        assertThat(response.getResponseModel()).isInstanceOf(ErrorModel.class);
+        assertThat(response.responseModel()).isInstanceOf(ErrorModel.class);
         assertThat(errorModel.getId()).isEqualTo(404);
     }
 
@@ -56,7 +56,7 @@ class VirsiContentWebClientTest {
                 .when(virsiContentWebClient)
                 .getWebContent(null);
         Response<?> response = virsiContentWebClient.getContent();
-        VirsiPetrolPriceModel virsiPetrolPriceModel = (VirsiPetrolPriceModel) response.getResponseModel();
+        VirsiPetrolPriceModel virsiPetrolPriceModel = (VirsiPetrolPriceModel) response.responseModel();
         // Assert
         assertThat(virsiPetrolPriceModel.getId()).isEqualTo(200);
         assertThat(virsiPetrolPriceModel.getPetrol()).isEqualTo(new BigDecimal("1.757"));
@@ -76,7 +76,7 @@ class VirsiContentWebClientTest {
                 .when(virsiContentWebClient)
                 .getWebContent(null);
         Response<?> response = virsiContentWebClient.getContent();
-        VirsiPetrolPriceModel virsiPetrolPriceModel = (VirsiPetrolPriceModel) response.getResponseModel();
+        VirsiPetrolPriceModel virsiPetrolPriceModel = (VirsiPetrolPriceModel) response.responseModel();
         // Assert
         assertThat(virsiPetrolPriceModel.getId()).isEqualTo(200);
         assertThat(virsiPetrolPriceModel.getPetrolBestPriceAddress()).isEqualTo("Satekles iela 2, RĪga, LV-1050");

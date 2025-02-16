@@ -33,12 +33,12 @@ public class ViadaPetrolPriceService implements PetrolPriceService {
             return;
         }
 
-        if (viadaPetrolPriceResponse.getResponseModel() != null) {
-            if (viadaPetrolPriceResponse.getResponseModel() instanceof ErrorModel errorModel) {
+        if (viadaPetrolPriceResponse.responseModel() != null) {
+            if (viadaPetrolPriceResponse.responseModel() instanceof ErrorModel errorModel) {
                 log.error(String.format(NOT_FOUND_ERROR, PETROL_STATION, errorModel.getCountry()));
                 return;
             }
-            ViadaPetrolPriceModel viadaPetrolPriceModel = (ViadaPetrolPriceModel) viadaPetrolPriceResponse.getResponseModel();
+            ViadaPetrolPriceModel viadaPetrolPriceModel = (ViadaPetrolPriceModel) viadaPetrolPriceResponse.responseModel();
             ViadaPriceEntity nestePriceEntity = ViadaPriceMapper.toViadaPriceEntity(viadaPetrolPriceModel);
 
             viadaPriceRepository.save(nestePriceEntity);

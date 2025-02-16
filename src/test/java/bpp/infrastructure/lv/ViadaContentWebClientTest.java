@@ -39,9 +39,9 @@ class ViadaContentWebClientTest {
                 .when(circleContentWebClient)
                 .getWebContent(null);
         Response<?> response = circleContentWebClient.getContent();
-        ErrorModel errorModel = (ErrorModel) response.getResponseModel();
+        ErrorModel errorModel = (ErrorModel) response.responseModel();
         // Assert
-        assertThat(response.getResponseModel()).isInstanceOf(ErrorModel.class);
+        assertThat(response.responseModel()).isInstanceOf(ErrorModel.class);
         assertThat(errorModel.getId()).isEqualTo(404);
     }
 
@@ -56,7 +56,7 @@ class ViadaContentWebClientTest {
                 .when(circleContentWebClient)
                 .getWebContent(null);
         Response<?> response = circleContentWebClient.getContent();
-        ViadaPetrolPriceModel circlePetrolPriceModel = (ViadaPetrolPriceModel) response.getResponseModel();
+        ViadaPetrolPriceModel circlePetrolPriceModel = (ViadaPetrolPriceModel) response.responseModel();
         // Assert
         assertThat(circlePetrolPriceModel.getId()).isEqualTo(200);
         assertThat(circlePetrolPriceModel.getPetrolEcto()).isEqualTo(new BigDecimal("1.694"));
@@ -79,7 +79,7 @@ class ViadaContentWebClientTest {
                 .when(circleContentWebClient)
                 .getWebContent(null);
         Response<?> response = circleContentWebClient.getContent();
-        ViadaPetrolPriceModel circlePetrolPriceModel = (ViadaPetrolPriceModel) response.getResponseModel();
+        ViadaPetrolPriceModel circlePetrolPriceModel = (ViadaPetrolPriceModel) response.responseModel();
         // Assert
         assertThat(circlePetrolPriceModel.getId()).isEqualTo(200);
         assertThat(circlePetrolPriceModel.getPetrolEctoBestPriceAddress()).isEqualTo("DUS Dārzciema: Dārzciema iela 69, Rīga, DUS Astras: G.Astras iela 7, Rīga, DUS Dambja: Dambja iela 11, Rīga, DUS Krūzes: Krūzes iela 53, Rīga, ADUS Valdeķu: Valdeķu iela 34, Rīga.");

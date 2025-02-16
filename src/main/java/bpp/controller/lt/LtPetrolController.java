@@ -32,14 +32,14 @@ public class LtPetrolController {
     public ResponseEntity<Object> getCirclePrice() {
         Response<?> circleClientResponse = ltCircleContentWebClient.getContent();
 
-        if (circleClientResponse.getResponseModel() instanceof ErrorModel) {
+        if (circleClientResponse.responseModel() instanceof ErrorModel) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
-                    .body(circleClientResponse.getResponseModel());
+                    .body(circleClientResponse.responseModel());
         }
 
         return ResponseEntity
                 .ok()
-                .body(circleClientResponse.getResponseModel());
+                .body(circleClientResponse.responseModel());
     }
 }

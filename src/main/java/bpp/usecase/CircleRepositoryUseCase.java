@@ -26,12 +26,12 @@ public class CircleRepositoryUseCase {
             return;
         }
 
-        if (circlePetrolPriceResponse.getResponseModel() != null) {
-            if (circlePetrolPriceResponse.getResponseModel() instanceof ErrorModel errorModel) {
+        if (circlePetrolPriceResponse.responseModel() != null) {
+            if (circlePetrolPriceResponse.responseModel() instanceof ErrorModel errorModel) {
                 log.error(String.format(NOT_FOUND_ERROR, PETROL_STATION, errorModel.getCountry()));
                 return;
             }
-            CirclePetrolPriceModel circlePetrolPriceModel = (CirclePetrolPriceModel) circlePetrolPriceResponse.getResponseModel();
+            CirclePetrolPriceModel circlePetrolPriceModel = (CirclePetrolPriceModel) circlePetrolPriceResponse.responseModel();
             CirclePriceEntity circlePriceEntity = CirclePriceMapper.toCirclePriceEntity(circlePetrolPriceModel);
 
             circlePriceRepository.save(circlePriceEntity);

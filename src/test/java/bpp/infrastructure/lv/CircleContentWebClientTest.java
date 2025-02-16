@@ -40,9 +40,9 @@ class CircleContentWebClientTest {
                 .when(circleContentWebClient)
                 .getWebContent(null);
         Response<?> response = circleContentWebClient.getContent();
-        ErrorModel errorModel = (ErrorModel) response.getResponseModel();
+        ErrorModel errorModel = (ErrorModel) response.responseModel();
         // Assert
-        assertThat(response.getResponseModel()).isInstanceOf(ErrorModel.class);
+        assertThat(response.responseModel()).isInstanceOf(ErrorModel.class);
         assertThat(errorModel.getId()).isEqualTo(404);
     }
 
@@ -57,14 +57,14 @@ class CircleContentWebClientTest {
                 .when(circleContentWebClient)
                 .getWebContent(null);
         Response<?> response = circleContentWebClient.getContent();
-        CirclePetrolPriceModel circlePetrolPriceModel = (CirclePetrolPriceModel) response.getResponseModel();
+        CirclePetrolPriceModel circlePetrolPriceModel = (CirclePetrolPriceModel) response.responseModel();
         // Assert
         assertThat(circlePetrolPriceModel.getId()).isEqualTo(200);
-        assertThat(circlePetrolPriceModel.getPetrol()).isEqualTo(new BigDecimal("1.547"));
-        assertThat(circlePetrolPriceModel.getPetrolPro()).isEqualTo(new BigDecimal("1.597"));
-        assertThat(circlePetrolPriceModel.getDiesel()).isEqualTo(new BigDecimal("1.417"));
-        assertThat(circlePetrolPriceModel.getDieselPro()).isEqualTo(new BigDecimal("1.517"));
-        assertThat(circlePetrolPriceModel.getGas()).isEqualTo(new BigDecimal("0.715"));
+        assertThat(circlePetrolPriceModel.getPetrol()).isEqualTo(new BigDecimal("1.654"));
+        assertThat(circlePetrolPriceModel.getPetrolPro()).isEqualTo(new BigDecimal("1.674"));
+        assertThat(circlePetrolPriceModel.getDiesel()).isEqualTo(new BigDecimal("1.634"));
+        assertThat(circlePetrolPriceModel.getDieselPro()).isEqualTo(new BigDecimal("1.734"));
+        assertThat(circlePetrolPriceModel.getGas()).isEqualTo(new BigDecimal("0.945"));
     }
 
     @Test
@@ -78,31 +78,26 @@ class CircleContentWebClientTest {
                 .when(circleContentWebClient)
                 .getWebContent(null);
         Response<?> response = circleContentWebClient.getContent();
-        CirclePetrolPriceModel circlePetrolPriceModel = (CirclePetrolPriceModel) response.getResponseModel();
+        CirclePetrolPriceModel circlePetrolPriceModel = (CirclePetrolPriceModel) response.responseModel();
         // Assert
         assertThat(circlePetrolPriceModel.getId()).isEqualTo(200);
-        assertThat(circlePetrolPriceModel.getPetrolBestPriceAddress()).isEqualTo("Valdeķu iela 35");
-        assertThat(circlePetrolPriceModel.getPetrolProBestPriceAddress()).isEqualTo("Valdeķu iela 35");
-        assertThat(circlePetrolPriceModel.getDieselBestPriceAddress()).isEqualTo("Gunāra Astras iela 10, Valdeķu iela 35");
-        assertThat(circlePetrolPriceModel.getDieselProBestPriceAddress()).isEqualTo("Gunāra Astras iela 10");
-        assertThat(circlePetrolPriceModel.getGasBestPriceAddress()).isEqualTo("Lubānas iela 119a");
+        assertThat(circlePetrolPriceModel.getPetrolBestPriceAddress()).isEqualTo("The fuel price is set for all gas stations");
+        assertThat(circlePetrolPriceModel.getPetrolProBestPriceAddress()).isEqualTo("The fuel price is set for all gas stations");
+        assertThat(circlePetrolPriceModel.getDieselBestPriceAddress()).isEqualTo("The fuel price is set for all gas stations");
+        assertThat(circlePetrolPriceModel.getDieselProBestPriceAddress()).isEqualTo("The fuel price is set for all gas stations");
+        assertThat(circlePetrolPriceModel.getGasBestPriceAddress()).isEqualTo("The fuel price is set for all gas stations");
     }
 
     private String returnContent() {
         return """
-                Meklēt staciju
-                Image
-                Image
-                Degvielas cenas
-                Zemākās cenas DUS tīklā Rīgā
-                Cenas spēkā no 05.07.2023.
-                Cenām ir informatīvs raksturs, tās \uFEFF\uFEFFvar mainīties vairākkārtīgi dienas laikā un atšķirties dažādās stacijās.
-                Degviela\tCena EUR\tUzpildes stacijas adrese
-                miles 95\t1.547 EUR\tValdeķu iela 35
-                milesPLUS 98\t1.597 EUR\tValdeķu iela 35
-                miles D\t1.417 EUR\tGunāra Astras iela 10, Valdeķu iela 35
-                milesPLUS D\t1.517 EUR\tGunāra Astras iela 10
-                Autogāze\t0.715 EUR\tLubānas iela 119a
+                Cenas spēkā no 14.02.2025.
+                Cenas attiecas uz privātpersonām, un tām ir informatīvs raksturs. Cenas ﻿﻿var mainīties vairākkārtīgi dienas laikā un atšķirties dažādās stacijās.
+                Degviela	Cena EUR	\s
+                95miles	1.654 EUR	Visās Rīgas DUS degvielas cenas ir vienādas
+                98miles+	1.674 EUR	Visās Rīgas DUS degvielas cenas ir vienādas
+                Dmiles	1.634 EUR	Visās Rīgas DUS degvielas cenas ir vienādas
+                Dmiles+	1.734 EUR	Visās Rīgas DUS degvielas cenas ir vienādas
+                Autogāze	0.945 EUR	Visās Rīgas DUS autogāzes cenas ir vienādas
                 Degvielas cenu ietekmējošie faktori""";
     }
 }

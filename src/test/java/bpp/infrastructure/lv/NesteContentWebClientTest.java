@@ -40,9 +40,9 @@ class NesteContentWebClientTest {
                 .when(nesteContentWebClient)
                 .getWebContent(null);
         Response<?> response = nesteContentWebClient.getContent();
-        ErrorModel errorModel = (ErrorModel) response.getResponseModel();
+        ErrorModel errorModel = (ErrorModel) response.responseModel();
         // Assert
-        assertThat(response.getResponseModel()).isInstanceOf(ErrorModel.class);
+        assertThat(response.responseModel()).isInstanceOf(ErrorModel.class);
         assertThat(errorModel.getId()).isEqualTo(404);
     }
 
@@ -57,7 +57,7 @@ class NesteContentWebClientTest {
                 .when(nesteContentWebClient)
                 .getWebContent(null);
         Response<?> response = nesteContentWebClient.getContent();
-        NestePetrolPriceModel nestePetrolPriceModel = (NestePetrolPriceModel) response.getResponseModel();
+        NestePetrolPriceModel nestePetrolPriceModel = (NestePetrolPriceModel) response.responseModel();
         // Assert
         assertThat(nestePetrolPriceModel.getId()).isEqualTo(200);
         assertThat(nestePetrolPriceModel.getPetrol()).isEqualTo(new BigDecimal("1.507"));
@@ -77,7 +77,7 @@ class NesteContentWebClientTest {
                 .when(nesteContentWebClient)
                 .getWebContent(null);
         Response<?> response = nesteContentWebClient.getContent();
-        NestePetrolPriceModel nestePetrolPriceModel = (NestePetrolPriceModel) response.getResponseModel();
+        NestePetrolPriceModel nestePetrolPriceModel = (NestePetrolPriceModel) response.responseModel();
         // Assert
         assertThat(nestePetrolPriceModel.getId()).isEqualTo(200);
         assertThat(nestePetrolPriceModel.getPetrolBestPriceAddress()).isEqualTo("Dzirnavu 127, Katoļu 4, Brīvības gatve 253");

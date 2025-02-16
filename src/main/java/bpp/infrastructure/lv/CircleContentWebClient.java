@@ -29,13 +29,12 @@ import static bpp.util.PetrolNames.PETROL_PRO_BEST_PRICE_ADDRESS;
 
 @Component
 public class CircleContentWebClient extends ContentWebClient<Response<?>> {
-    private static final String FULL_LINE_WITH_NEXT_LINE_CHAR_PATTERN = "(.*\\t)";
     private static final String CIRCLEK_PRICE_PATTERN =
             "95miles\\s+(?<petrol95>\\d{1,2}\\.\\d{3})\\s+EUR\\s+(?<petrol95BestPriceAddress>.*?)\\s*?" +
                     "98miles\\+\\s+(?<petrol98>\\d{1,2}\\.\\d{3})\\s+EUR\\s+(?<petrol98BestPriceAddress>.*?)\\s*?" +
                     "Dmiles\\s+(?<diesel>\\d{1,2}\\.\\d{3})\\s+EUR\\s+(?<dieselBestPriceAddress>.*?)\\s*?" +
                     "Dmiles\\+\\s+(?<dieselPro>\\d{1,2}\\.\\d{3})\\s+EUR\\s+(?<dieselProBestPriceAddress>.*?)\\s*?" +
-                    "Autogāze\\s+(?<gas>\\d{1,2}\\.\\d{3})\\s+EUR\\s+(?<gasBestPriceAddress>.*?)\\s*?";
+                    "Autogāze\\s+(?<gas>\\d{1,2}\\.\\d{3})\\s+EUR\\s+(?<gasBestPriceAddress>.*?)\\s*(?:$|\\n)";
     @Value("${circleK.lv_price_link}")
     private String circlePriceLink;
     private Pattern pattern;

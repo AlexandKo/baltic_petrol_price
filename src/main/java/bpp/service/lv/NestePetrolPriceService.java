@@ -33,12 +33,12 @@ public class NestePetrolPriceService implements PetrolPriceService {
             return;
         }
 
-        if (nestePetrolPriceResponse.getResponseModel() != null) {
-            if (nestePetrolPriceResponse.getResponseModel() instanceof ErrorModel errorModel) {
+        if (nestePetrolPriceResponse.responseModel() != null) {
+            if (nestePetrolPriceResponse.responseModel() instanceof ErrorModel errorModel) {
                 log.error(String.format(NOT_FOUND_ERROR, PETROL_STATION, errorModel.getCountry()));
                 return;
             }
-            NestePetrolPriceModel nestePetrolPriceModel = (NestePetrolPriceModel) nestePetrolPriceResponse.getResponseModel();
+            NestePetrolPriceModel nestePetrolPriceModel = (NestePetrolPriceModel) nestePetrolPriceResponse.responseModel();
             NestePriceEntity nestePriceEntity = NestePriceMapper.toNestePriceEntity(nestePetrolPriceModel);
 
             nestePriceRepository.save(nestePriceEntity);

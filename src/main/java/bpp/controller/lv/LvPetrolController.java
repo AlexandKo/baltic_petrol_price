@@ -37,15 +37,15 @@ public class LvPetrolController {
     public ResponseEntity<Object> getNestePrice() {
         Response<?> nesteClientResponse = nesteContentWebClient.getContent();
 
-        if (nesteClientResponse.getResponseModel() instanceof ErrorModel) {
+        if (nesteClientResponse.responseModel() instanceof ErrorModel) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
-                    .body(nesteClientResponse.getResponseModel());
+                    .body(nesteClientResponse.responseModel());
         }
 
         return ResponseEntity
                 .ok()
-                .body(nesteClientResponse.getResponseModel());
+                .body(nesteClientResponse.responseModel());
     }
 
     @GetMapping("/circlek")
@@ -57,15 +57,15 @@ public class LvPetrolController {
     public ResponseEntity<Object> getCirclePrice() {
         Response<?> circleClientResponse = circleContentWebClient.getContent();
 
-        if (circleClientResponse.getResponseModel() instanceof ErrorModel) {
+        if (circleClientResponse.responseModel() instanceof ErrorModel) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
-                    .body(circleClientResponse.getResponseModel());
+                    .body(circleClientResponse.responseModel());
         }
 
         return ResponseEntity
                 .ok()
-                .body(circleClientResponse.getResponseModel());
+                .body(circleClientResponse.responseModel());
     }
 
     @GetMapping("/gotika")
@@ -77,15 +77,15 @@ public class LvPetrolController {
     public ResponseEntity<Object> getGotikaPrice() {
         Response<?> gotikaClientResponse = gotikaContentWebClient.getContent();
 
-        if (gotikaClientResponse.getResponseModel() instanceof ErrorModel) {
+        if (gotikaClientResponse.responseModel() instanceof ErrorModel) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
-                    .body(gotikaClientResponse.getResponseModel());
+                    .body(gotikaClientResponse.responseModel());
         }
 
         return ResponseEntity
                 .ok()
-                .body(gotikaClientResponse.getResponseModel());
+                .body(gotikaClientResponse.responseModel());
     }
 
     @GetMapping("/viada")
@@ -97,15 +97,15 @@ public class LvPetrolController {
     public ResponseEntity<Object> getViadaPrice() {
         Response<?> viadaClientResponse = viadaContentWebClient.getContent();
 
-        if (viadaClientResponse.getResponseModel() instanceof ErrorModel) {
+        if (viadaClientResponse.responseModel() instanceof ErrorModel) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
-                    .body(viadaClientResponse.getResponseModel());
+                    .body(viadaClientResponse.responseModel());
         }
 
         return ResponseEntity
                 .ok()
-                .body(viadaClientResponse.getResponseModel());
+                .body(viadaClientResponse.responseModel());
     }
 
     @GetMapping("/virsi")
@@ -117,15 +117,15 @@ public class LvPetrolController {
     public ResponseEntity<Object> getVirsiPrice() {
         Response<?> virsiClientResponse = virsiContentWebClient.getContent();
 
-        if (virsiClientResponse.getResponseModel() instanceof ErrorModel) {
+        if (virsiClientResponse.responseModel() instanceof ErrorModel) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
-                    .body(virsiClientResponse.getResponseModel());
+                    .body(virsiClientResponse.responseModel());
         }
 
         return ResponseEntity
                 .ok()
-                .body(virsiClientResponse.getResponseModel());
+                .body(virsiClientResponse.responseModel());
     }
 
     @GetMapping("/daily")
@@ -139,6 +139,6 @@ public class LvPetrolController {
 
         return ResponseEntity
                 .ok()
-                .body(dailyPriceModel.getResponseModel());
+                .body(dailyPriceModel.responseModel());
     }
 }
